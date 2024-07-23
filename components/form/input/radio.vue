@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="relative flex items-start">
-      <div v-if="isDefault" class="absolute flex items-center justify-center rounded w-7 h-7 bottom-1 -left-10 bg-zinc-200">
+    <div class="relative flex items-center">
+      <div v-if="isDefault" class="absolute flex items-center justify-center w-6 h-6 rounded -left-10 bg-zinc-200">
         <p class="font-medium">
           §
         </p>

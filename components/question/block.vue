@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-4">
+  <div class="max-w-2xl mx-auto space-y-4">
     <h2 class="">1/8. {{ title }}</h2>
     <p v-if="subTitle">{{ subTitle }}</p>
     <div class="px-4">
