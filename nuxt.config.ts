@@ -31,9 +31,14 @@ export default defineNuxtConfig({
 
   googleFonts: {
     families: {
-      Poppins: [100, 200, 300, 500, 700],
+      Poppins: [100, 200, 300, 400, 500, 700],
     },
     // download: true,
+  },
+
+  tailwindcss: {
+    cssPath: '~/assets/css/tailwind.css',
+    configPath: '~/tailwind.config.js',
   },
 
   compatibilityDate: '2024-07-19',

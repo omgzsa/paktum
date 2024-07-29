@@ -22,6 +22,8 @@ const validationSchema = [
   }),
 ];
 
+const selectedContractType = ref('');
+
 /**
  * Only Called when the last step is submitted
  */
@@ -48,20 +50,22 @@ function onSubmit(formData: any) {
 
         <QuestionBlock 
           title="A bérlemény használata" 
-          subTitle="A Bérleményt a Bérlőnek rendeltetésszerűen kell használnia. A rendeltetésszerű használat fogalmát"
+          sub-text="A Bérleményt a Bérlőnek rendeltetésszerűen kell használnia. A rendeltetésszerű használat fogalmát"
         >
           <FormInputRadio 
             id="rental" 
             name="contractType" 
             label="a szerződés nem tartalmazza, azt csak a bírósági gyakorlat határozza meg." 
             value="rental" 
-            is-default
+            v-model="selectedContractType" 
           />
           <FormInputRadio 
             id="housing" 
             name="contractType" 
             label="a szerződés is tartalmazza: Bérlő köteles a kármegelőzésre, az állagvédelemre, a vagyonvédelemre, a hulladéktól mentes tisztántartásra." 
-            value="rental" 
+            value="housing" 
+            v-model="selectedContractType" 
+            is-default
           />
         </QuestionBlock>
 

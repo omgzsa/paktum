@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -45,7 +45,7 @@
   a,
   p,
   li {
-    @apply text-sm font-light leading-snug tracking-wide md:text-base text-zinc-900 dark:text-zinc-200;
+    @apply text-xs font-normal leading-snug tracking-wider text-black xs:text-sm md:text-base dark:text-zinc-200;
   }
 
     /* FORM STYLING */
