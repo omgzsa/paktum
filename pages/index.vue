@@ -4,25 +4,8 @@ import * as yup from 'yup';
 
 // break down the validation steps into multiple schemas
 const validationSchema = [
-  yup.object({
-    contractType: yup.string().required(),
-  }),
-  yup.object({
-    password: yup.string().min(8).required(),
-    confirmPass: yup
-      .string()
-      .required()
-      .oneOf([yup.ref('password')], 'Passwords must match'),
-  }),
-  yup.object({
-    favoriteDrink: yup
-      .string()
-      .required()
-      .oneOf(['coffee', 'tea', 'soda'], 'Choose a drink'),
-  }),
+  //
 ];
-
-const selectedContractType = ref('');
 
 /**
  * Only Called when the last step is submitted
@@ -41,35 +24,13 @@ function onSubmit(formData: any) {
       <h3>Válaszd ki a szerződés típusát</h3>
       <p class="pb-16">Ha a szerződés nem szabályoz egy kérdéskört, de a törvény igen,  a kérdésben a háttérjogszabály rendelkezéseit kell alkalmazni. Ha szerződéseddel akarsz szabályozni egy kérdéskört, a háttérjogszabálytól függ, hogy a törvényi rendelkezésektől eltérhetsz-e, és ha igen, milyen irányba.</p>
 
-      <!-- <FormWrapper :validation-schema="validationSchema" @submit="onSubmit"> -->
-        <!-- <FormStep>
-          <FormInputRadio id="rental" name="contractType" label="Bérleti szerződés" value="rental" />
+      <FormWrapper :validation-schema="validationSchema" @submit="onSubmit">
+        <FormStep>
+          #1
+        </FormStep> 
 
-          <FormInputText name="name" label="Név" />
-        </FormStep>  -->
-
-        <QuestionBlock 
-          title="A bérlemény használata" 
-          sub-text="A Bérleményt a Bérlőnek rendeltetésszerűen kell használnia. A rendeltetésszerű használat fogalmát"
-        >
-          <FormInputRadio 
-            id="rental" 
-            name="contractType" 
-            label="a szerződés nem tartalmazza, azt csak a bírósági gyakorlat határozza meg." 
-            value="rental" 
-            v-model="selectedContractType" 
-          />
-          <FormInputRadio 
-            id="housing" 
-            name="contractType" 
-            label="a szerződés is tartalmazza: Bérlő köteles a kármegelőzésre, az állagvédelemre, a vagyonvédelemre, a hulladéktól mentes tisztántartásra." 
-            value="housing" 
-            v-model="selectedContractType" 
-            is-default
-          />
-        </QuestionBlock>
-
-        <!-- <FormStep>
+        <FormStep>
+          #2
           <Field
             name="password"
             type="password"
@@ -93,8 +54,8 @@ function onSubmit(formData: any) {
             <option value="soda">Soda</option>
           </Field>
           <ErrorMessage name="favoriteDrink" />
-        </FormStep> -->
-      <!-- </FormWrapper> -->
+        </FormStep> 
+      </FormWrapper>
     </UContainer>
   </div>
 </template>
