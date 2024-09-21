@@ -9,11 +9,15 @@
   html,
   body,
   #__nuxt {
-    @apply min-h-screen;
+    @apply min-h-screen overflow-x-hidden;
   }
 
   img {
     @apply block w-full;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-neutral-900 dark:text-white;
   }
 
   h1 {
@@ -45,7 +49,7 @@
   a,
   p,
   li {
-    @apply text-xs font-normal leading-snug tracking-wider text-black xs:text-sm md:text-base dark:text-zinc-200;
+    @apply text-xs font-normal leading-snug tracking-normal text-neutral-900 sm:text-sm md:text-base dark:text-neutral-200;
   }
 
     /* FORM STYLING */
@@ -65,7 +69,26 @@
     [multiple],
     textarea,
     select {
-      @apply block w-full px-2 py-1 border-0 shadow-sm sm:px-2.5 sm:py-1.5 text-zinc-900 dark:text-zinc-100 ring-1 ring-inset ring-gray-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-zinc-100 rounded-md;
+      @apply block w-full px-2 pt-1 pb-0.5 border-0 shadow-sm sm:px-2.5 sm:pt-1.5 sm:pb-1 text-neutral-900 dark:text-neutral-100 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-neutral-100 rounded-md;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* For Firefox */
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    [type='checkbox'] {
+      /*  */
+    }
+
+    [type='radio'] {
+      @apply bg-white dark:bg-neutral-800;
     }
   
     .app-input-wrapper {
