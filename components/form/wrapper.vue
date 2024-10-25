@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useForm } from 'vee-validate';
+import { useRouter, useRoute } from 'vue-router';
 
 const props = defineProps({
   validationSchema: {
@@ -9,80 +10,85 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['submit']);
-const currentStepIdx = ref(0);
 
-// Injects the starting step, child <form-steps> will use this to generate their ids
 const stepCounter = ref(0);
+const currentStepIdx = ref(0);
 provide('STEP_COUNTER', stepCounter);
-
-// Inject the live ref of the current index to child components
-// will be used to toggle each form-step visibility
 provide('CURRENT_STEP_INDEX', currentStepIdx);
+const transitionDirection = ref('forward');
 
-const isLastStep = computed(() => {
-  return currentStepIdx.value === stepCounter.value - 1;
+const router = useRouter();
+const route = useRoute();
+
+// Initialize current step index from the route parameter on load
+onMounted(() => {
+  const pageIndex = parseInt(route.query.page as string, 10);
+  if (!isNaN(pageIndex) && pageIndex >= 0 && pageIndex < stepCounter.value) {
+    currentStepIdx.value = pageIndex;
+  }
 });
 
-const hasPrevious = computed(() => {
-  return currentStepIdx.value > 0;
+watch(currentStepIdx, (newIndex) => {
+  router.replace({ query: { page: newIndex.toString() } });
 });
 
-// extracts the indivdual step schema
-const currentSchema = computed(() => {
-  return props.validationSchema[currentStepIdx.value];
-});
+const isLastStep = computed(() => currentStepIdx.value === stepCounter.value - 1);
+const hasPrevious = computed(() => currentStepIdx.value > 0);
+const currentSchema = computed(() => props.validationSchema[currentStepIdx.value]);
 
 const { values, handleSubmit, isSubmitting } = useForm({
-  // vee-validate will be aware of computed schema changes
   validationSchema: currentSchema,
-  // turn this on so each step values won't get removed when you move back or to the next step
   keepValuesOnUnmount: true,
 });
 
-// We are using the "submit" handler to progress to next steps
-// and to submit the form if its the last step
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 const onSubmit = handleSubmit((values) => {
   if (!isLastStep.value) {
+    transitionDirection.value = 'forward';
     currentStepIdx.value++;
-
+    scrollToTop();
     return;
   }
 
-  // Let the parent know the form was filled across all steps
   emit('submit', values);
 });
 
 function goToPrev() {
-  if (currentStepIdx.value === 0) {
-    return;
-  }
-
+  if (currentStepIdx.value === 0) return;
+  transitionDirection.value = 'backward';
+  scrollToTop();
   currentStepIdx.value--;
 }
 </script>
 
+
 <template>
-  <form @submit="onSubmit" class="max-w-2xl mx-auto">
-    <TransitionGroup name="slide-fade">
+  <form @submit="onSubmit" class="mx-auto">
+    <TransitionGroup
+      :name="transitionDirection === 'forward' ? 'slide-forward' : 'slide-backward'"
+    >
       <slot />
     </TransitionGroup>
 
-    <div class="flex justify-between max-w-2xl py-10 mx-auto">
+    <div class="flex items-center py-10 justify-evenly">
       <button
-        class="flex items-center text-base font-medium transition-all text-dark-300 hover:text-dark-100 hover:ring-0 ring-1 ring-gray-300 px-3 pt-1.5 pb-1 hover:bg-accent-100"
+        class="flex items-center px-5 py-2 text-sm font-bold transition-all rounded-md group hover:shadow-md text-neutral-200 bg-neutral-900 hover:ring-0 ring-1 ring-neutral-900 hover:bg-accent-100"
         v-if="hasPrevious"
         type="button"
         @click="goToPrev"
       >
-        Előző
+      <Icon name="i-heroicons-chevron-double-left-16-solid" class="w-5 h-5 mr-2 transition transform group-hover:-translate-x-0.5" /> Előző
       </button>
 
       <button
-        class="flex items-center ml-auto text-base font-medium transition-all text-dark-300 hover:text-dark-100 hover:ring-0 ring-1 ring-gray-300 px-3 pt-1.5 pb-1 hover:bg-accent-100"
+        class="flex items-center px-5 py-2 text-sm font-bold transition-all rounded-md group hover:shadow-md text-dark-300 hover:ring-0 ring-1 ring-paktum-500 bg-paktum-500 hover:bg-accent-100"
         v-if="!isLastStep"
         type="submit"
       >
-        Következő
+        Következő <Icon name="i-heroicons-chevron-double-right-16-solid" class="w-5 h-5 ml-2 transition transform group-hover:translate-x-0.5" />
       </button>
 
       <button
@@ -98,25 +104,39 @@ function goToPrev() {
     </div>
 
     <ClientOnly>
-      <pre>{{ values }}</pre>
+      <pre wrap class="pb-10">{{ values }}</pre>
     </ClientOnly>
   </form>
 </template>
 
 <style>
-.slide-fade-move,
-.slide-fade-enter-active,
-.slide-fade-leave-active {
+.slide-forward-enter-active,
+.slide-forward-leave-active {
   transition: all 0.25s ease;
 }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
+.slide-forward-enter-from {
   opacity: 0;
   transform: translateX(20px);
 }
 
-.slide-fade-leave-active {
-  position: absolute;
+.slide-forward-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.slide-backward-enter-active,
+.slide-backward-leave-active {
+  transition: all 0.25s ease;
+}
+
+.slide-backward-enter-from {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.slide-backward-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
 }
 </style>
