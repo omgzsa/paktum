@@ -15,19 +15,19 @@ const items = [
 </script>
 
 <template>
-  <div>
+  <section>
     <QuestionBlock
       title="Az alábbi háttérjogszabályok szövegét kérem a bérleti szerződésembe"
       sub-text=""
       placement="1."
     >
-      <InputCheckbox
+      <InputChboxPrice
         v-model="ptkSelected"
         name="ptkSelected"
         label="Polgári Törvénykönyv (2013. évi V. törvény)"
         price="2500"
       />
-      <InputCheckbox
+      <InputChboxPrice
         v-model="ltvSelected"
         name="ltvSelected"
         label="Lakástörvény (1993. évi LXXVIII. törvény)"
@@ -76,5 +76,5 @@ const items = [
         </div>
       </template>
     </UAccordion>
-  </div>
+  </section>
 </template>
