@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap items-center gap-x-2">
+  <div class="flex flex-wrap items-center -mt-[1px] gap-x-1">
     <slot name="label-start" />
     <slot />
     <slot name="label-end" />
