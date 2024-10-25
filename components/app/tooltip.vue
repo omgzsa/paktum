@@ -89,7 +89,7 @@ const tooltipLeft = () => {
         v-if="isHovered || isTooltipHovered"
         ref="floating"
         :style="floatingStyles"
-        class="z-50 px-6 py-5 space-y-4 shadow-md rounded-2xl md:max-w-xl bg-neutral-900 dark:border border-neutral-700"
+        class="z-50 px-6 py-5 space-y-4 leading-normal shadow-md rounded-2xl md:max-w-xl bg-neutral-900 dark:border border-neutral-700"
       >
         <slot name="content" />
       </div>
@@ -97,7 +97,7 @@ const tooltipLeft = () => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.15s ease;
