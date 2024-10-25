@@ -1,10 +1,3 @@
-<template>
-  <div v-if="shouldShow">
-    <slot />
-    <slot name="hint" />
-  </div>
-</template>
-
 <script setup>
 // This is a ref injected from FormWizard
 // clones the step index to get the step's index and advances it by 1 for the next step
@@ -18,3 +11,10 @@ const shouldShow = computed(() => {
   return currentIdx === formStepIdx.value;
 });
 </script>
+
+<template>
+  <div v-if="shouldShow">
+    <slot />
+    <slot name="hint" />
+  </div>
+</template>
