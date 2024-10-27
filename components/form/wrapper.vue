@@ -103,9 +103,9 @@ function goToPrev() {
       </button>
     </div>
 
-    <ClientOnly>
+    <!-- <ClientOnly>
       <pre wrap class="pb-10">{{ values }}</pre>
-    </ClientOnly>
+    </ClientOnly> -->
   </form>
 </template>
 
