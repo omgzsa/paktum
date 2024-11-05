@@ -15,7 +15,7 @@ const items = [
 </script>
 
 <template>
-  <section>
+  <section class="">
     <QuestionBlock
       title="Az alábbi háttérjogszabályok szövegét kérem a bérleti szerződésembe"
       sub-text=""
@@ -36,7 +36,7 @@ const items = [
     </QuestionBlock>
 
     <UAccordion :items="items" class="max-w-2xl mx-auto">
-      <template #default="{ item, index, open }">
+      <template #default="{ item, open }">
         <UButton
           color="gray"
           variant="ghost"

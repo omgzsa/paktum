@@ -42,7 +42,7 @@ const updateQuestions = (
 </script>
 
 <template>
-  <section class="space-y-4">
+  <section class="">
     <!-- Q12 - 1/6 -->
     <QuestionBlock
       title="Bérlő kárfelelőssége az okozott károkért"
@@ -129,7 +129,7 @@ const updateQuestions = (
     >
       <template #hint>
         <AppTooltip
-          class="ml-auto -mt-2 -mb-2 sm:-mt-6 lg:-mt-8"
+          class="ml-auto -mb-2 md:-mt-4"
           :width="300"
           label="§ Kellékszavatosság"
         >
@@ -169,9 +169,9 @@ const updateQuestions = (
     >
       <template #hint>
         <AppTooltip
-          class="ml-auto -mt-2 -mb-2 sm:-mt-6 lg:-mt-8"
           :width="300"
           label="§ Jogszavatosság"
+          class="ml-auto -mb-2 md:-mt-4"
         >
           <template #content>
             <p class="text-xs font-normal tracking-wide text-neutral-100">
@@ -211,9 +211,9 @@ const updateQuestions = (
     >
       <template #hint>
         <AppTooltip
-          class="ml-auto -mt-2 -mb-2 sm:-mt-6 lg:-mt-8"
           :width="300"
           label="§ Zálogjog"
+          class="ml-auto -mb-2 md:-mt-4"
         >
           <template #content>
             <p class="text-xs font-normal tracking-wide text-neutral-100">

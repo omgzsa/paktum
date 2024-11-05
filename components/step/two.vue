@@ -2,7 +2,7 @@
 import { useContractStore } from '@/stores/contract';
 
 const contractStore = useContractStore();
-const { questions } = storeToRefs(contractStore);
+// const { questions } = storeToRefs(contractStore);
 const { getQuestion, addQuestion } = contractStore;
 
 const createValue = (questionId: number) => computed({
@@ -40,7 +40,7 @@ const updateQuestions = (optionId: string, questionId: number, optionParams?: st
 </script>
 
 <template>
-  <section class="space-y-4">
+  <section class="">
     <AppTooltip :width="300" :cross-axis="-10" label="Ezt jó ha tudod!">
       <template #content>
         <h5 class="pb-2 text-white border-b border-b-neutral-400">
@@ -164,9 +164,9 @@ const updateQuestions = (optionId: string, questionId: number, optionParams?: st
     >
       <template #hint>
         <AppTooltip
-          class="ml-auto -mt-2 -mb-2 sm:-mt-6 lg:-mt-8"
           :width="300"
           label="A késedelmi kamat"
+          class="ml-auto -mb-2 md:-mt-2 lg:-mt-4"
         >
           <template #content>
             <p class="text-xs font-normal tracking-wide text-neutral-100">

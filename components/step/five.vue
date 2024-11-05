@@ -65,7 +65,7 @@ const updateQuestionsWithTwoParams = (
 </script>
 
 <template>
-  <section class="space-y-4">
+  <section class="">
     <!-- Q26 - 1/8 -->
     <QuestionBlock
       title="A felmondás írásbelisége"
@@ -104,9 +104,9 @@ const updateQuestionsWithTwoParams = (
     >
       <template #hint>
         <AppTooltip
-          class="ml-auto -mt-2 -mb-2 sm:-mt-8"
           :width="300"
           label="§ Rendkívüli felmondás"
+          class="ml-auto -mb-2 md:-mt-4"
         >
           <template #content>
             <p class="text-xs font-normal tracking-wide text-neutral-100">

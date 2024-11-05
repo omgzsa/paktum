@@ -2,7 +2,7 @@
 import { useContractStore } from '@/stores/contract';
 
 const contractStore = useContractStore();
-const { questions } = storeToRefs(contractStore);
+// const { questions } = storeToRefs(contractStore);
 const { getQuestion, addQuestion } = contractStore;
 
 const createValue = (questionId: number) => computed({
@@ -119,7 +119,7 @@ const handleCombinedUpdate = (
 </script>
 
 <template>
-  <section class="space-y-4">
+  <section class="">
     <!-- Q15 - 1/8 -->
     <QuestionBlock
       title="Karbantartási kötelezettség"
@@ -222,13 +222,13 @@ const handleCombinedUpdate = (
       sub-text="A Bérbeadó a Bérlemény hibáit"
       placement="4/8."
       :bordered="true"
-      class="pb-0"
+      class="mb-4"
     >
       <template #hint>
         <AppTooltip
-          class="mt-2 ml-auto -mb-2 sm:-mt-2 lg:-mt-4"
           :width="300"
           label="Ezt jó, ha tudod!"
+          class="ml-auto -mb-2 md:-mt-2 lg:-mt-4"
         >
           <template #content>
             <p class="text-xs font-normal tracking-wide text-neutral-100">
@@ -262,7 +262,7 @@ const handleCombinedUpdate = (
       sub-text="Ha a Bérbeadó a Bérlemény azonnali beavatkozást nem igénylő hibáit nem javítja ki"
       placement="5/8."
       :bordered="true"
-      class="pb-0"
+      class=""
     >
       <InputRadioBase
         v-model="Q21Value"
