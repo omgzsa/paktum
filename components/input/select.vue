@@ -34,9 +34,9 @@ watch(value, (newValue) => {
       {{ props.label }}
     </label>
     <USelectMenu 
-      v-model="value" 
+      v-slot="{ open }" 
+      v-model="value"
       :options="options"
-      v-slot="{ open }"
       :ui="{
         background: 'bg-white dark:bg-neutral-900',
       }"

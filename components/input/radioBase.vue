@@ -5,10 +5,10 @@ const props = defineProps<{
   modelValue: string;
   name: string;
   label: string;
-  optionId: string;
-  questionId: number;
+  optionId?: string;
+  questionId?: number;
   isDefault?: boolean;
-}>()
+}>();
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -31,14 +31,14 @@ const emitValues = () => {
         label="§"
         text="Jogszabályi alapállapot"
       />
-      <div class="w-5 h-5 xs:w-6 xs:h-6" v-else></div>
+      <div v-else class="w-5 h-5 xs:w-6 xs:h-6"/>
       <label
         :for="props.optionId"
         class="flex items-start gap-1.5 xs:gap-3 cursor-pointer"
       >
         <InputRadio
-          v-model="value"
           :id="props.optionId"
+          v-model="value"
           :name="props.name"
           :option-id="props.optionId"
           @change="emitValues"

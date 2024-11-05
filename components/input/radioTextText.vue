@@ -79,7 +79,7 @@ const isDisabled = computed(() => value.value !== props.optionId);
       label="§"
       text="Jogszabályi alapállapot"
     />
-    <div class="w-5 h-5 xs:w-6 xs:h-6" v-else></div>
+    <div v-else class="w-5 h-5 xs:w-6 xs:h-6"/>
     <label
       :for="props.optionId"
       class="flex items-start gap-1.5 xs:gap-3 cursor-pointer"
@@ -96,7 +96,6 @@ const isDisabled = computed(() => value.value !== props.optionId);
         </template>
         <input
           v-model="textValue"
-          @input="handleInput"
           :disabled="isDisabled"
           type="number"
           :placeholder="props.placeholder"
@@ -106,13 +105,13 @@ const isDisabled = computed(() => value.value !== props.optionId);
           :style="{ width: `${props.width}px` }"
           class="mx-1 inline flex-wrap h-[22px] transition-all border-none ring-1 focus:ring-paktum-500 md:px-2 md:pb-1.5 hover:border-neutral-950 focus:border-paktum-500 font-bold text-xs md:text-sm dark:bg-neutral-800 dark:text-neutral-100"
           :class="{ 'cursor-not-allowed opacity-50': isDisabled }"
-        />
+          @input="handleInput"
+        >
         <p v-for="(w, index) in labelCenterArray" :key="index" class="text-xs md:text-sm">
           {{ w }}
         </p>
         <input
           v-model="textValueTwo"
-          @input="handleInput"
           :disabled="isDisabled"
           type="number"
           :placeholder="props.placeholder2"
@@ -122,7 +121,8 @@ const isDisabled = computed(() => value.value !== props.optionId);
           :style="{ width: `${props.width}px` }"
           class="mx-1 inline flex-wrap h-[22px] transition-all border-none ring-1 focus:ring-paktum-500 md:px-2 md:pb-1.5 hover:border-neutral-950 focus:border-paktum-500 font-bold text-xs md:text-sm dark:bg-neutral-800 dark:text-neutral-100"
           :class="{ 'cursor-not-allowed opacity-50': isDisabled }"
-        />
+          @input="handleInput"
+        >
         <template #label-end>
           <p v-for="(w, index) in labelEndArray" :key="index" class="text-xs md:text-sm">{{ w }}</p>
         </template>
