@@ -4,12 +4,13 @@ export const useContractStore = defineStore('contract', () => {
 
   const subjectProperty = ref({
     subjectPropertyId: 0,
-    parcelNumber: "738291HU",
-    country: "Magyarország",
+    parcelNumber: "",
+    country: "",
     zipCode: "",
     city: "",
     address: "",
     size: '',
+    independentHouse: false,
     hasFurniture: false,
     inventoryDocument: false,
     numberOfKeys: 2,
@@ -318,7 +319,7 @@ export const useContractStore = defineStore('contract', () => {
   const contractReConfirmationDays = ref(0);
 
   const damageReport = ref(false);
-  const notarialDocumentCostForOwner = ref("Bérlő");
+  const notarialDocumentCostForOwner = ref("");
   const energeticCertificateRequired = ref(false);
   const condominiumFoundingDocument = ref(false);
   const orgRules = ref(false);
