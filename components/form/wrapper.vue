@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useForm } from 'vee-validate';
-import { useRouter, useRoute } from 'vue-router';
 
 const props = defineProps({
   validationSchema: {
@@ -66,34 +65,45 @@ function goToPrev() {
 
 
 <template>
-  <form @submit="onSubmit" class="mx-auto">
+  <form class="mx-auto" @submit="onSubmit">
     <TransitionGroup
       :name="transitionDirection === 'forward' ? 'slide-forward' : 'slide-backward'"
     >
       <slot />
     </TransitionGroup>
 
-    <div class="flex items-center py-10 justify-evenly">
+    <div class="flex items-center py-10 pt-16 justify-evenly">
       <button
-        class="flex items-center px-5 py-2 text-sm font-bold transition-all rounded-md group hover:shadow-md text-neutral-200 bg-neutral-900 hover:ring-0 ring-1 ring-neutral-900 hover:bg-accent-100"
         v-if="hasPrevious"
+        class="flex items-center px-5 py-2 text-sm font-bold transition-all rounded-md group hover:shadow-md text-neutral-200 bg-neutral-900 hover:ring-0 ring-1 ring-neutral-900 hover:bg-accent-100"
+        title="Előző"
         type="button"
         @click="goToPrev"
       >
-      <Icon name="i-heroicons-chevron-double-left-16-solid" class="w-5 h-5 mr-2 transition transform group-hover:-translate-x-0.5" /> Előző
+        <Icon 
+          name="i-heroicons-chevron-double-left-16-solid" 
+          class="w-5 h-5 mr-2 transition transform group-hover:-translate-x-0.5"
+        /> 
+        Előző
       </button>
 
       <button
-        class="flex items-center px-5 py-2 text-sm font-bold transition-all rounded-md group hover:shadow-md text-dark-300 hover:ring-0 ring-1 ring-paktum-500 bg-paktum-500 hover:bg-accent-100"
         v-if="!isLastStep"
+        class="flex items-center px-5 py-2 text-sm font-bold transition-all rounded-md group hover:shadow-md text-dark-300 hover:ring-0 ring-1 ring-paktum-500 bg-paktum-500 hover:bg-accent-100"
+        title="Következő"
         type="submit"
       >
-        Következő <Icon name="i-heroicons-chevron-double-right-16-solid" class="w-5 h-5 ml-2 transition transform group-hover:translate-x-0.5" />
+        Következő 
+        <Icon 
+          name="i-heroicons-chevron-double-right-16-solid" 
+          class="w-5 h-5 ml-2 transition transform group-hover:translate-x-0.5"
+        />
       </button>
 
       <button
-        class="text-xl font-medium transition-all hover:underline text-dark-300 hover:text-orange-600 underline-offset-4"
         v-if="isLastStep"
+        class="text-xl font-medium transition-all hover:underline text-dark-300 hover:text-orange-600 underline-offset-4"
+        :title="isSubmitting ? 'Fizetés folyamatban' : 'Fizetés'"
         type="submit"
       >
         <span v-if="isSubmitting">
@@ -103,15 +113,80 @@ function goToPrev() {
       </button>
     </div>
 
-    <!-- <ClientOnly>
-      <pre wrap class="pb-10">{{ values }}</pre>
-    </ClientOnly> -->
+    <ClientOnly>
+      <pre wrap class="text-[11px]">{{ values }}</pre>
+    </ClientOnly>
   </form>
 </template>
 
 <style>
-.slide-forward-enter-active,
+@keyframes slideInForward {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutForward {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+@keyframes slideInBackward {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutBackward {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+
+.slide-forward-enter-active {
+  animation: slideInForward 0.3s ease forwards;
+}
+
 .slide-forward-leave-active {
+  animation: slideOutForward 0.3s ease forwards;
+}
+
+.slide-backward-enter-active {
+  animation: slideInBackward 0.3s ease forwards;
+}
+
+.slide-backward-leave-active {
+  animation: slideOutBackward 0.3s ease forwards;
+}
+
+
+/* .slide-forward-enter-active,
+.slide-forward-leave-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   transition: all 0.25s ease;
 }
 
@@ -127,6 +202,10 @@ function goToPrev() {
 
 .slide-backward-enter-active,
 .slide-backward-leave-active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   transition: all 0.25s ease;
 }
 
@@ -138,5 +217,5 @@ function goToPrev() {
 .slide-backward-leave-to {
   opacity: 0;
   transform: translateX(20px);
-}
+} */
 </style>

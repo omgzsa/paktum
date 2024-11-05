@@ -2,12 +2,18 @@
 import { useFloating, offset, flip, shift, size } from '@floating-ui/vue';
 
 const props = defineProps({
-  label: String,
+  label: {
+    type: String,
+    default: 'Tooltip',
+  },
   width: {
     type: [String, Number],
     default: 'auto',
   },
-  crossAxis: Number,
+  crossAxis: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const isHovered = ref(false);
@@ -64,12 +70,12 @@ const tooltipLeft = () => {
 </script>
 
 <template>
-  <div>
+  <div class="-mb-4">
     <span
-      @mouseenter="showTooltip"
-      @mouseleave="hideTooltip"
       ref="reference"
       class="inline-flex items-center text-sm font-semibold underline transition cursor-default hover:transition-transform hover:transform hover:scale-105 group hover:underline-offset-2 decoration-neutral-400 hover:decoration-neutral-950 dark:hover:decoration-neutral-200"
+      @mouseenter="showTooltip"
+      @mouseleave="hideTooltip"
     >
       <Icon
         name="heroicons:light-bulb"
@@ -84,12 +90,12 @@ const tooltipLeft = () => {
     </span>
     <Transition name="fade">
       <div
-        @mouseenter="tooltipHovered"
-        @mouseleave="tooltipLeft"
         v-if="isHovered || isTooltipHovered"
         ref="floating"
         :style="floatingStyles"
         class="z-50 px-6 py-5 space-y-4 leading-normal shadow-md rounded-2xl md:max-w-xl bg-neutral-900 dark:border border-neutral-700"
+        @mouseenter="tooltipHovered"
+        @mouseleave="tooltipLeft"
       >
         <slot name="content" />
       </div>

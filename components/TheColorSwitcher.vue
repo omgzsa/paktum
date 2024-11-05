@@ -17,8 +17,8 @@ const isDark = computed({
       color="gray"
       variant="ghost"
       aria-label="Theme"
-      @click="isDark = !isDark"
       class="ml-auto"
+      @click="isDark = !isDark"
     />
     <template #fallback>
       <div class="w-8 h-8" />
