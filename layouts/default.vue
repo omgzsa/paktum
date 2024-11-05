@@ -3,11 +3,15 @@
 </script>
 
 <template>
-  <div>
-    <p class="text-center">default layout</p>
+  <UContainer as="div">
     <header>
       <NavDesktop />
     </header>
-    <slot />
-  </div>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      // DEFAULT FOOTER
+    </footer>
+  </UContainer>
 </template>
