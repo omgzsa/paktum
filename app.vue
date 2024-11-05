@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="transition-all">
+  <div>
     <NuxtLoadingIndicator
       color="repeating-linear-gradient(to right,#6de8b4 0%,#10d38d 50%,#037955 100%)"
     />
@@ -14,23 +14,23 @@
   </div>
 </template>
 
-<style scoped>
-/* .page-enter-active,
+<style>
+.page-enter-active,
 .page-leave-active {
   transition: all 0.2s;
 }
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
-  filter: blur(0.25rem);
-} */
+  filter: blur(0.2rem);
+}
 
-.layout-enter-active,
+/* .layout-enter-active,
 .layout-leave-active {
   transition: all 0.4s;
 }
 .layout-enter-from,
 .layout-leave-to {
   filter: grayscale(1);
-}
+} */
 </style>
