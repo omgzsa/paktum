@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "paktum-app",
   "private": true,
   "type": "module",
   "scripts": {
@@ -7,7 +7,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@floating-ui/vue": "^1.1.5",
@@ -19,6 +21,8 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@formkit/auto-animate": "^0.8.2",
+    "@nuxt/eslint": "^0.6.1",
     "@nuxt/image": "^1.7.0",
     "@nuxt/ui": "^2.17.0",
     "@nuxtjs/google-fonts": "^3.2.0",
