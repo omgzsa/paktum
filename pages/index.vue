@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <UContainer class="pt-10">
+  <section>
     <h1>Kösd meg bérleti szerződésed otthonról, gyorsan, egyszerűen</h1>
     <h2>Lorem ipsum dolor sit ame</h2>
     <h3>Válaszd ki a szerződés típusát</h3>
@@ -14,5 +14,5 @@
       függ, hogy a törvényi rendelkezésektől eltérhetsz-e, és ha igen, milyen
       irányba.
     </p>
-  </UContainer>
+  </section>
 </template>
