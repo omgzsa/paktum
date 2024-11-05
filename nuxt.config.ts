@@ -2,8 +2,8 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   app: {
-    // pageTransition: { name: 'page', mode: 'out-in' }
-    layoutTransition: { name: 'layout', mode: 'out-in' },
+    pageTransition: { name: 'page', mode: 'out-in' },
+    // layoutTransition: { name: 'layout', mode: 'out-in' },
   },
 
   runtimeConfig: {
@@ -28,6 +28,8 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vee-validate/nuxt',
     '@pinia/nuxt',
+    '@formkit/auto-animate',
+    "@nuxt/eslint"
   ],
 
   googleFonts: {
