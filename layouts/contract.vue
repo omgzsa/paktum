@@ -3,7 +3,10 @@ import { useForm } from 'vee-validate';
 import { schemas } from '@/utils/schemas';
 
 const router = useRouter();
-const currentStep = ref(1);
+const route = useRoute();
+
+// Extract the step from route.fullPath (e.g., "/berletiv2/lepes/3")
+const currentStep = ref(parseInt(route.fullPath.split('/').pop() as string) || 1);
 const currentSchema = ref(schemas[currentStep.value - 1]);
 
 const { values, handleSubmit, isSubmitting } = useForm({
@@ -13,8 +16,10 @@ const { values, handleSubmit, isSubmitting } = useForm({
 
 provide('currentStep', currentStep);
 
-watch(currentStep, (newStep) => {
-  currentSchema.value = schemas[newStep - 1] || schemas[0];
+// Watch for changes in the route to update currentStep
+watch(() => route.fullPath, (newPath) => {
+  const newStep = parseInt(newPath.split('/').pop() as string);
+  currentStep.value = newStep || 1;
 });
 
 function validateAndGo(step: number | null) {
@@ -31,28 +36,29 @@ function validateAndGo(step: number | null) {
 }
 </script>
 
+
 <template>
-  <UContainer as="div">
+  <UContainer as="div" class="py-4 space-y-8">
     <header>
       <NavDesktop />
     </header>
 
-    <main class="py-8">
-      <p class="text-[10px] leading-tight">
-        {{ values }}
-      </p>
+    <main class="relative">
       <form>
         <slot />
       </form>
-    </main>
 
-    <FormControls
-      :has-previous="currentStep > 1"
-      :is-last-step="currentStep === schemas.length"
-      :is-submitting="isSubmitting"
-      :current-step="currentStep"
-      @validate-and-go="validateAndGo"
-    />
+      <FormControls
+        :has-previous="currentStep > 1"
+        :is-last-step="currentStep === schemas.length"
+        :is-submitting="isSubmitting"
+        :current-step="currentStep"
+        @validate-and-go="validateAndGo"
+      />
+      <!-- <pre wrap class="text-[10px] leading-tight fixed right-0 top-20 w-60">
+        {{ values }}
+      </pre> -->
+    </main>
 
     <footer>
       <!-- footer content -->
