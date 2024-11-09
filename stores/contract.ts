@@ -1,3 +1,12 @@
+interface Question {
+  questionId: number,
+  questionSelectedOptionIdentifier: string,
+  optionParameters?: Array<{ 
+    optionParameterId?: number, 
+    parameter?: string | number | undefined
+  }>
+};
+
 export const useContractStore = defineStore('contract', () => {
   const contractId = ref(0);
   const userId = ref(1);
@@ -11,7 +20,9 @@ export const useContractStore = defineStore('contract', () => {
     address: "",
     size: '',
     independentHouse: false,
+    condominiumApartment: false,
     hasFurniture: false,
+    noFurniture: false,
     inventoryDocument: false,
     numberOfKeys: 2,
     smokingPermitted: false,
@@ -21,6 +32,13 @@ export const useContractStore = defineStore('contract', () => {
     propertyEmptied: false,
     propertyCleaned: false,
     propertyFurnituredByOwner: false,
+    streetName: '',
+    houseNumber: '',
+    building: '',
+    staircase: '',
+    floor: '',
+    door: '',
+    publicAreaType: '',
   });
 
   const contractStartDate = ref("2024-06-21T19:43:14.217Z");
@@ -76,25 +94,19 @@ export const useContractStore = defineStore('contract', () => {
   ]);
 
   const paymentDetail = ref({
+    isPreviousMonth: false,
+    isCurrentMonth: false,
     paymentDetailId: 0,
-    rentingFee: 200000,
-    paymentDeadlineDay: 15,
+    rentingFee: 0,
+    paymentDeadlineDay: 1,
     bankName: "K&H Bank",
     accountNumber: "12345678-12345678-12345678",
     cash: false,
+    transfer: false,
     firstPaymentDate: "2024-06-21T19:43:14.217Z",
-    paymentCurrency: "EUR",
+    paymentCurrency: "Magyar Forint (HUF)",
     paymentDocument: false,
   });
-
-  interface Question {
-    questionId: number,
-    questionSelectedOptionIdentifier: string,
-    optionParameters?: Array<{ 
-      optionParameterId?: number, 
-      parameter?: string | number | undefined
-    }>
-  };
 
   const questions = ref<Array<Question>>([
     {
@@ -279,8 +291,8 @@ export const useContractStore = defineStore('contract', () => {
   const indexing = ref({
     indexingId: 0,
     contractId: 0,
-    indexingType: "EUR",
-    indexingNotifyDate: "04.15.",
+    indexingType: "",
+    indexingNotifyDate: new Date(),
   });
 
   const ptkSelected = ref(false)
@@ -307,6 +319,7 @@ export const useContractStore = defineStore('contract', () => {
     bankAccount: "string",
     cash: false,
     paymentDocument: false,
+    depositChangeIfAgainstContract: false,
     depositPaybackDays: 0,
     depositRefillDays: 0,
     contractTerminationPossibleOnNoRefill: false,
@@ -328,6 +341,8 @@ export const useContractStore = defineStore('contract', () => {
   const moveOut = ref(false);
   const paymentObligation = ref(false);
   const presumptionOfDelivery = ref(false);
+
+  // GETTERS
   
   // ACTIONS
   const addQuestion = (
@@ -350,7 +365,6 @@ export const useContractStore = defineStore('contract', () => {
       });
     }
   };
-
   const getQuestion = (questionId: number) => {
     const question = questions.value.find(q => q.questionId === questionId);
 
