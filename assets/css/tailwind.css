@@ -1,10 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --header-height: 10vh;
+    --footer-height: 15vh;
+  }
 
   html,
   body,
@@ -12,12 +16,29 @@
     @apply min-h-screen overflow-y-visible;
   }
 
+  /* header {
+    position: fixed;
+    height: var(--header-height)
+  }
+
+  main {
+    height: calc(100vh - var(--header-height) - var(--footer-height));
+    margin-top: var(--header-height);
+    margin-bottom: var(--footer-height);
+  }
+
+  footer {
+    position: fixed;
+    height: var(--footer-height);
+    bottom: 0;
+  } */
+
   img {
     @apply block w-full;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply text-neutral-900 dark:text-white;
+    @apply text-neutral-900 dark:text-neutral-200;
   }
 
   h1 {
@@ -38,18 +59,18 @@
 
   h1,
   h2 {
-    @apply font-bold leading-tight;
+    @apply font-bold leading-tight tracking-wide;
   }
 
   h3,
   h4 {
-    @apply font-medium leading-tight;
+    @apply font-medium leading-tight tracking-wide;
   }
 
   a,
   p,
   li {
-    @apply text-xs font-normal leading-snug tracking-normal text-neutral-900 sm:text-sm md:text-base dark:text-neutral-200;
+    @apply text-xs font-normal leading-relaxed tracking-normal text-neutral-900 sm:text-sm md:text-base dark:text-neutral-300;
   }
 
     /* FORM STYLING */
@@ -87,25 +108,12 @@
       @apply text-xs font-semibold text-gray-400;
     }
 
-    [type='checkbox'] {
-      /* no extra styles yet */
+    input[type='checkbox'] {
+      @apply mt-0.5 xs:mt-0 md:mt-0.5 relative w-3 sm:w-3.5 h-3 sm:h-3.5 transition-all border-none rounded-sm shadow appearance-none cursor-pointer ring-2 hover:shadow-md dark:ring-neutral-600 ring-neutral-600 checked:ring-paktum-400 dark:checked:ring-paktum-400 dark:bg-neutral-800 checked:bg-paktum-500 dark:checked:bg-paktum-500 hover:checked:bg-paktum-500 hover:ring-paktum-500 dark:hover:ring-paktum-500 focus:ring-paktum-500 focus:checked:bg-paktum-500;
     }
 
-    [type='radio'] {
-      @apply bg-white dark:bg-neutral-800;
-    }
-  
-    .app-input-wrapper {
-      @apply relative;
-    }
-  
-    .app-input-wrapper > .app-input-label,
-    .app-input-wrapper > label {
-      @apply pb-1 text-sm font-normal tracking-wide;
-    }
-  
-    .app-input-wrapper > span[role='alert'] {
-      @apply absolute block pt-1 text-sm font-medium text-red-500 bg-white;
+    input[type='radio'] {
+      @apply mt-0.5 xs:mt-0 md:mt-0.5 relative w-3 sm:w-3.5 h-3 sm:h-3.5 transition-all border-none shadow appearance-none cursor-pointer ring-2 hover:shadow-md dark:ring-neutral-600 ring-neutral-600 checked:ring-paktum-400 dark:checked:ring-paktum-400 dark:bg-neutral-800 checked:bg-paktum-500 dark:checked:bg-paktum-500 hover:checked:bg-paktum-500 hover:ring-paktum-500 dark:hover:ring-paktum-500 focus:ring-paktum-500 focus:checked:bg-paktum-500;
     }
 }
 
