@@ -13,11 +13,11 @@ defineProps({
 
 <template>
   <div
-    class="relative flex flex-col max-w-2xl px-2 py-4 mx-auto space-y-5 border-b xs:py-5 xs:px-4 md:px-5 lg:px-7 md:py-7 lg:py-9 border-b-neutral-200"
-    :class="{ 'border rounded-md bg-neutral-100/90 z-0 border-neutral-500 border-b-neutral-500 dark:bg-neutral-800' : bordered }"
+    class="relative flex flex-col max-w-2xl px-2 py-4 mx-auto space-y-5 border-b xs:py-5 xs:px-4 md:px-5 lg:px-7 md:py-7 lg:py-9 border-b-neutral-200 dark:border-b-neutral-600"
+    :class="{ 'border rounded-md bg-neutral-100/90 z-0 border-neutral-500 border-b-neutral-500 dark:bg-neutral-900' : bordered }"
   >
     <slot name="hint" />
-    <h2 class="flex items-center justify-between gap-2">
+    <h2 v-if="title" class="flex items-center justify-between gap-2">
       <div>
         <span>{{ placement }}</span> {{ title }}
       </div>
@@ -25,7 +25,7 @@ defineProps({
         {{ price }}
       </div>
     </h2>
-    <p v-if="subText" class="">{{ subText }}</p>
+    <p v-if="subText">{{ subText }}</p>
     <div class="space-y-3">
       <slot />
     </div>
