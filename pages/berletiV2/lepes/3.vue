@@ -352,14 +352,14 @@ const handleCombinedUpdate = (
         option-id="Q20O2"
         name="Q20"
         is-default
-        label="a bérleti díj erre az időre nem jár, vagy felajánlott cserelakásként a Bérlő  kevesebb szobaszámú, alacsonyabb komfortfokozatú lakást köteles elfogadni."
+        label="a bérleti díj erre az időre nem jár, vagy felajánlott cserelakásként a Bérlő kevesebb szobaszámú, alacsonyabb komfortfokozatú lakást köteles elfogadni."
       />
       <InputRadioBase
         v-model="Q20Value"
         :question-id="17"
         option-id="Q20O3"
         name="Q20"
-        label="a bérleti díj továbbra is minden esetben jár, felajánlott cserelakásként a Bérlő  kevesebb szobaszámú, alacsonyabb komfortfokozatú lakást köteles elfogadni."
+        label="a bérleti díj továbbra is minden esetben jár, felajánlott cserelakásként a Bérlő kevesebb szobaszámú, alacsonyabb komfortfokozatú lakást köteles elfogadni."
       />
     </QuestionBlock>
   </section>

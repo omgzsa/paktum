@@ -47,7 +47,7 @@ const updateQuestions = (optionId: string, questionId: number, optionParams?: st
   <section class="max-w-2xl mx-auto">
     <AppTooltip :width="300" :cross-axis="-10" label="Ezt jó ha tudod!">
       <template #content>
-        <h5 class="pb-2 text-white border-b border-b-neutral-400">
+        <h5 class="pb-2 text-white border-b dark:text-neutral-900 border-b-neutral-400">
           Eltérések a válaszokban
         </h5>
         <p class="text-xs font-normal tracking-wide text-neutral-200">

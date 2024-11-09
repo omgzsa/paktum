@@ -1,18 +1,19 @@
 <script lang="ts" setup>
 import { useContractStore } from '@/stores/contract';
 
+const contractStore = useContractStore();
+const { 
+  subjectProperty, 
+  condominiumFoundingDocument, 
+  orgRules, 
+  houseRules 
+} = storeToRefs(contractStore);
+
 definePageMeta({
   layout: 'contract',
 });
 
-// 1/3. BÉRLEMÉNY ADATAI
-const streetName = ref('');
-const houseNumber = ref('');
-const building = ref('');
-const staircase = ref('');
-const floor = ref('');
-const door = ref('');
-const kozteruletek = ref([
+const publicAreaTypes = ref([
   'utca', 
   'tér', 
   'út', 
@@ -32,24 +33,23 @@ const kozteruletek = ref([
   'telep', 
   'sziget'
 ]);
-const kozteruletJellege = ref<string>(kozteruletek.value[0]);
 
 const concatAddress = computed(() => {
-  const street = `${streetName.value} ${kozteruletJellege.value} `;
-  const houseN = `${houseNumber.value}., `;
-  const buildingN = building.value ? `${building.value}. épület, ` : '';
-  const staircaseN = staircase.value ? `${staircase.value}. lépcsőház, ` : '';
-  const floorN = floor.value ? `${floor.value}.em./` : '';
-  const doorN = door.value ? `${door.value}.a.` : '';
+  const property = subjectProperty.value;
 
+  const street = `${property.streetName} ${property.publicAreaType} `;
+  const houseN = `${property.houseNumber}., `;
+  const buildingN = property.building ? `${property.building}. épület, ` : '';
+  const staircaseN = property.staircase ? `${property.staircase}. lépcsőház, ` : '';
+  const floorN = property.floor ? `${property.floor}.em./` : '';
+  const doorN = property.door ? `${property.door}.a.` : '';
 
-  // filter values that are not noFurniture
   const address = [street, houseN, buildingN, staircaseN, floorN, doorN].filter((value) => value !== '').join('');
 
   return address;
 });
-const measure = 'm2';
 
+const measure = 'm2';
 const formattedMeasure = computed(() => {
   return {
     base: measure.slice(0, -1),
@@ -58,27 +58,17 @@ const formattedMeasure = computed(() => {
 });
 
 // 2/3. INGATLAN TÍPUSA
-const condominiumApartment = ref(false);
-const docsVisible = ref(false);
+const docsVisible = useState('docsVisible', () => false);
 
 // 3/3. BÚTOROZOTTSÁG
-const noFurniture = ref(false);
 const annexLabel = 'Birtokbaadási jegyzőkönyv, állapotleírás és bútorleltár';
-const annexVisible = ref(false);
-
-const contractStore = useContractStore();
-const { 
-  subjectProperty, 
-  condominiumFoundingDocument, 
-  orgRules, 
-  houseRules 
-} = storeToRefs(contractStore);
+const annexVisible = useState('annexVisible', () => false);
 
 watch(concatAddress, (newValue) => {
   subjectProperty.value.address = newValue;
 });
 
-watch(condominiumApartment, (newValue) => {
+watch(() => subjectProperty.value.condominiumApartment, (newValue) => {
   if (newValue) {
     docsVisible.value = true;
   } else {
@@ -86,8 +76,10 @@ watch(condominiumApartment, (newValue) => {
   }
 });
 
-watch(noFurniture, () => {
-  if (noFurniture.value) {
+watch(()=> subjectProperty.value.noFurniture, () => {
+  const hasNoFurniture = subjectProperty.value.noFurniture;
+  
+  if (hasNoFurniture) {
     subjectProperty.value.hasFurniture = false;
     annexVisible.value = false;
   }
@@ -133,41 +125,41 @@ watch(annexVisible, (newValue) => {
         name="subjectProperty.city"
       />
       <InputText
-        v-model="streetName"
+        v-model="subjectProperty.streetName"
         label="Közterület neve"
         name="subjectProperty.streetName"
       />
       <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
         <InputSelect
-          v-model="kozteruletJellege"
+          v-model="subjectProperty.publicAreaType"
           label="Közterület jellege"
-          :options="kozteruletek"
+          :options="publicAreaTypes"
           name="subjectProperty.streetType"
         />
         <InputText
-          v-model="houseNumber"
+          v-model="subjectProperty.houseNumber"
           label="Házszám"
           name="subjectProperty.houseNumber"
         />
         <InputText
-          v-model="building"
+          v-model="subjectProperty.building"
           label="Épület"
           name="subjectProperty.building"
         />
       </div>
       <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
         <InputText
-          v-model="staircase"
+          v-model="subjectProperty.staircase"
           label="Lépcsőház"
           name="subjectProperty.staircase"
         />
         <InputText
-          v-model="floor"
+          v-model="subjectProperty.floor"
           label="Emelet"
           name="subjectProperty.floor"
         />
         <InputText
-          v-model="door"
+          v-model="subjectProperty.door"
           label="Ajtó"
           name="subjectProperty.door"
         />
@@ -200,10 +192,10 @@ watch(annexVisible, (newValue) => {
         v-model="subjectProperty.independentHouse"
         name="subjectProperty.independentHouse"
         label="Önálló lakóépület"
-        @update:model-value="condominiumApartment = false"
+        @update:model-value="subjectProperty.condominiumApartment = false"
       />
       <InputRadioBool 
-        v-model="condominiumApartment"
+        v-model="subjectProperty.condominiumApartment"
         name="subjectProperty.condominiumApartment"
         label="Társasházi lakás"
         @update:model-value="subjectProperty.independentHouse = false"
@@ -244,7 +236,7 @@ watch(annexVisible, (newValue) => {
       class="question-block"
     >
       <InputRadioBool 
-        v-model="noFurniture"
+        v-model="subjectProperty.noFurniture"
         name="subjectProperty.noFurniture"
         label="Üres"
         @update:model-value="subjectProperty.hasFurniture = false"
@@ -254,7 +246,7 @@ watch(annexVisible, (newValue) => {
         name="subjectProperty.hasFurniture"
         label="Bútorozott"
         @update:model-value="() => {
-          noFurniture = false;
+          subjectProperty.noFurniture = false;
           annexVisible = true;
           subjectProperty.hasFurniture = true;
         }"
@@ -271,7 +263,7 @@ watch(annexVisible, (newValue) => {
       >
         <template #hint>
           <AppTooltip
-            class="ml-auto -mt-2 -mb-2 sm:-mt-4"
+            class="ml-auto -mt-2 -mb-2 sm:-mt-2 lg:-mt-4"
             :width="300"
             label="Mire jó ez a melléklet?"
           >

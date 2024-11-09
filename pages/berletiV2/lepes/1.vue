@@ -42,7 +42,7 @@ const items = [
     <UAccordion :items="items" class="max-w-2xl mx-auto">
       <template #default="{ item, open }">
         <UButton
-          color="gray"
+          color="white"
           variant="ghost"
           class="border-b border-gray-200 dark:border-gray-700"
           :ui="{ rounded: 'rounded-none', padding: { sm: 'py-3' } }"
@@ -62,7 +62,7 @@ const items = [
         <div class="py-3 space-y-4">
           <h4>A háttérjogszabály</h4>
           <p>
-            Ha a szerződés nem szabályoz egy kérdést, de a törvény igen, a
+            Ha a szerződés nem szabályoz egy kérdést, de a törvény igen, akkor a
             kérdésben a háttérjogszabály rendelkezéseit kell alkalmazni. Ha
             szerződéseddel akarsz szabályozni egy kérdéskört, a
             háttérjogszabálytól függ, hogy a törvénytől eltérhetsz-e, és ha
@@ -73,7 +73,7 @@ const items = [
             A lakáscélú bérleti szerződések háttérjogszabályai a Polgári
             Törvénykönyv és a Lakástörvény. A szerződésben a Polgári
             Törvénykönyvtől mindkét fél javára, viszont a Lakástörvénytől -
-            néhány kivételtől eltekintve - csak a Bérlő javára el lehet térni.
+            néhány kivételtől eltekintve - csak a Bérlő javára lehet eltérni.
             Ha szeretnéd, hogy a szerződésedben szerepeljen a jogszabályok
             szövege is, pipáld ki fentebb!
           </p>

@@ -209,7 +209,7 @@ const updateQuestions = (
 
     <!-- Q24 - 5/6 -->
     <QuestionBlock
-      title=" Bérlő kárfelelőssége az okozott károkért"
+      title="Bérlő kárfelelőssége az okozott károkért"
       sub-text="Ha a Bérleményben a Bérlő vagy a vele együttlakó kárt okoz"
       placement="5/6."
     >
