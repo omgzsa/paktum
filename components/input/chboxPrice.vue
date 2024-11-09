@@ -21,15 +21,17 @@ const { value, checked, handleChange, errorMessage } = useField(
 </script>
 
 <template>
-  <label class="flex items-start gap-2 text-xs sm:gap-3 sm:text-sm">
+  <label class="flex items-start gap-2 text-xs cursor-pointer sm:gap-3 sm:text-sm">
     <input
       v-model="value"
       :checked="checked"
       type="checkbox"
-      class="relative transition-all border-2 rounded-sm appearance-none cursor-pointer peer border-neutral-700 hover:border-neutral-950 checked:hover:bg-paktum-500 before:opacity-0 checked:border-paktum-500 checked:bg-paktum-500 hover:before:opacity-10 before:bg-paktum-500 checked:hover:before:opacity-0 focus:ring-2 focus:ring-paktum-500 focus:ring-opacity-50 ring-paktum-500 text-paktum-500"
+      class="mt-0.5"
       @change="handleChange"
     >
-    {{ label }}
+    <p class="text-xs md:text-sm">
+      {{ label }}
+    </p>
     <span
       v-if="price && checked === true"
       class="ml-auto text-xs italic text-neutral-700 dark:text-neutral-400"

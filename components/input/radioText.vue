@@ -87,7 +87,7 @@ const isDisabled = computed(() => value.value !== props.optionId);
           :max="props.max"
           :step="props.step"
           :style="{ width: `${props.width}px` }"
-          class="mx-1 inline flex-wrap h-[22px] transition-all border-none ring-1 focus:ring-paktum-500 md:px-2 md:pb-1.5 hover:border-neutral-950 focus:border-paktum-500 font-bold text-xs md:text-sm dark:bg-neutral-800 dark:text-neutral-100"
+          class="mx-1 inline flex-wrap h-[22px] transition-all border-none ring-1 focus:ring-paktum-500 md:px-2 md:pb-1.5 hover:border-neutral-950 focus:border-paktum-500 font-bold text-xs md:text-sm dark:bg-neutral-800 dark:text-neutral-100 dark:ring-neutral-600"
           :class="{ 'cursor-not-allowed opacity-50': isDisabled }"
           @input="handleInput"
           >

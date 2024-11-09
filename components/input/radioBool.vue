@@ -22,20 +22,32 @@ const emitValues = (e: Event) => {
 </script>
 
 <template>
-  <label
-    :for="props.name"
-    class="flex items-start gap-1.5 xs:gap-3 cursor-pointer"
-  >
-    <input
-      :id="props.name"
-      v-model="value"
-      :name="props.name"
-      :checked="props.modelValue"
-      :value="props.modelValue"
-      type="radio"
-      class="relative transition-all border-2 appearance-none cursor-pointer border-zinc-500 -z-10 peer checked:border-paktum-500 checked:bg-paktum-500 focus:ring-paktum-500 focus:ring-opacity-50 ring-paktum-500 text-paktum-500"
-      @change="emitValues"
+  <div>
+    <div
+      class="grid grid-cols-[auto_auto] items-start justify-start gap-1.5 xs:gap-3 text-left"
     >
-    <p class="text-xs md:text-sm">{{ props.label }}</p>
-  </label>
+      <InputTooltip
+        v-if="false"
+        label="§"
+        text="Jogszabályi alapállapot"
+      />
+      <div class="w-5 h-5 xs:w-6 xs:h-6"/>
+      <label
+        :for="props.name"
+        class="flex items-start gap-1.5 xs:gap-3 cursor-pointer"
+      >
+        <input
+          :id="props.name"
+          v-model="value"
+          :name="props.name"
+          :checked="props.modelValue"
+          :value="props.modelValue"
+          type="radio"
+          class=""
+          @change="emitValues"
+        >
+        <p class="text-xs md:text-sm">{{ props.label }}</p>
+      </label>
+    </div>
+  </div>
 </template>

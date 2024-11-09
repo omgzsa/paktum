@@ -17,7 +17,7 @@ const { value, errorMessage } = useField<string>(props.name || '', undefined, {
 });
 
 const emitValues = () => {
-  emit('update:modelValue', value.value);
+  emit('update:modelValue', value.value as string);
 };
 </script>
 
