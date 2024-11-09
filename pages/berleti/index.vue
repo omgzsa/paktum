@@ -1,10 +1,4 @@
 <script lang="ts" setup>
-/**
- * ÖTLET:
- * jelzés, hogy vegye elő az iratait
- * szig, lkck, tulajdonilap, stb..
- * jelmagyarázat
- */
 // import StepOne from '@/components/step/one.vue';
 // import StepTwo from '@/components/step/two.vue';
 // import StepThree from '@/components/step/three.vue';
@@ -24,7 +18,7 @@ import { schemas } from '@/utils/schemas.js';
 /**
  * Only Called when the last step is submitted
  */
- function onSubmit(formData: any) {
+ function onSubmit(formData: Record<string, unknown>) {
   console.log(JSON.stringify(formData, null, 2));
 };
 </script>
