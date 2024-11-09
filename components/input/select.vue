@@ -4,12 +4,19 @@ import { useField } from 'vee-validate';
 const props = defineProps<{
   name: string,
   modelValue: string | number,
-  options: string[],
+  options: string[] | { value: string, label: string }[],
   label?: string,
   placeholder?: string,
   disabled?: boolean,
 }>();
 
+// if options is an array of object return the label concatenated with the value as a string: label (value)
+const options = props.options.map((option) => {
+  if (typeof option === 'object') {
+    return `${option.label} (${option.value})`;
+  }
+  return option;
+});
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -40,9 +47,12 @@ watch(value, (newValue) => {
       :ui="{
         background: 'bg-white dark:bg-neutral-900',
       }"
-      class="w-full pr-1 sm:w-28"
+      class="w-full mr-1 sm:min-w-28"
     >
-      <UButton color="white" variant="outline" class="justify-between flex-1 py-[2.25px] text-xs font-bold transition-all border-0 border-none rounded-md shadow-sm ring-1 focus:ring-paktum-500 hover:border-neutral-950 focus:border-paktum-500 md:text-sm dark:bg-neutral-800 dark:text-neutral-100 text-neutral-900 ring-inset ring-gray-300 placeholder:text-gray-400 hover:bg-none focus:ring-2 focus:ring-inset">
+      <UButton 
+        color="white"
+        class="justify-between flex-1 py-[2.25px] text-xs font-bold transition-all border-0 border-none rounded-md shadow-sm ring-1 focus:ring-paktum-500 hover:border-neutral-950 focus:border-paktum-500 md:text-sm dark:bg-neutral-800 dark:text-neutral-100 text-neutral-900 ring-inset ring-gray-300 placeholder:text-gray-400 hover:bg-none focus:ring-2 focus:ring-inset"
+      >
         {{ value }}
 
         <UIcon 
@@ -53,7 +63,3 @@ watch(value, (newValue) => {
     </USelectMenu>
   </div>
 </template>
-
-<style scoped>
-/* */
-</style>
