@@ -14,6 +14,7 @@
       <ul class="space-x-4">
         <NuxtLink to="/">home</NuxtLink>
         <NuxtLink to="/berleti">berleti</NuxtLink>
+        <NuxtLink to="/berletiV2/lepes/1">berleti V2</NuxtLink>
         <NuxtLink to="/test">test</NuxtLink>
       </ul>
       <TheColorSwitcher />
