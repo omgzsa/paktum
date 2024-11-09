@@ -6,9 +6,13 @@ const props = defineProps<{
   labelEnd?: string | { base: string; sup: string };
   placeholder?: string;
   isDisabled?: boolean;
+  min?: number;
+  max?: number;
+  step?: number;
+  customClass?: string;
 }>();
 
-const model = defineModel();
+const model = defineModel<string | number>();
 
 const { value, errorMessage } = useField(
   `${props.name}`,
@@ -24,7 +28,7 @@ const inputId = `${props.name}-input`;
 
 <template>
   <div class="space-y-1">
-    <div class="flex items-center gap-2">
+    <div :class="['flex items-center gap-2', props.customClass]">
       <label
         v-if="props.label"
         :for="inputId"
@@ -38,10 +42,13 @@ const inputId = `${props.name}-input`;
         :disabled="props.isDisabled"
         :type="props.type || 'text'"
         :placeholder="props.placeholder"
-        class="mx-1 inline flex-wrap h-6 transition-all border-none ring-1 focus:ring-paktum-500 md:px-2 md:pb-1.5 hover:border-neutral-950 focus:border-paktum-500 font-bold text-xs md:text-sm dark:bg-neutral-800 dark:text-neutral-100"
+        :min="props.min"
+        :max="props.max"
+        :step="props.step"
+        class="mx-1 inline flex-wrap h-6 transition-all border-none ring-1 focus:ring-paktum-500 md:px-2 md:pb-1.5 hover:border-neutral-950 focus:border-paktum-500 font-bold text-xs md:text-sm dark:bg-neutral-800 dark:text-neutral-100 dark:ring-neutral-600"
         :class="{ 'cursor-not-allowed opacity-50': props.isDisabled }"
       >
-      <span v-if="typeof labelEnd === 'string'" class="text-xs md:text-sm">{{ props.labelEnd }}</span>
+      <span v-if="typeof labelEnd === 'string'" class="text-xs md:text-sm whitespace-nowrap">{{ props.labelEnd }}</span>
       <span v-if="typeof labelEnd === 'object'" class="text-xs md:text-sm">{{ labelEnd.base }}<sup>{{ labelEnd.sup }}</sup></span>
     </div>
     <!-- Error message rendering -->
