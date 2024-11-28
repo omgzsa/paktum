@@ -5,6 +5,7 @@ const props = defineProps<{
   modelValue: boolean;
   name: string;
   label: string;
+  isDefault?: boolean;
 }>();
 
 const emit = defineEmits(['update:modelValue']);
@@ -27,11 +28,11 @@ const emitValues = (e: Event) => {
       class="grid grid-cols-[auto_auto] items-start justify-start gap-1.5 xs:gap-3 text-left"
     >
       <InputTooltip
-        v-if="false"
+        v-if="props.isDefault"
         label="§"
         text="Jogszabályi alapállapot"
       />
-      <div class="w-5 h-5 xs:w-6 xs:h-6"/>
+      <div v-else class="w-5 h-5 xs:w-6 xs:h-6"/>
       <label
         :for="props.name"
         class="flex items-start gap-1.5 xs:gap-3 cursor-pointer"
