@@ -102,7 +102,7 @@ watch(annexVisible, (newValue) => {
 
 <template>
   <section class="max-w-2xl mx-auto">
-    <!-- 1/3 - BÉRLEMÉNY ADATAI -->
+    <!-- 1/3 - Bérlemény adatai -->
     <QuestionBlock
       title="Bérlemény adatai"
       sub-text=""
@@ -181,7 +181,7 @@ watch(annexVisible, (newValue) => {
       </div>
     </QuestionBlock>
 
-    <!-- 2/3 - INGATLAN TÍPUSA -->
+    <!-- 2/3 - Ingatlan típusa -->
     <QuestionBlock
       title="Az ingatlan típusa"
       placement="2/3."
@@ -202,7 +202,7 @@ watch(annexVisible, (newValue) => {
       />
     </QuestionBlock>
 
-    <!-- 2/3.1 - OKIRAT, SZMSZ, HÁZIREND (if) -->
+    <!-- 2/3.1 - Okirat, SZMSZ, Házirend -->
     <TheTransition v-model="docsVisible">
       <QuestionBlock
         title="Bérlő megismerte és átolvasta a társasház"
@@ -228,7 +228,7 @@ watch(annexVisible, (newValue) => {
       </QuestionBlock>
     </TheTransition>
 
-    <!-- 3/3 - BÚTOROZOTTSÁG -->
+    <!-- 3/3 - Bútorozottság -->
     <QuestionBlock
       title="Bútorozottság"
       placement="3/3."

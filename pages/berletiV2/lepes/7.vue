@@ -6,17 +6,23 @@ definePageMeta({
 });
 
 const contractStore = useContractStore();
-const { paymentDetail, indexing } = storeToRefs(contractStore);
+const { 
+  paymentDetail,
+  indexing,
+  contractTerminationDays,
+  penalityChange
+} = storeToRefs(contractStore);
 
 const availableCurrencies = [
-  { value: 'HUF', label: 'Magyar forint' }, 
-  { value: 'USD', label: 'Amerikai dollár' }, 
-  { value: 'GBP', label: 'Angol font' }, 
-  { value: 'RON', label: 'Román lej' }, 
-  { value: 'HRK', label: 'Horvát kuna' }, 
-  { value: 'RSD', label: 'Szerb dínár' }, 
-  { value: 'UAH', label: 'Ukrán hrivnya' }, 
-  { value: 'CZK', label: 'Cseh korona' }, 
+  { value: 'HUF', label: 'Magyar forint' },
+  { value: 'EUR', label: 'Euró' },
+  { value: 'USD', label: 'Amerikai dollár' },
+  { value: 'GBP', label: 'Angol font' },
+  { value: 'RON', label: 'Román lej' },
+  { value: 'HRK', label: 'Horvát kuna' },
+  { value: 'RSD', label: 'Szerb dínár' },
+  { value: 'UAH', label: 'Ukrán hrivnya' },
+  { value: 'CZK', label: 'Cseh korona' },
   { value: 'PLN', label: 'Lengyel zloty' }
 ]
 
@@ -24,9 +30,9 @@ const availableCurrencies = [
 const hasIndexingDate = useState('hasIndexingDate', () => false);
 
 // 4/7.1 & 4/7.2 - Átutalás & Készpénz
-const isTransferPayment = useState('isTransferPayment', () => false);
-const isCashPayment = useState('isCashPayment', () => false);
-const cashAnnexLabel = 'Készpénz átvételi elismervény minta bérleti díjról';
+const isRentTransferPayment = useState('isRentTransferPayment', () => false);
+const isRentCashPayment = useState('isRentCashPayment', () => false);
+const cashRentAnnexLabel = 'Készpénz átvételi elismervény minta bérleti díjról';
 
 watch(() => indexing.value.indexingType, () => {
   if (indexing.value.indexingType === 'HU' || indexing.value.indexingType === 'EUR') {
@@ -38,23 +44,21 @@ watch(() => indexing.value.indexingType, () => {
 
 watch(() => paymentDetail.value.cash, () => {
   if (paymentDetail.value.cash) {
-    isCashPayment.value = true;
-    isTransferPayment.value = false;
+    isRentCashPayment.value = true;
+    isRentTransferPayment.value = false;
   } else {
-
     paymentDetail.value.paymentDocument = false;
-    isCashPayment.value = false;
-    isTransferPayment.value = true;
+    isRentCashPayment.value = false;
+    isRentTransferPayment.value = true;
   }
 });
 </script>
 
 <template>
   <section class="max-w-2xl mx-auto">
-    <!-- 1/7 - BÉRLETI DÍJ -->
+    <!-- 1/7 - Bérleti díj -->
     <QuestionBlock
       title="Bérleti díj"
-      sub-text=""
       placement="1/7."
     >
       <div class="gap-4 space-y-4">
@@ -75,7 +79,7 @@ watch(() => paymentDetail.value.cash, () => {
       </div>
     </QuestionBlock>
 
-    <!-- 2/7 - ÉVES INDEXÁLÁS -->
+    <!-- 2/7 - Éves indexálás -->
     <QuestionBlock
       title="Bérleti díj éves indexálása"
       placement="2/7."
@@ -143,7 +147,7 @@ watch(() => paymentDetail.value.cash, () => {
       </QuestionBlock>
     </TheTransition>
 
-    <!-- 3/7 - FIZETÉSI ESEDÉKESSÉGE -->
+    <!-- 3/7 - Fizetés esedékessége -->
     <QuestionBlock
       title="Bérleti díj fizetés esedékessége"
       sub-text=""
@@ -152,16 +156,16 @@ watch(() => paymentDetail.value.cash, () => {
       <div class="xs:flex xs:justify-between">
         <div class="space-y-3">
           <InputRadioBool 
-            v-model="paymentDetail.isPreviousMonth"
-            name="paymentDetail.isPreviousMonth"
+            v-model="paymentDetail.previousMonth"
+            name="paymentDetail.previousMonth"
             label="előző hónap"
-            @update:model-value="paymentDetail.isCurrentMonth = false"
+            @update:model-value="paymentDetail.currentMonth = false"
           />
           <InputRadioBool 
-            v-model="paymentDetail.isCurrentMonth"
-            name="paymentDetail.isCurrentMonth"
+            v-model="paymentDetail.currentMonth"
+            name="paymentDetail.currentMonth"
             label="tárgyhónap"
-            @update:model-value="paymentDetail.isPreviousMonth = false"
+            @update:model-value="paymentDetail.previousMonth = false"
           />
         </div>
 
@@ -180,12 +184,12 @@ watch(() => paymentDetail.value.cash, () => {
       </div>
     </QuestionBlock>
     
-    <!-- 4/7 - FIZETÉS MÓDJA -->
+    <!-- 4/7 - Fizetés módja -->
     <QuestionBlock
       title="Bérleti díj fizetés módja"
       sub-text=""
       placement="4/7."
-      :class="{ 'border-b-0 -mb-2 sm:-mb-4': isTransferPayment || !isTransferPayment }"
+      :class="{ 'border-b-0 -mb-2 sm:-mb-4': isRentTransferPayment || isRentCashPayment }"
     >
       <InputRadioBool 
         v-model="paymentDetail.cash"
@@ -201,30 +205,8 @@ watch(() => paymentDetail.value.cash, () => {
       />
     </QuestionBlock>
 
-    <!-- 4/7.1 - ÁTUTALÁS -->
-    <TheTransition v-model="isTransferPayment">
-      <QuestionBlock
-        title=""
-        :bordered="true"
-        class="mb-4"
-      >
-        <InputText
-          v-model="paymentDetail.bankName"
-          label="Bérbeadó számlavezető bankjának neve"
-          name="paymentDetail.bankName"
-          :custom-class="`grid space-x-0 sm:flex`"
-        />
-        <InputText
-          v-model="paymentDetail.accountNumber"
-          label="Bérbeadó bankszámlaszáma"
-          name="paymentDetail.accountNumber"
-          :custom-class="`grid space-x-0 sm:flex`"
-        />
-      </QuestionBlock>
-    </TheTransition>
-
-    <!-- 4/7.2 - KÉSZPÉNZ -->
-    <TheTransition v-model="isCashPayment">
+    <!-- 4/7.1 - készpénz -->
+    <TheTransition v-model="isRentCashPayment">
       <QuestionBlock
         title="Melléklet vásárlási lehetőség"
         :bordered="true"
@@ -250,10 +232,101 @@ watch(() => paymentDetail.value.cash, () => {
         </template>
         <InputToggle 
           v-model="paymentDetail.paymentDocument"
-          :label="cashAnnexLabel"
+          :label="cashRentAnnexLabel"
           name="subjectProperty.inventoryDocument"
         />
       </QuestionBlock>
     </TheTransition>
+
+    <!-- 4/7.2 - átutalás -->
+    <TheTransition v-model="isRentTransferPayment">
+      <QuestionBlock
+        title=""
+        :bordered="true"
+        class="mb-4"
+      >
+        <InputText
+          v-model="paymentDetail.bankName"
+          label="Bérbeadó számlavezető bankjának neve"
+          name="paymentDetail.bankName"
+          :custom-class="`grid space-x-0 sm:flex`"
+        />
+        <InputText
+          v-model="paymentDetail.accountNumber"
+          label="Bérbeadó bankszámlaszáma"
+          name="paymentDetail.accountNumber"
+          :custom-class="`grid space-x-0 sm:flex`"
+        />
+      </QuestionBlock>
+    </TheTransition>
+
+    <!-- 5/7. - Első havi fizetés esedékessége -->
+    <QuestionBlock
+      title="Első havi bérleti díj fizetésének esedékessége"
+      placement="5/7."
+    >
+      <div class="inline-flex flex-col items-center">
+        <p class="text-sm text-gray-500">Válassz dátumot</p>
+        <InputDatePicker 
+          v-model="paymentDetail.firstPaymentDate"
+          name="paymentDetail.firstPaymentDate"
+        />
+      </div>
+    </QuestionBlock>
+
+    <!-- 6/7. Felmondási idő -->
+    <QuestionBlock
+      title="Ha a bérlő nem fizet bérleti díjat, és emiatt mond fel a bérbeadó, mennyi legyen a felmondási idő?"
+      placement="6/7."
+    >
+      <InputText
+        v-model="contractTerminationDays"
+        type="number"
+        :min="15"
+        :max="999"
+        :step="1"
+        placeholder="min.15"
+        label-end="nap"
+        name="contractTerminationDays"
+        class="w-28"
+      />
+    </QuestionBlock>
+
+    <!-- 7/7. Használati díj (megszűnés után) -->
+    <QuestionBlock
+      title="Ha a bérleti szerződés megszűnt és a bérlő ingóságaival nem hagyja el a bérleményt, a visszaadásig a bérbeadónak fizetendő használati díj havi mértéke a megszűnéstől számított 2 hónap elteltével"
+      placement="7/7."
+    >
+    <InputRadioBase
+        v-model="penalityChange"
+        option-id="1"
+        name="penalityChange"
+        label="a bérleti díj 1-szerese"
+      />
+      <InputRadioBase
+        v-model="penalityChange"
+        option-id="1.5"
+        name="penalityChange"
+        label="a bérleti díj 1,5-szöröse"
+      />
+      <InputRadioBase
+        v-model="penalityChange"
+        option-id="2"
+        name="penalityChange"
+        label="a bérleti díj 2-szerese"
+      />
+      <InputRadioBase
+        v-model="penalityChange"
+        option-id="2.5"
+        name="penalityChange"
+        label="a bérleti díj 2,5-szöröse"
+      />
+      <InputRadioBase
+        v-model="penalityChange"
+        option-id="3"
+        name="penalityChange"
+        label="a bérleti díj 3-szorosa"
+      />
+    </QuestionBlock>
   </section>
 </template>
