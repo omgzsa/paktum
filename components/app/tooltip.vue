@@ -93,7 +93,7 @@ const tooltipLeft = () => {
         v-if="isHovered || isTooltipHovered"
         ref="floating"
         :style="floatingStyles"
-        class="z-50 px-6 py-5 space-y-4 leading-loose shadow-md rounded-2xl md:max-w-xl bg-neutral-900 dark:border border-neutral-700 dark:bg-neutral-300 [&>p]:dark:text-neutral-900 dark:border-neutral-500"
+        class="z-[9999] px-6 py-5 space-y-4 leading-loose shadow-md rounded-2xl md:max-w-xl bg-neutral-900 dark:border border-neutral-700 dark:bg-neutral-300 [&>p]:dark:text-neutral-900 dark:border-neutral-500"
         @mouseenter="tooltipHovered"
         @mouseleave="tooltipLeft"
       >
