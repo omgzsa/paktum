@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { useForm } from 'vee-validate';
 import { schemas } from '@/utils/schemas';
+// import { useContractStore } from '@/stores/contract';
+
+// const contractStore = useContractStore();
 
 const router = useRouter();
 const route = useRoute();
@@ -9,12 +12,13 @@ const route = useRoute();
 const currentStep = ref(parseInt(route.fullPath.split('/').pop() as string) || 1);
 const currentSchema = ref(schemas[currentStep.value - 1]);
 
-const { values, handleSubmit, isSubmitting } = useForm({
+const { values, handleSubmit, isSubmitting, setFieldValue } = useForm({
   validationSchema: currentSchema,
   keepValuesOnUnmount: true,
 });
 
 provide('currentStep', currentStep);
+provide('setFieldValue', setFieldValue);
 
 // Watch for changes in the route to update currentStep
 watch(() => route.fullPath, (newPath) => {
@@ -38,12 +42,12 @@ function validateAndGo(step: number | null) {
 
 
 <template>
-  <UContainer as="div" class="py-4 space-y-8">
+  <UContainer as="div" class="py-4 pt-8 space-y-16">
     <header>
       <NavDesktop />
     </header>
 
-    <main class="relative">
+    <main class="relative space-y-16">
       <form>
         <slot />
       </form>
@@ -55,7 +59,7 @@ function validateAndGo(step: number | null) {
         :current-step="currentStep"
         @validate-and-go="validateAndGo"
       />
-      <!-- <pre wrap class="text-[10px] leading-tight fixed right-0 top-20 w-60">
+      <!-- <pre wrap class="fixed right-0 text-[10px] leading-tight top-20 w-60">
         {{ values }}
       </pre> -->
     </main>
