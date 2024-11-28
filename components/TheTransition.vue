@@ -28,7 +28,7 @@ const [parent] = useAutoAnimate({
   duration: props.duration,
   easing: props.easing,
   disrespectUserMotionPreference: false,
-  keyframes: ({ el, initial }) => [
+  keyframes: ({ initial }) => [
     { opacity: initial ? 1 : 0, transform: initial ? 'scale(1)' : 'scale(0.98)' },
     { opacity: initial ? 0 : 1, transform: initial ? 'scale(0.98)' : 'scale(1)' }
   ]
