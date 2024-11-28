@@ -25,6 +25,7 @@ const { value } = useField<Date | number>(
       :label="format(date, 'yyy. MMM. d.')"
       variant="ghost"
       color="paktum"
+      class="dark:text-paktum-500 text-paktum-600"
     />
 
     <template #panel="{ close }">
