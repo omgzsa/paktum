@@ -31,7 +31,8 @@ export const useContractStore = defineStore('contract', () => {
     tempAddressCardPermitted: false,
     propertyEmptied: false,
     propertyCleaned: false,
-    propertyFurnituredByOwner: false,
+    propertyFurnituredByOwner: true,
+    notFurnishedByOwner: false,
     streetName: '',
     houseNumber: '',
     building: '',
@@ -43,7 +44,7 @@ export const useContractStore = defineStore('contract', () => {
 
   const contractStartDate = ref("2024-06-21T19:43:14.217Z");
   const contractEndDate = ref("2024-06-21T19:43:14.217Z");
-  const propertyUsageStartDate = ref("2024-06-21T19:43:14.217Z");
+  const propertyUsageStartDate = new Date();
   const undefiniteContractPeriod = ref(false);
 
   const cohabitants = ref([
@@ -94,8 +95,8 @@ export const useContractStore = defineStore('contract', () => {
   ]);
 
   const paymentDetail = ref({
-    isPreviousMonth: false,
-    isCurrentMonth: false,
+    previousMonth: false,
+    currentMonth: false,
     paymentDetailId: 0,
     rentingFee: 0,
     paymentDeadlineDay: 1,
@@ -103,8 +104,8 @@ export const useContractStore = defineStore('contract', () => {
     accountNumber: "12345678-12345678-12345678",
     cash: false,
     transfer: false,
-    firstPaymentDate: "2024-06-21T19:43:14.217Z",
-    paymentCurrency: "Magyar Forint (HUF)",
+    firstPaymentDate: new Date(),
+    paymentCurrency: "Magyar forint (HUF)",
     paymentDocument: false,
   });
 
@@ -278,6 +279,16 @@ export const useContractStore = defineStore('contract', () => {
       questionSelectedOptionIdentifier: 'Q33O2',
       optionParameters: [],
     },
+    {
+      questionId: 32,
+      questionSelectedOptionIdentifier: 'Q2O1',
+      optionParameters: [],
+    },
+    {
+      questionId: 33,
+      questionSelectedOptionIdentifier: 'Q1O1',
+      optionParameters: [],
+    },
   ]);
 
   const selectedLanguages = ref([
@@ -305,24 +316,29 @@ export const useContractStore = defineStore('contract', () => {
     bankAccount: "12345678-12345678-12345678",
     cash: false,
     payedByOwner: false,
+    payedToProvider: false,
     paymentDocument: false,
   });
 
   const deposit = ref({
     depositId: 0,
     contractId: 0,
-    paymentDate: "2024-06-21T19:43:14.217Z",
+    payedWhen: "string",
+    paymentDate: new Date(),
     amount: 0,
     currency: "string",
-    nbOfMonths: 0,
-    bankName: "string",
-    bankAccount: "string",
+    nbOfMonths: 1,
+    bankName: "",
+    bankAccount: "",
     cash: false,
+    transfer: false,
     paymentDocument: false,
-    depositChangeIfAgainstContract: false,
     depositPaybackDays: 0,
     depositRefillDays: 0,
+    mustRefill: false,
+    mustNotRefill: false,
     contractTerminationPossibleOnNoRefill: false,
+    contractTerminationPossibleOnNoNotRefill: false,
   });
 
   const contractTerminationDate = ref("2024-06-21T19:43:14.217Z");
@@ -330,6 +346,7 @@ export const useContractStore = defineStore('contract', () => {
   const contractTerminationDayInMonth = ref(0);
   const contractConfirmationDays = ref(0);
   const contractReConfirmationDays = ref(0);
+
 
   const damageReport = ref(false);
   const notarialDocumentCostForOwner = ref("");
@@ -341,6 +358,8 @@ export const useContractStore = defineStore('contract', () => {
   const moveOut = ref(false);
   const paymentObligation = ref(false);
   const presumptionOfDelivery = ref(false);
+  const eSignature = ref(false);
+  const penalityChange = ref('');
 
   // GETTERS
   
@@ -365,6 +384,15 @@ export const useContractStore = defineStore('contract', () => {
       });
     }
   };
+
+  const removeQuestion = (questionId: number) => {
+    const existingQuestionIndex = questions.value.findIndex(q => q.questionId === questionId);
+  
+    if (existingQuestionIndex !== -1) {
+      questions.value.splice(existingQuestionIndex, 1);
+    }
+  };
+
   const getQuestion = (questionId: number) => {
     const question = questions.value.find(q => q.questionId === questionId);
 
@@ -375,6 +403,57 @@ export const useContractStore = defineStore('contract', () => {
     }
   };
 
+  const updateQuestions = (
+    optionId: string,
+    questionId: number,
+    optionParams?: string | number
+  ) => {
+    const stringParam = JSON.stringify(optionParams) || '';
+  
+    if (optionParams) {
+      addQuestion(questionId, optionId, [
+        {
+          optionParameterId: 0,
+          parameter: stringParam,
+        },
+      ]);
+      return;
+    }
+  
+    addQuestion(questionId, optionId, []);
+  };
+
+  const updateQuestionsWithTwoParams = (
+    optionId: string,
+    questionId: number,
+    param1?: string | number,
+    param2?: string | number
+  ) => {
+    const stringParam = JSON.stringify(param1) || '';
+    const stringParamTwo = JSON.stringify(param2) || '';
+  
+    addQuestion(questionId, optionId, [
+      {
+        optionParameterId: 0,
+        parameter: stringParam,
+      },
+      {
+        optionParameterId: 1,
+        parameter: stringParamTwo,
+      },
+    ]);
+  };
+
+  const updateDepositAmount = (times: number = 1) => {
+    if (!deposit.value.amount) {
+      deposit.value.amount = paymentDetail.value.rentingFee;
+    } else {
+      deposit.value.amount = paymentDetail.value.rentingFee * times;
+    }
+
+    return deposit.value.amount;
+  };
+  
   return {
     contractId,
     userId,
@@ -406,9 +485,15 @@ export const useContractStore = defineStore('contract', () => {
     orgRules,
     houseRules,
     moveOut,
+    eSignature,
     paymentObligation,
     presumptionOfDelivery,
+    penalityChange,
     addQuestion,
+    removeQuestion,
     getQuestion,
+    updateQuestions,
+    updateQuestionsWithTwoParams,
+    updateDepositAmount,
   }
 });
