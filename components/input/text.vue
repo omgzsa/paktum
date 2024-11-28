@@ -48,11 +48,24 @@ const inputId = `${props.name}-input`;
         class="mx-1 inline flex-wrap h-6 transition-all border-none ring-1 focus:ring-paktum-500 md:px-2 md:pb-1.5 hover:border-neutral-950 focus:border-paktum-500 font-bold text-xs md:text-sm dark:bg-neutral-800 dark:text-neutral-100 dark:ring-neutral-600"
         :class="{ 'cursor-not-allowed opacity-50': props.isDisabled }"
       >
-      <span v-if="typeof labelEnd === 'string'" class="text-xs md:text-sm whitespace-nowrap">{{ props.labelEnd }}</span>
-      <span v-if="typeof labelEnd === 'object'" class="text-xs md:text-sm">{{ labelEnd.base }}<sup>{{ labelEnd.sup }}</sup></span>
+      <span 
+        v-if="typeof labelEnd === 'string'"
+        class="text-xs md:text-sm whitespace-nowrap"
+      >
+        {{ props.labelEnd }}
+      </span>
+      <span 
+        v-if="typeof labelEnd === 'object'"
+        class="text-xs md:text-sm"
+      >
+        {{ labelEnd.base }}<sup>{{ labelEnd.sup }}</sup>
+      </span>
     </div>
     <!-- Error message rendering -->
-    <span v-if="errorMessage" class="text-xs text-red-500">
+    <span 
+      v-if="errorMessage" 
+      class="text-xs text-red-500"
+    >
       {{ errorMessage }}
     </span>
   </div>
