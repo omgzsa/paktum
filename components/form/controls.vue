@@ -10,7 +10,7 @@ const currentStep = inject<number>('currentStep', 0);
 </script>
 
 <template>
-  <div class="flex items-center py-10 pt-16 justify-evenly">
+  <div class="flex items-center py-10 justify-evenly">
     <NuxtLink
       v-if="hasPrevious"
       :to="`/berletiv2/lepes/${currentStep - 1}`"
