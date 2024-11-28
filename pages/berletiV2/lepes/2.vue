@@ -7,7 +7,7 @@ definePageMeta({
 
 const contractStore = useContractStore();
 // const { questions } = storeToRefs(contractStore);
-const { getQuestion, addQuestion } = contractStore;
+const { getQuestion, updateQuestions } = contractStore;
 
 const createValue = (questionId: number) => computed({
   get: () => getQuestion(questionId)?.optionId,
@@ -25,22 +25,6 @@ const Q10Value = createValue(6);
 const Q8Value = createValue(7);
 const Q9Value = createValue(8);
 const Q11Value = createValue(9);
-
-const updateQuestions = (optionId: string, questionId: number, optionParams?: string | number) => {
-  const stringParam = JSON.stringify(optionParams) || '';
-
-  if (optionParams) {
-    addQuestion(questionId, optionId, [
-      {
-        optionParameterId: 0,
-        parameter: stringParam,
-      },
-    ]);
-    return;
-  }
-
-  addQuestion(questionId, optionId, []);
-};
 </script>
 
 <template>

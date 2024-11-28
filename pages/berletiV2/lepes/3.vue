@@ -7,7 +7,7 @@ definePageMeta({
 
 const contractStore = useContractStore();
 // const { questions } = storeToRefs(contractStore);
-const { getQuestion, addQuestion } = contractStore;
+const { getQuestion, addQuestion, updateQuestions } = contractStore;
 
 const createValue = (questionId: number) => computed({
   get: () => getQuestion(questionId)?.optionId || '',
@@ -36,22 +36,6 @@ const optionsQ15 = [
   { id: 5, label: 'háztartási szemét elszállítása' },
 ];
 
-const updateQuestions = (optionId: string, questionId: number, optionParams?: string | number) => {
-  const stringParam = JSON.stringify(optionParams) || '';
-
-  if (optionParams) {
-    addQuestion(questionId, optionId, [
-      {
-        optionParameterId: 0,
-        parameter: stringParam,
-      },
-    ]);
-    return;
-  }
-
-  addQuestion(questionId, optionId, []);
-};
-
 const handleSyncChange = (e: Event) => {
   const clickedOption = (e.target as HTMLInputElement).value;
 
@@ -70,7 +54,6 @@ const handleSyncChange = (e: Event) => {
 
 const textValueRef = ref<string | number | null>(null);
 const checkedValuesRef = ref<string[]>([]);
-
 const handleCombinedUpdate = (
   optionId: string, 
   questionId: number,
@@ -100,31 +83,11 @@ const handleCombinedUpdate = (
     checkedValuesRef.value = [];
   }
 };
-
-// const handleMultipleInputs = (event: any) => {
-//   const { optionId, checkedValues, textValue } = event;
-
-//   if (!optionId || !textValue) return;
-//   if (!checkedValues.length) return updateQuestions(optionId, 10, textValue);
-
-//   const concatenatedValues = ref(concatValues(checkedValues));
-
-//   addQuestion(10, optionId, [
-//     {
-//       optionParameterId: 0,
-//       parameter: JSON.stringify(textValue),
-//     },
-//     {
-//       optionParameterId: 1,
-//       parameter: concatenatedValues.value,
-//     },
-//   ]);
-// };
 </script>
 
 <template>
   <section class="max-w-2xl mx-auto">
-    <!-- Q15 - 1/8 -->
+    <!-- 1/8 - Karbantartási kötelezettség -->
     <QuestionBlock
       title="Karbantartási kötelezettség"
       sub-text="A Bérleményt"
