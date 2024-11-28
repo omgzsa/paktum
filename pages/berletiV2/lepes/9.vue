@@ -5,7 +5,7 @@ definePageMeta({
   layout: 'contract',
 });
 
-// const setFieldValue = inject('setFieldValue') as (field: string, value: string | number | boolean) => void;
+const setFieldValue = inject('setFieldValue') as (field: string, value: string | number | boolean) => void;
 
 const contractStore = useContractStore();
 const { propertyUsageStartDate, subjectProperty } = storeToRefs(contractStore);
@@ -24,8 +24,9 @@ const isFurnishedByOwner = useState('is-furnished-by-owner', () => false);
 const Q1Value = createValue(33);
 watch(() => subjectProperty.value.propertyFurnituredByOwner, (newValue) => {
   if(newValue) {
-    isFurnishedByOwner.value = false;
     removeQuestion(33);
+    setFieldValue('Q1', ''); /// is this a must?
+    isFurnishedByOwner.value = false;
   } else {
     isFurnishedByOwner.value = true;
   }
