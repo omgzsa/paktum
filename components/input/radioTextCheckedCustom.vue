@@ -47,7 +47,11 @@ const handleCheckbox = () => {
 };
 
 const handleCustomInput = (value: string) => {
-  //
+  if(!isCustomChecked.value) {
+    customInput.value = '';
+  }
+
+  emitValues();
 };
 
 const emitValues = () => {
@@ -78,6 +82,12 @@ watch(customInput, (newVal, oldVal) => {
   }
 
   emitValues();
+});
+
+watch(isCustomChecked, (newVal) => {
+  if(!isCustomChecked.value) {
+    customInput.value = '';
+  }
 });
 </script>
 
