@@ -42,9 +42,10 @@ export const useContractStore = defineStore('contract', () => {
     publicAreaType: '',
   });
 
-  const contractStartDate = ref("2024-06-21T19:43:14.217Z");
-  const contractEndDate = ref("2024-06-21T19:43:14.217Z");
-  const propertyUsageStartDate = new Date();
+  const contractStartDate = ref(new Date());
+  const contractEndDate = ref(new Date());
+  const propertyUsageStartDate = ref(new Date());
+  const definiteContractPeriod = ref(true);
   const undefiniteContractPeriod = ref(false);
 
   const cohabitants = ref([
@@ -104,7 +105,7 @@ export const useContractStore = defineStore('contract', () => {
     accountNumber: "12345678-12345678-12345678",
     cash: false,
     transfer: false,
-    firstPaymentDate: new Date(),
+    firstPaymentDate: ref(new Date()),
     paymentCurrency: "Magyar forint (HUF)",
     paymentDocument: false,
   });
@@ -303,7 +304,7 @@ export const useContractStore = defineStore('contract', () => {
     indexingId: 0,
     contractId: 0,
     indexingType: "",
-    indexingNotifyDate: new Date(),
+    indexingNotifyDate: ref(new Date()),
   });
 
   const ptkSelected = ref(false)
@@ -324,7 +325,7 @@ export const useContractStore = defineStore('contract', () => {
     depositId: 0,
     contractId: 0,
     payedWhen: "string",
-    paymentDate: new Date(),
+    paymentDate: ref(new Date()),
     amount: 0,
     currency: "string",
     nbOfMonths: 1,
@@ -344,6 +345,8 @@ export const useContractStore = defineStore('contract', () => {
   const contractTerminationDate = ref("2024-06-21T19:43:14.217Z");
   const contractTerminationDays = ref(0);
   const contractTerminationDayInMonth = ref(0);
+  const contractTerminationPossibleBeforeEndDate = ref(false);
+  const contractTerminationNotPossibleBeforeEndDate = ref(false);
   const contractConfirmationDays = ref(0);
   const contractReConfirmationDays = ref(0);
 
@@ -461,6 +464,7 @@ export const useContractStore = defineStore('contract', () => {
     contractStartDate,
     contractEndDate,
     propertyUsageStartDate,
+    definiteContractPeriod,
     undefiniteContractPeriod,
     cohabitants,
     owners,
@@ -477,6 +481,8 @@ export const useContractStore = defineStore('contract', () => {
     contractTerminationDays,
     contractTerminationDayInMonth,
     contractConfirmationDays,
+    contractTerminationPossibleBeforeEndDate,
+    contractTerminationNotPossibleBeforeEndDate,
     contractReConfirmationDays,
     damageReport,
     notarialDocumentCostForOwner,
