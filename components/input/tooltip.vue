@@ -24,7 +24,7 @@ defineProps({
       :padded="false"
       color="gray"
       variant="soft"
-      class="flex items-center justify-center w-5 h-5 rounded-md xs:-top-1 xs:w-6 xs:h-6 bg-zinc-200 dark:bg-zinc-800/90 pb-0.5 text-xs xs:text-sm hover:bg-zinc-300 dark:hover:bg-zinc-700/90 transition-all"
+      class="flex items-center justify-center w-5 h-5 rounded-md xs:-top-1 xs:w-6 xs:h-6 bg-zinc-200 dark:bg-zinc-800/90 pb-0.5 text-xs xs:text-sm hover:bg-zinc-300 dark:hover:bg-zinc-700/90 transition-all cursor-default"
     >
       §
     </UButton>
