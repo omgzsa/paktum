@@ -8,7 +8,14 @@ definePageMeta({
 const setFieldValue = inject('setFieldValue') as (field: string, value: string | number | boolean) => void;
 
 const contractStore = useContractStore();
-const { propertyUsageStartDate, subjectProperty } = storeToRefs(contractStore);
+const { 
+    propertyUsageStartDate,
+    subjectProperty,
+    definiteContractPeriod,
+    undefiniteContractPeriod,
+    contractStartDate,
+    contractEndDate
+} = storeToRefs(contractStore);
 const { removeQuestion, getQuestion, updateQuestions } = contractStore;
 
 const createValue = (questionId: number) => computed({
@@ -31,6 +38,22 @@ watch(() => subjectProperty.value.propertyFurnituredByOwner, (newValue) => {
     isFurnishedByOwner.value = true;
   }
 });
+
+// 4/6 - A bérlet ideje
+// 4/6.1 - Határozott idő
+// 4/6.2 - Határozatlan idő
+const isDefiniteContract = useState('is-definite-contract', () => true);
+const isUndefiniteContract = useState('is-undefinite-contract', () => false);
+watch(() => definiteContractPeriod.value, (newValue) => {
+  if(newValue) {
+    isDefiniteContract.value = true;
+    isUndefiniteContract.value = false;
+  } else {
+    isDefiniteContract.value = false;
+    isUndefiniteContract.value = true;
+  }
+});
+// }
 </script>
 
 <template>
@@ -103,7 +126,7 @@ watch(() => subjectProperty.value.propertyFurnituredByOwner, (newValue) => {
     <TheTransition v-model="isFurnishedByOwner">
       <QuestionMultiple
         title="A berendezés igazolt költségeit"
-        :bordered="true"
+        bordered
       >
         <QuestionItem
           title="A berendezés igazolt költségeit"
@@ -145,8 +168,75 @@ watch(() => subjectProperty.value.propertyFurnituredByOwner, (newValue) => {
     <QuestionBlock
       title="A bérlet ideje"
       placement="4/6."
+      :class="{ 'border-b-0 -mb-2 sm:-mb-4': isDefiniteContract || isUndefiniteContract }"
     >
-      # undefiniteContractPeriod
+      <InputRadioBool
+        v-model="definiteContractPeriod"
+        name="definiteContractPeriod"
+        label="határozott idő."
+        @update:model-value="undefiniteContractPeriod = false"
+      />
+      <InputRadioBool
+        v-model="undefiniteContractPeriod"
+        name="undefiniteContractPeriod"
+        label="határozatlan idő."
+        @update:model-value="definiteContractPeriod = false"
+      />
     </QuestionBlock>
+
+    <!-- 4/6.1 - Időtartam, lejárat, felmondás -->
+    <TheTransition v-model="isDefiniteContract">
+      <QuestionMultiple bordered>
+        <!-- időtartam -->
+        <QuestionItem title="A bérlet időtartama">
+          <div class="xs:flex">
+            <div class="flex items-center gap-2">
+              <div class="xs:inline-flex xs:flex-col xs:items-center">
+                <p class="ml-3 text-sm text-gray-500 xs:ml-0">Válassz dátumot</p>
+                <InputDatePicker 
+                  v-model="contractStartDate"
+                  name="contractStartDate"
+                />
+              </div>
+              <p>- tól</p>
+            </div>
+            <div class="flex items-center gap-2 xs:ml-auto sm:ml-24">
+              <div class="xs:inline-flex xs:flex-col xs:items-center">
+                <p class="ml-3 text-sm text-gray-500 xs:ml-0">Válassz dátumot</p>
+                <InputDatePicker 
+                  v-model="contractEndDate"
+                  name="contractEndDate"
+                />
+              </div>
+              <p>- ig.</p>
+            </div>
+          </div>
+        </QuestionItem>
+        <!-- lejárat -->
+        <QuestionItem title="Határozott idő lejárta előtt felmondható-e?">
+          # felmondható-e
+        </QuestionItem>
+        <!-- felmondás -->
+        <QuestionItem title="Felmondási idő">
+          # felmondási idő
+        </QuestionItem>
+        <!-- teljes időtartamra járó bérleti díj -->
+        <QuestionItem title="A bérlő felmondása esetén a teljes időtartamra járó bérleti díjat meg kell-e fizetni?">
+          # felmondás esetén
+        </QuestionItem>
+      </QuestionMultiple>
+    </TheTransition>
+    
+    <!-- 4/6.2 - Határozatlan idő -->
+    <TheTransition v-model="isUndefiniteContract">
+      <QuestionMultiple bordered>
+        <QuestionItem title="A bérlet a hónap hanyadik napjáig mondható fel a következő hónap végére?">
+          # időtartama
+        </QuestionItem>
+        <QuestionItem title="Felmondási idő">
+          # felmondható-e
+        </QuestionItem>
+      </QuestionMultiple>
+    </TheTransition>
   </section>
 </template>

@@ -206,7 +206,7 @@ watch(annexVisible, (newValue) => {
     <TheTransition v-model="docsVisible">
       <QuestionBlock
         title="Bérlő megismerte és átolvasta a társasház"
-        :bordered="true"
+        bordered
         
         class="question-block"
       >
@@ -257,7 +257,7 @@ watch(annexVisible, (newValue) => {
     <TheTransition v-model="annexVisible">
       <QuestionBlock
         title="Melléklet vásárlási lehetőség"
-        :bordered="true"
+        bordered
         price="5.000Ft"
         class="question-block"
       >

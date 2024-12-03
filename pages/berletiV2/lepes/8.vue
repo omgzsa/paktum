@@ -136,7 +136,7 @@ watch(() => utilityExpenses.value.payedByOwner, (newVal) => {
       <QuestionBlock
         title="Aránytalanul magas biztosíték"
         sub-text="Az aránytalanul magas kauciót"
-        :bordered="true"
+        bordered
       >
         <InputRadioBase
           v-model="Q2Value"
@@ -179,7 +179,7 @@ watch(() => utilityExpenses.value.payedByOwner, (newVal) => {
     <TheTransition v-model="depositPaymentLater">
       <QuestionBlock
         title="A szerződéskötést követően mikor kell megfizetni a kauciót?"
-        :bordered="true"
+        bordered
         class="mb-4"
       >
         <div class="inline-flex flex-col items-center">
@@ -217,7 +217,7 @@ watch(() => utilityExpenses.value.payedByOwner, (newVal) => {
     <TheTransition v-model="isDepositCashPayment">
       <QuestionBlock
         title="Melléklet vásárlási lehetőség"
-        :bordered="true"
+        bordered
         price="2.500Ft"
       >
         <template #hint>
@@ -249,7 +249,7 @@ watch(() => utilityExpenses.value.payedByOwner, (newVal) => {
     <TheTransition v-model="isDepositTransferPayment">
       <QuestionBlock
         title=""
-        :bordered="true"
+        bordered
         class="mb-4"
       >
         <InputText
@@ -291,7 +291,7 @@ watch(() => utilityExpenses.value.payedByOwner, (newVal) => {
     <!-- 4/6.1 - Kaució visszatöltése -->
     <TheTransition v-model="hasToRefillDeposit">
       <QuestionMultiple
-        :bordered="true"
+        bordered
       >
         <QuestionItem
           title="A felhasználásról történő tudomásszerzéstől számított hány napon belül kell visszatöltenie a bérlőnek a felhasznált kaució összegét?"
@@ -378,7 +378,7 @@ watch(() => utilityExpenses.value.payedByOwner, (newVal) => {
     <!-- 6/6.1 - Rezsi/közös ktsg. fizetés módja -->
     <TheTransition v-model="payesToProvider">
       <QuestionMultiple
-        :bordered="true"
+        bordered
       >
         <QuestionItem
           title="Fizetés módja"

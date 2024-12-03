@@ -122,7 +122,7 @@ watch(() => paymentDetail.value.cash, () => {
     <TheTransition v-model="hasIndexingDate">
       <QuestionBlock
         title="Bérbeadó adott évben legkésőbb mikor küldje meg az indexálási értesítőt a Bérlőnek?"
-        :bordered="true"
+        bordered
       >
         <template #hint>
           <AppTooltip
@@ -209,7 +209,7 @@ watch(() => paymentDetail.value.cash, () => {
     <TheTransition v-model="isRentCashPayment">
       <QuestionBlock
         title="Melléklet vásárlási lehetőség"
-        :bordered="true"
+        bordered
         price="2.500Ft"
       >
         <template #hint>
@@ -242,7 +242,7 @@ watch(() => paymentDetail.value.cash, () => {
     <TheTransition v-model="isRentTransferPayment">
       <QuestionBlock
         title=""
-        :bordered="true"
+        bordered
         class="mb-4"
       >
         <InputText

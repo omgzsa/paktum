@@ -221,7 +221,7 @@ const handleCombinedUpdate = (
       title="Bérbeadói karbantartás esedékessége"
       sub-text="A Bérbeadó a Bérlemény hibáit"
       placement="4/8."
-      :bordered="true"
+      bordered
       class="mb-4"
     >
       <template #hint>
@@ -261,7 +261,7 @@ const handleCombinedUpdate = (
       title="Azonnali beavatkozást nem igénylő hibák kijavításának elmulasztása"
       sub-text="Ha a Bérbeadó a Bérlemény azonnali beavatkozást nem igénylő hibáit nem javítja ki"
       placement="5/8."
-      :bordered="true"
+      bordered
       class=""
     >
       <InputRadioBase
