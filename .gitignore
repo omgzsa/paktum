@@ -1,3 +1,7 @@
+# exclude folders
+.github
+.vscode
+
 # Nuxt dev/build outputs
 .output
 .data
@@ -8,7 +12,6 @@ dist
 
 # Node dependencies
 node_modules
-.vscode
 
 # Logs
 logs
