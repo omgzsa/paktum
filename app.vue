@@ -25,12 +25,12 @@
   filter: blur(0.2rem);
 }
 
-/* .layout-enter-active,
+.layout-enter-active,
 .layout-leave-active {
   transition: all 0.4s;
 }
 .layout-enter-from,
 .layout-leave-to {
-  filter: grayscale(1);
-} */
+  filter: neutralscale(1);
+}
 </style>
