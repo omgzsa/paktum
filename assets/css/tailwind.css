@@ -9,11 +9,10 @@
     --header-height: 10vh;
     --footer-height: 15vh;
   }
-
-  html,
+  /* html, */
   body,
   #__nuxt {
-    @apply min-h-screen overflow-y-visible;
+    @apply min-h-screen overflow-y-visible bg-neutral-50 dark:bg-neutral-950;
   }
 
   /* header {
@@ -90,7 +89,7 @@
     [multiple],
     textarea,
     select {
-      @apply block w-full px-2 pt-1 pb-0.5 border-0 shadow-sm sm:px-2.5 sm:pt-1.5 sm:pb-1 text-neutral-900 dark:text-neutral-100 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-neutral-100 rounded-md;
+      @apply block w-full px-2 pt-1 pb-0.5 border-0 shadow-sm sm:px-2.5 sm:pt-1.5 sm:pb-1 text-neutral-900 dark:text-neutral-100 ring-1 ring-inset ring-neutral-300 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset focus:ring-neutral-100 rounded-md;
     }
 
     input::-webkit-outer-spin-button,
@@ -105,7 +104,7 @@
     }
 
     input::placeholder {
-      @apply text-xs font-semibold text-gray-400;
+      @apply text-xs font-semibold text-neutral-400;
     }
 
     input[type='checkbox'] {
