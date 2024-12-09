@@ -1,3 +1,6 @@
+<!-- 
+  IDŐTARTAM
+-->
 <script lang="ts" setup>
 import { useContractStore } from '@/stores/contract';
 
@@ -14,7 +17,13 @@ const {
     definiteContractPeriod,
     undefiniteContractPeriod,
     contractStartDate,
-    contractEndDate
+    contractEndDate,
+    contractTerminationPossibleBeforeEndDate,
+    contractTerminationNotPossibleBeforeEndDate,
+    contractTerminationDays,
+    paymentObligation,
+    noPaymentObligation,
+    contractTerminationDayInMonth,
 } = storeToRefs(contractStore);
 const { removeQuestion, getQuestion, updateQuestions } = contractStore;
 
@@ -64,7 +73,7 @@ watch(() => definiteContractPeriod.value, (newValue) => {
       placement="1/6."
     >
       <div class="inline-flex flex-col items-center">
-        <p class="text-sm text-gray-500">Válassz dátumot</p>
+        <p class="text-sm text-neutral-500">Válassz dátumot</p>
         <InputDatePicker 
           v-model="propertyUsageStartDate"
           name="propertyUsageStartDate"
@@ -154,7 +163,7 @@ watch(() => definiteContractPeriod.value, (newValue) => {
           title="Az igazolt költségek megfizetésének határideje"
         >
           <div class="inline-flex flex-col items-center">
-            <p class="text-sm text-gray-500">Válassz dátumot</p>
+            <p class="text-sm text-neutral-500">Válassz dátumot</p>
             <InputDatePicker 
               v-model="propertyUsageStartDate"
               name="propertyUsageStartDate"
@@ -192,7 +201,7 @@ watch(() => definiteContractPeriod.value, (newValue) => {
           <div class="xs:flex">
             <div class="flex items-center gap-2">
               <div class="xs:inline-flex xs:flex-col xs:items-center">
-                <p class="ml-3 text-sm text-gray-500 xs:ml-0">Válassz dátumot</p>
+                <p class="ml-3 text-sm text-neutral-500 xs:ml-0">Válassz dátumot</p>
                 <InputDatePicker 
                   v-model="contractStartDate"
                   name="contractStartDate"
@@ -202,7 +211,7 @@ watch(() => definiteContractPeriod.value, (newValue) => {
             </div>
             <div class="flex items-center gap-2 xs:ml-auto sm:ml-24">
               <div class="xs:inline-flex xs:flex-col xs:items-center">
-                <p class="ml-3 text-sm text-gray-500 xs:ml-0">Válassz dátumot</p>
+                <p class="ml-3 text-sm text-neutral-500 xs:ml-0">Válassz dátumot</p>
                 <InputDatePicker 
                   v-model="contractEndDate"
                   name="contractEndDate"
@@ -214,15 +223,45 @@ watch(() => definiteContractPeriod.value, (newValue) => {
         </QuestionItem>
         <!-- lejárat -->
         <QuestionItem title="Határozott idő lejárta előtt felmondható-e?">
-          # felmondható-e
+          <InputRadioBool
+            v-model="contractTerminationPossibleBeforeEndDate"
+            name="contractTerminationPossibleBeforeEndDate"
+            label="igen"
+            @update:model-value="contractTerminationNotPossibleBeforeEndDate = false"
+          />
+          <InputRadioBool
+            v-model="contractTerminationNotPossibleBeforeEndDate"
+            name="contractTerminationNotPossibleBeforeEndDate"
+            label="nem"
+            @update:model-value="contractTerminationPossibleBeforeEndDate = false"
+          />
         </QuestionItem>
         <!-- felmondás -->
         <QuestionItem title="Felmondási idő">
-          # felmondási idő
+          <InputText
+            v-model="contractTerminationDays"
+            type="number"
+            label-end="nap"
+            :step="1"
+            :min="0"
+            name="contractTerminationDays"
+            class="w-full xs:w-32"
+          />
         </QuestionItem>
         <!-- teljes időtartamra járó bérleti díj -->
         <QuestionItem title="A bérlő felmondása esetén a teljes időtartamra járó bérleti díjat meg kell-e fizetni?">
-          # felmondás esetén
+          <InputRadioBool
+            v-model="paymentObligation"
+            name="paymentObligation"
+            label="igen"
+            @update:model-value="noPaymentObligation = false"
+          />
+          <InputRadioBool
+            v-model="noPaymentObligation"
+            name="noPaymentObligation"
+            label="nem"
+            @update:model-value="paymentObligation = false"
+          />
         </QuestionItem>
       </QuestionMultiple>
     </TheTransition>
@@ -231,12 +270,53 @@ watch(() => definiteContractPeriod.value, (newValue) => {
     <TheTransition v-model="isUndefiniteContract">
       <QuestionMultiple bordered>
         <QuestionItem title="A bérlet a hónap hanyadik napjáig mondható fel a következő hónap végére?">
-          # időtartama
+          <InputText
+            v-model="contractTerminationDayInMonth"
+            type="number"
+            label-end=". nap a hónapban."
+            :step="1"
+            :min="1"
+            :max="31"
+            name="contractTerminationDayInMonth"
+            class="w-full xs:w-48"
+          />
         </QuestionItem>
         <QuestionItem title="Felmondási idő">
-          # felmondható-e
+          <div class="items-center space-y-4 xs:space-y-0 xs:flex xs:gap-6">
+            <InputText
+              v-model="contractTerminationDays"
+              type="number"
+              label-end="nap"
+              :step="1"
+              :min="0"
+              name="contractTerminationDays"
+              class="w-full xs:w-32"
+            />
+            <QuestionHelp 
+              icon-name="heroicons:information-circle-16-solid" 
+              icon-size="20"
+              class="mb-2"
+            >
+              A mezőbe min. 30 napot, vagy többet írj.
+            </QuestionHelp>
+          </div>
         </QuestionItem>
       </QuestionMultiple>
     </TheTransition>
+
+    <!-- 5/6. - Melléklet vásárlási lehetőség Bérbeadónak -->
+    <QuestionBlock
+      title="Melléklet vásárlási lehetőség Bérbeadónak"
+      placement="5/6."
+    >
+      # mellékletek Bérbeadónak
+    </QuestionBlock>
+    <!-- 6/6. - Melléklet vásárlási lehetőség Bérlőnek -->
+    <QuestionBlock
+      title="Melléklet vásárlási lehetőség Bérlőnek"
+      placement="6/6."
+    >
+      # mellékletek Bérlőnek
+    </QuestionBlock>
   </section>
 </template>
