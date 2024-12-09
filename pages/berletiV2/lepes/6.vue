@@ -110,7 +110,6 @@ watch(annexVisible, (newValue) => {
       title="Bérlemény adatai"
       sub-text=""
       placement="1/3."
-      class="question-block"
     >
       <InputText
         v-model="subjectProperty.country"
@@ -189,7 +188,6 @@ watch(annexVisible, (newValue) => {
       title="Az ingatlan típusa"
       placement="2/3."
       :class="{ 'border-b-0 -mb-2 sm:-mb-4': docsVisible }"
-      class="question-block"
     >
       <InputRadioBool 
         v-model="subjectProperty.independentHouse"
@@ -210,8 +208,6 @@ watch(annexVisible, (newValue) => {
       <QuestionBlock
         title="Bérlő megismerte és átolvasta a társasház"
         bordered
-        
-        class="question-block"
       >
         <InputChboxPrice 
           v-model="condominiumFoundingDocument"
@@ -236,7 +232,6 @@ watch(annexVisible, (newValue) => {
       title="Bútorozottság"
       placement="3/3."
       :class="{ 'border-b-0 -mb-2 sm:-mb-4': annexVisible }"
-      class="question-block"
     >
       <InputRadioBool 
         v-model="subjectProperty.noFurniture"
@@ -262,7 +257,6 @@ watch(annexVisible, (newValue) => {
         title="Melléklet vásárlási lehetőség"
         bordered
         price="5.000Ft"
-        class="question-block"
       >
         <template #hint>
           <AppTooltip
@@ -297,14 +291,3 @@ watch(annexVisible, (newValue) => {
     </TheTransition>
   </section>
 </template>
-
-<style scoped>
-.canvas-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-</style>
