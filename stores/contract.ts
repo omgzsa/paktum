@@ -26,9 +26,13 @@ export const useContractStore = defineStore('contract', () => {
     inventoryDocument: false,
     numberOfKeys: 2,
     smokingPermitted: false,
+    smokingNotPermitted: false,
     petsAllowed: false,
+    petsNotAllowed: false,
     addressCardPermitted: false,
     tempAddressCardPermitted: false,
+    addressCardNotPermitted: false, // do we need it?
+    annualInspectionDays: 0,
     propertyEmptied: false,
     propertyCleaned: false,
     propertyFurnituredByOwner: true,
@@ -360,6 +364,7 @@ export const useContractStore = defineStore('contract', () => {
 
   const moveOut = ref(false);
   const paymentObligation = ref(false);
+  const noPaymentObligation = ref(false);
   const presumptionOfDelivery = ref(false);
   const eSignature = ref(false);
   const penalityChange = ref('');
@@ -493,6 +498,7 @@ export const useContractStore = defineStore('contract', () => {
     moveOut,
     eSignature,
     paymentObligation,
+    noPaymentObligation,
     presumptionOfDelivery,
     penalityChange,
     addQuestion,
