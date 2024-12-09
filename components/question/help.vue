@@ -24,11 +24,11 @@ const hover = ref(false);
     <Icon 
       :name="iconName"
       :size="iconSize" 
-      class="text-gray-800 dark:text-neutral-400 xs:px-1.5 ml-1 xs:py-1"
+      class="text-neutral-800 dark:text-neutral-400 xs:px-1.5 ml-1 xs:py-1"
     />
     
     <span
-      class="px-1 py-0.5 xs:px-1.5 xs:py-1 absolute flex items-center gap-2 text-xs transition-all duration-300 will-change-auto ease-in-out origin-left scale-x-0 rounded-full shadow opacity-0 bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200"
+      class="px-1 py-0.5 xs:px-1.5 xs:py-1 sm:px-0 sm:pl-1.5 sm:pr-2.5 absolute flex items-center gap-2 text-xs transition-all duration-300 will-change-auto ease-in-out origin-left scale-x-0 rounded-full shadow opacity-0 bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200"
       :class="{
         'scale-x-100 opacity-100': hover,
       }"
@@ -36,7 +36,7 @@ const hover = ref(false);
       <Icon 
         :name="iconName"
         :size="iconSize"
-        class="text-gray-800 dark:text-neutral-400 shrink-0 xs:px-1.5 xs:py-1"
+        class="text-neutral-800 dark:text-neutral-400 shrink-0 xs:px-1.5 xs:py-1"
       />
       <slot />
     </span>
