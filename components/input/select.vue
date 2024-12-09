@@ -51,7 +51,7 @@ watch(value, (newValue) => {
     >
       <UButton 
         color="white"
-        class="justify-between flex-1 py-[2.25px] text-xs font-bold transition-all border-0 border-none rounded-md shadow-sm ring-1 focus:ring-paktum-500 hover:border-neutral-950 focus:border-paktum-500 md:text-sm dark:bg-neutral-800 dark:text-neutral-100 text-neutral-900 ring-inset ring-gray-300 placeholder:text-gray-400 hover:bg-none focus:ring-2 focus:ring-inset"
+        class="justify-between flex-1 py-[2.25px] text-xs font-bold transition-all border-0 border-none rounded-md shadow-sm ring-1 focus:ring-paktum-500 hover:border-neutral-950 focus:border-paktum-500 md:text-sm dark:bg-neutral-800 dark:text-neutral-100 text-neutral-900 ring-inset ring-neutral-300 placeholder:text-neutral-400 hover:bg-none focus:ring-2 focus:ring-inset"
       >
         {{ value }}
 
