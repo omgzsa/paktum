@@ -346,6 +346,15 @@ export const useContractStore = defineStore('contract', () => {
     contractTerminationPossibleOnNoNotRefill: false,
   });
 
+  const publicDocument = ref({
+    movingOut: false,
+    paymentObligation: false,
+    servicePresumption: false,
+    paidByOwner: false,
+    paidByRenter: false,
+    paidByBoth: false,
+  });
+
   const contractTerminationDate = ref("2024-06-21T19:43:14.217Z");
   const contractTerminationDays = ref(0);
   const contractTerminationDayInMonth = ref(0);
@@ -356,8 +365,11 @@ export const useContractStore = defineStore('contract', () => {
 
 
   const damageReport = ref(false);
+  const damageReportWithPhotoAndVideo = ref(false);
+  const damageReportWithPhotoAndVideoAndProtocol = ref(false);
   const notarialDocumentCostForOwner = ref("");
   const energeticCertificateRequired = ref(false);
+  const energeticCertificateNotRequired = ref(false);
   const condominiumFoundingDocument = ref(false);
   const orgRules = ref(false);
   const houseRules = ref(false);
@@ -490,8 +502,12 @@ export const useContractStore = defineStore('contract', () => {
     contractTerminationNotPossibleBeforeEndDate,
     contractReConfirmationDays,
     damageReport,
+    damageReportWithPhotoAndVideo,
+    damageReportWithPhotoAndVideoAndProtocol,
     notarialDocumentCostForOwner,
     energeticCertificateRequired,
+    energeticCertificateNotRequired,
+    publicDocument,
     condominiumFoundingDocument,
     orgRules,
     houseRules,
