@@ -1,3 +1,6 @@
+<!-- 
+  AZ INGATLAN
+-->
 <script lang="ts" setup>
 import { useContractStore } from '@/stores/contract';
 
@@ -294,3 +297,14 @@ watch(annexVisible, (newValue) => {
     </TheTransition>
   </section>
 </template>
+
+<style scoped>
+.canvas-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+</style>

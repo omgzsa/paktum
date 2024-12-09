@@ -1,3 +1,6 @@
+<!-- 
+  HÁTTÉRJOGSZABÁLYOK
+-->
 <script lang="ts" setup>
 import { useContractStore } from '@/stores/contract';
 
@@ -44,7 +47,7 @@ const items = [
         <UButton
           color="white"
           variant="ghost"
-          class="border-b border-gray-200 dark:border-gray-700"
+          class="border-b border-neutral-200 dark:border-neutral-700"
           :ui="{ rounded: 'rounded-none', padding: { sm: 'py-3' } }"
         >
           <span class="truncate">{{ item.label }}</span>

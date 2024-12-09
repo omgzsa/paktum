@@ -1,3 +1,6 @@
+<!-- 
+  BIZTOSÍTÉKOK ÉS KÖLTÉSGEK
+-->
 <script lang="ts" setup>
 import { useContractStore } from '@/stores/contract';
 
@@ -183,7 +186,7 @@ watch(() => utilityExpenses.value.payedByOwner, (newVal) => {
         class="mb-4"
       >
         <div class="inline-flex flex-col items-center">
-          <p class="text-sm text-gray-500">Válassz dátumot</p>
+          <p class="text-sm text-neutral-500">Válassz dátumot</p>
           <InputDatePicker 
             v-model="deposit.paymentDate"
             name="deposit.paymentDate"

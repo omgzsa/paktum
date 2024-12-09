@@ -1,3 +1,6 @@
+<!-- 
+  AZ ELLENÉRTÉK
+-->
 <script lang="ts" setup>
 import { useContractStore } from '@/stores/contract';
 
@@ -138,7 +141,7 @@ watch(() => paymentDetail.value.cash, () => {
           </AppTooltip>
         </template>
         <div class="inline-flex flex-col items-center">
-          <p class="text-sm text-gray-500">Válassz dátumot</p>
+          <p class="text-sm text-neutral-500">Válassz dátumot</p>
           <InputDatePicker 
             v-model="indexing.indexingNotifyDate" 
             name="indexing.indexingNotifyDate"
@@ -266,7 +269,7 @@ watch(() => paymentDetail.value.cash, () => {
       placement="5/7."
     >
       <div class="inline-flex flex-col items-center">
-        <p class="text-sm text-gray-500">Válassz dátumot</p>
+        <p class="text-sm text-neutral-500">Válassz dátumot</p>
         <InputDatePicker 
           v-model="paymentDetail.firstPaymentDate"
           name="paymentDetail.firstPaymentDate"

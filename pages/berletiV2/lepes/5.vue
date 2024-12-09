@@ -1,3 +1,6 @@
+<!-- 
+  TESTRESZABÁS 4. LÉPÉS
+-->
 <script lang="ts" setup>
 import { useContractStore } from '@/stores/contract';
 
