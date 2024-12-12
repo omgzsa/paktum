@@ -136,7 +136,7 @@ watch(annexVisible, (newValue) => {
           v-model="subjectProperty.publicAreaType"
           label="Közterület jellege"
           :options="publicAreaTypes"
-          name="subjectProperty.streetType"
+          name="subjectProperty.publicAreaType"
         />
         <InputText
           v-model="subjectProperty.houseNumber"
