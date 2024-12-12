@@ -2,7 +2,7 @@
 import { useField } from 'vee-validate';
 
 const props = defineProps<{
-  modelValue: string;
+  modelValue: string | undefined;
   name: string;
   label: string;
   optionId?: string;
