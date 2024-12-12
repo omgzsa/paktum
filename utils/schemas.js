@@ -34,4 +34,8 @@ const stepNine = object({});
 
 const stepTen = object({});
 
-export const schemas = [stepOne, stepTwo, stepThree, stepFour, stepFive, stepSix, stepSeven, stepEight, stepNine, stepTen];
+const stepEleven = object({});
+
+export const schemas = [ 
+  stepOne, stepTwo, stepThree, stepFour, stepFive, stepSix, stepSeven, stepEight, stepNine, stepTen, stepEleven 
+];
