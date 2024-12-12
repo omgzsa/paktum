@@ -394,7 +394,8 @@ export const useContractStore = defineStore('contract', () => {
   const eSignature = ref(false);
   const noSignature = ref(false); // extra
   const penalityChange = ref('');
-  const isDifferentMailingAddress = ref(false); // extra
+  const isDifferentMailingAddressForOwner = ref(false); // extra
+  const isDifferentMailingAddressForRenter = ref(false); // extra
 
   // GETTERS
   
@@ -561,7 +562,8 @@ export const useContractStore = defineStore('contract', () => {
     noPaymentObligation,
     presumptionOfDelivery,
     penalityChange,
-    isDifferentMailingAddress,
+    isDifferentMailingAddressForOwner,
+    isDifferentMailingAddressForRenter,
     addQuestion,
     removeQuestion,
     getQuestion,
