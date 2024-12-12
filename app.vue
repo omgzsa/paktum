@@ -1,5 +1,13 @@
-<script setup>
-//
+<script lang="ts" setup>
+// const response = await useFetch('/api/login', {
+//   method: 'POST',
+//   body: JSON.stringify({
+//     username: 'test',
+//     password: 'test1234',
+//   }),
+// });
+
+// console.log(response);
 </script>
 
 <template>
