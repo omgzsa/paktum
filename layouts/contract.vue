@@ -17,6 +17,9 @@ const { values, handleSubmit, isSubmitting, setFieldValue } = useForm({
   keepValuesOnUnmount: true,
 });
 
+const isLeftAsideOpen = ref(false)
+const isRightAsideOpen = ref(false)
+
 provide('currentStep', currentStep);
 provide('setFieldValue', setFieldValue);
 
@@ -54,7 +57,7 @@ function validateAndGo(step: number | null) {
         :total-steps="schemas.length"
       />
 
-      <form class="min-h-[70vh]">
+      <form>
         <slot />
       </form>
 
@@ -65,9 +68,27 @@ function validateAndGo(step: number | null) {
         :current-step="currentStep"
         @validate-and-go="validateAndGo"
       />
-      <pre wrap class="fixed right-0 text-[10px] leading-tight top-0 w-60">
+      <!-- <p class="bottom-0 right-0 w-full text-xs leading-tight">
         {{ values }}
-      </pre>
+      </p> -->
+      <!-- Mobile Sticky Buttons -->
+      <div class="fixed z-50 flex flex-col gap-2 bottom-4 right-4">
+        <UButton
+          icon="i-heroicons-bars-3"
+          color="white"
+          variant="solid"
+          class="glass-effect"
+          @click="isLeftAsideOpen = true"
+        />
+        <UButton
+          icon="i-heroicons-ellipsis-vertical"
+          color="white"
+          variant="solid"
+          class="glass-effect"
+          @click="isRightAsideOpen = true"
+        />
+      </div>
+    
     </main>
 
     <footer>
