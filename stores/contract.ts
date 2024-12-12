@@ -1,11 +1,4 @@
-interface Question {
-  questionId: number,
-  questionSelectedOptionIdentifier: string,
-  optionParameters?: Array<{ 
-    optionParameterId?: number, 
-    parameter?: string | number | undefined
-  }>
-};
+import type { Owner, Renter, PublicDocument, Question } from '@/types';
 
 export const useContractStore = defineStore('contract', () => {
   const contractId = ref(0);
@@ -19,38 +12,40 @@ export const useContractStore = defineStore('contract', () => {
     city: "",
     address: "",
     size: '',
-    independentHouse: false,
-    condominiumApartment: false,
+    independentHouse: false, // extra
+    condominiumApartment: false, // extra
     hasFurniture: false,
-    noFurniture: false,
+    noFurniture: false, // extra
     inventoryDocument: false,
     numberOfKeys: 2,
     smokingPermitted: false,
-    smokingNotPermitted: false,
+    smokingNotPermitted: false, // extra
     petsAllowed: false,
-    petsNotAllowed: false,
+    petsNotAllowed: false, // extra
     addressCardPermitted: false,
     tempAddressCardPermitted: false,
-    addressCardNotPermitted: false, // do we need it?
-    annualInspectionDays: 0,
+    addressCardNotPermitted: false, // extra
+    annualInspectionDays: 0, // extra
     propertyEmptied: false,
     propertyCleaned: false,
+    propertyEmptiedAndCleaned: false, // extra
     propertyFurnituredByOwner: true,
     notFurnishedByOwner: false,
-    streetName: '',
-    houseNumber: '',
-    building: '',
-    staircase: '',
-    floor: '',
-    door: '',
-    publicAreaType: '',
+    // these below concatenates to address
+    streetName: '', // extra
+    houseNumber: '', // extra
+    building: '', // extra
+    staircase: '', // extra
+    floor: '', // extra
+    door: '', // extra
+    publicAreaType: '', // extra
   });
 
   const contractStartDate = ref(new Date());
   const contractEndDate = ref(new Date());
   const propertyUsageStartDate = ref(new Date());
   const definiteContractPeriod = ref(true);
-  const undefiniteContractPeriod = ref(false);
+  const undefiniteContractPeriod = ref(false); // extra
 
   const cohabitants = ref([
     {
@@ -63,39 +58,57 @@ export const useContractStore = defineStore('contract', () => {
     }
   ]);
 
-  const owners = ref([
+  const owners = ref<Owner[]>([
     {
       ownerId: 0,
       contractId: 0,
-      firstName: "János",
-      lastName: "Jakab",
-      birthDate: "2024-06-21T19:43:14.217Z",
-      birthPlace: "Budapest",
-      mothersName: "Piros Rózsa",
-      country: "Magyarország",
-      city: "Budapest",
+      firstName: "owners.firstName",
+      lastName: "owners.lastName",
+      birthDate: new Date(),
+      birthPlace: "owners.birthPlace",
+      mothersName: "owners.mothersName",
+      country: "owners.country",
+      city: "owners.city",
+      zipcode: "owners.zipcode",
       address: "Fő utca 11",
-      idCardType: "személyi igazolvány",
-      idCardNumber: "7328919JA",
+      idCardType: "owners.idCardType",
+      idCardNumber: "owners.idCardNumber",
       bankName: "K&H",
       bankAccount: "12345678-12345678-12345678",
+      // these below concatenates to address
+      streetName: '', // extra
+      houseNumber: '', // extra
+      building: undefined, // extra
+      staircase: undefined, // extra
+      floor: undefined, // extra
+      door: undefined, // extra
+      publicAreaType: '', // extra
     }
   ]);
 
-  const renters = ref([
+  const renters = ref<Renter[]>([
     {
       renterId: 0,
       contractId: 0,
-      firstName: "József",
-      lastName: "Teszt",
-      birthDate: "2024-06-21T19:43:14.217Z",
-      birthPlace: "Budapest",
-      mothersName: "Hegyi Liliom",
-      country: "Hungary",
-      city: "Budapest",
+      firstName: "renters.firstName",
+      lastName: "renters.lastName",
+      birthDate: new Date(),
+      birthPlace: "renters.birthPlace",
+      mothersName: "renters.mothersName",
+      country: "renters.country",
+      city: "renters.city",
+      zipcode: "renters.zipcode",
       address: "Teszt utca 2",
-      idCardType: "személyi igazolvány",
-      idCardNumber: "843279ZA",
+      idCardType: "renters.idCardType",
+      idCardNumber: "renters.idCardNumber",
+      // these below concatenates to address
+      streetName: '', // extra
+      houseNumber: '', // extra
+      building: undefined, // extra
+      staircase: undefined, // extra
+      floor: undefined, // extra
+      door: undefined, // extra
+      publicAreaType: '', // extra
     }
   ]);
 
@@ -108,13 +121,13 @@ export const useContractStore = defineStore('contract', () => {
     bankName: "K&H Bank",
     accountNumber: "12345678-12345678-12345678",
     cash: false,
-    transfer: false,
+    transfer: false, // extra
     firstPaymentDate: ref(new Date()),
     paymentCurrency: "Magyar forint (HUF)",
     paymentDocument: false,
   });
 
-  const questions = ref<Array<Question>>([
+  const questions = ref<Question[]>([
     {
       questionId: 1,
       questionSelectedOptionIdentifier: 'Q6O1',
@@ -328,7 +341,7 @@ export const useContractStore = defineStore('contract', () => {
   const deposit = ref({
     depositId: 0,
     contractId: 0,
-    payedWhen: "string",
+    payedWhen: "string", // extra
     paymentDate: ref(new Date()),
     amount: 0,
     currency: "string",
@@ -336,23 +349,22 @@ export const useContractStore = defineStore('contract', () => {
     bankName: "",
     bankAccount: "",
     cash: false,
-    transfer: false,
+    transfer: false, // extra
     paymentDocument: false,
     depositPaybackDays: 0,
     depositRefillDays: 0,
     mustRefill: false,
-    mustNotRefill: false,
+    mustNotRefill: false, // extra
     contractTerminationPossibleOnNoRefill: false,
-    contractTerminationPossibleOnNoNotRefill: false,
+    contractTerminationPossibleOnNoNotRefill: false, // extra
   });
 
-  const publicDocument = ref({
+  // whole object extra
+  const publicDocument = ref<PublicDocument>({
     movingOut: false,
     paymentObligation: false,
     servicePresumption: false,
-    paidByOwner: false,
-    paidByRenter: false,
-    paidByBoth: false,
+    paidBy: undefined,
   });
 
   const contractTerminationDate = ref("2024-06-21T19:43:14.217Z");
@@ -365,21 +377,24 @@ export const useContractStore = defineStore('contract', () => {
 
 
   const damageReport = ref(false);
-  const damageReportWithPhotoAndVideo = ref(false);
-  const damageReportWithPhotoAndVideoAndProtocol = ref(false);
-  const notarialDocumentCostForOwner = ref("");
+  const damageReportWithPhotoAndVideo = ref(false); // extra
+  const damageReportWithPhotoAndVideoAndProtocol = ref(false); // extra
+  const notarialDocumentCostForOwner = ref(50);
+  const notarialDocumentCostForRenter = ref(50); // extra
   const energeticCertificateRequired = ref(false);
-  const energeticCertificateNotRequired = ref(false);
+  const energeticCertificateNotRequired = ref(false); // extra
   const condominiumFoundingDocument = ref(false);
   const orgRules = ref(false);
   const houseRules = ref(false);
 
-  const moveOut = ref(false);
+  const moveOut = ref(false); // extra
   const paymentObligation = ref(false);
-  const noPaymentObligation = ref(false);
-  const presumptionOfDelivery = ref(false);
+  const noPaymentObligation = ref(false); // extra
+  const presumptionOfDelivery = ref(false); // extra
   const eSignature = ref(false);
+  const noSignature = ref(false); // extra
   const penalityChange = ref('');
+  const isDifferentMailingAddress = ref(false); // extra
 
   // GETTERS
   
@@ -473,6 +488,33 @@ export const useContractStore = defineStore('contract', () => {
 
     return deposit.value.amount;
   };
+
+  const updateNotarialCosts = (type: 'owner' | 'renter', value: number) => {
+    // Strict input validation
+    // 1. Ensure the input is a number
+    // 2. Round to one decimal place (for precision)
+    // 3. Clamp between 0.1 and 99.9
+    const parsedValue = Math.max(0.1, Math.min(99.9, 
+      Number(value.toFixed(1)) || 0.1
+    ))
+  
+    if (publicDocument.value.paidBy === 'both') {
+      if (type === 'owner') {
+        notarialDocumentCostForOwner.value = parsedValue
+        notarialDocumentCostForRenter.value = Math.max(0.1, Math.min(99.9, 100 - parsedValue))
+      } else {
+        notarialDocumentCostForRenter.value = parsedValue
+        notarialDocumentCostForOwner.value = Math.max(0.1, Math.min(99.9, 100 - parsedValue))
+      }
+    } else {
+      // If not split, update the value directly
+      if (type === 'owner') {
+        notarialDocumentCostForOwner.value = parsedValue
+      } else {
+        notarialDocumentCostForRenter.value = parsedValue
+      }
+    }
+  }
   
   return {
     contractId,
@@ -505,6 +547,7 @@ export const useContractStore = defineStore('contract', () => {
     damageReportWithPhotoAndVideo,
     damageReportWithPhotoAndVideoAndProtocol,
     notarialDocumentCostForOwner,
+    notarialDocumentCostForRenter,
     energeticCertificateRequired,
     energeticCertificateNotRequired,
     publicDocument,
@@ -513,15 +556,18 @@ export const useContractStore = defineStore('contract', () => {
     houseRules,
     moveOut,
     eSignature,
+    noSignature,
     paymentObligation,
     noPaymentObligation,
     presumptionOfDelivery,
     penalityChange,
+    isDifferentMailingAddress,
     addQuestion,
     removeQuestion,
     getQuestion,
     updateQuestions,
     updateQuestionsWithTwoParams,
     updateDepositAmount,
+    updateNotarialCosts,
   }
 });
