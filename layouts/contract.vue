@@ -1,12 +1,20 @@
 <script lang="ts" setup>
 import { useForm } from 'vee-validate';
 import { schemas } from '@/utils/schemas';
-// import { useContractStore } from '@/stores/contract';
+import { AuthLogin } from '#components';
 
-// const contractStore = useContractStore();
+const { useAuthUser } = useAuth();
 
 const router = useRouter();
 const route = useRoute();
+const modal = useModal();
+
+function openModal() {
+  if(!useAuthUser().value) {
+    return modal.open(AuthLogin);
+  }
+  return;
+}
 
 // Extract the step from route.fullPath (e.g., "/berletiv2/lepes/3")
 const currentStep = ref(parseInt(route.fullPath.split('/').pop() as string) || 1);
@@ -37,6 +45,7 @@ function validateAndGo(step: number | null) {
     })();
   } else {
     handleSubmit(() => {
+      openModal();
       console.log(JSON.stringify(values, null, 2));
     })();
   }
