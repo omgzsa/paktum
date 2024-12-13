@@ -68,6 +68,7 @@ export const useContractStore = defineStore('contract', () => {
       birthPlace: "owners.birthPlace",
       mothersName: "owners.mothersName",
       country: "owners.country",
+      nationality: "owners.nationality",
       city: "owners.city",
       zipcode: "owners.zipcode",
       address: "Fő utca 11",
@@ -96,6 +97,7 @@ export const useContractStore = defineStore('contract', () => {
       birthPlace: "renters.birthPlace",
       mothersName: "renters.mothersName",
       country: "renters.country",
+      nationality: "renters.nationality",
       city: "renters.city",
       zipcode: "renters.zipcode",
       address: "Teszt utca 2",
@@ -367,8 +369,8 @@ export const useContractStore = defineStore('contract', () => {
     paidBy: undefined,
   });
 
-  const contractTerminationDate = ref("2024-06-21T19:43:14.217Z");
-  const contractTerminationDays = ref(0);
+  // const contractTerminationDateIfNotPaid = ref("2024-06-21T19:43:14.217Z"); // 7. oldal 6/7 ???
+  const contractTerminationDays = ref(0); // 2 helyen is van 7. oldal 6/7 és 9. oldal 4/6.2
   const contractTerminationDayInMonth = ref(0);
   const contractTerminationPossibleBeforeEndDate = ref(false);
   const contractTerminationNotPossibleBeforeEndDate = ref(false);
@@ -537,7 +539,7 @@ export const useContractStore = defineStore('contract', () => {
     ltvSelected,
     utilityExpenses,
     deposit,
-    contractTerminationDate,
+    // contractTerminationDateIfNotPaid,
     contractTerminationDays,
     contractTerminationDayInMonth,
     contractConfirmationDays,
