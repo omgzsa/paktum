@@ -1,18 +1,35 @@
 <script setup lang="ts">
-//
+const { useAuthUser, logout } = useAuth();
+
+const user = useAuthUser();
 </script>
 
 <template>
-  <section>
-    <h1>Kösd meg bérleti szerződésed otthonról, gyorsan, egyszerűen</h1>
-    <h2>Lorem ipsum dolor sit ame</h2>
-    <h3>Válaszd ki a szerződés típusát</h3>
-    <p class="pb-16">
-      Ha a szerződés nem szabályoz egy kérdéskört, de a törvény igen, a
-      kérdésben a háttérjogszabály rendelkezéseit kell alkalmazni. Ha
-      szerződéseddel akarsz szabályozni egy kérdéskört, a háttérjogszabálytól
-      függ, hogy a törvényi rendelkezésektől eltérhetsz-e, és ha igen, milyen
-      irányba.
-    </p>
-  </section>
+  <div class="flex flex-col justify-center min-h-screen py-12 bg-gray-50 sm:px-6 lg:px-8">
+    <div class="text-center sm:mx-auto sm:w-full sm:max-w-md">
+      <h1 class="mb-6 text-4xl font-bold text-gray-900">Welcome</h1>
+      <div class="space-x-4">
+        <NuxtLink
+          v-if="!user" 
+          to="/user/login"
+          class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700"
+        >
+        Sign In
+      </NuxtLink>
+      <button
+        v-else
+        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700"
+        @click="() => logout()"
+      >
+        Logout
+      </button>
+        <NuxtLink 
+          to="/"
+          class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700"
+        >
+          Dashboard
+        </NuxtLink>
+      </div>
+    </div>
+  </div>
 </template>
