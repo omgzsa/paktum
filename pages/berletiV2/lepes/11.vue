@@ -54,24 +54,21 @@ const concatAddress = computed(() => {
   return address;
 });
 
-// const measure = 'm2';
-// const formattedMeasure = computed(() => {
-//   return {
-//     base: measure.slice(0, -1),
-//     sup: measure.slice(-1),
-//   };
-// });
-
 watch(concatAddress, (newValue) => {
   subjectProperty.value.address = newValue;
 });
 
-// Levelezési cím
+// 1/4. - Bérbeadó adatai (levelezési cím)
 const mailingAddressDiffersForOwner = useState('mailing-address-differs-for-owner', () => false);
 watch(isDifferentMailingAddressForOwner, () => {
   mailingAddressDiffersForOwner.value = isDifferentMailingAddressForOwner.value;
 });
 
+// 2/4. - Bérbeadó jogalapja a bérbeadásra
+
+// 3/4. - Bérbeadó személyes/meghatalmazott
+
+// 4/4. - Bérlő adatai (levelezési cím)
 const mailingAddressDiffersForRenter = useState('mailing-address-differs-for-renter', () => false);
 watch(isDifferentMailingAddressForRenter, () => {
   mailingAddressDiffersForRenter.value = isDifferentMailingAddressForRenter.value;
@@ -123,9 +120,9 @@ watch(isDifferentMailingAddressForRenter, () => {
         name="owners[0].mothersName"
       />
       <InputText
-        v-model="owners[0].country"
+        v-model="owners[0].nationality"
         label="Állampolgárság"
-        name="owners[0].country"
+        name="owners[0].nationality"
       />
 
       <UDivider class="py-4" size="xs" label="Lakcím" />
