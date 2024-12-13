@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    // gtagKey: process.env.NUXT_GTAG_KEY,
+    paktumApiUrl: process.env.NUXT_PAKTUM_API_URL,
     public: {
       //
     }
