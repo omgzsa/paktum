@@ -1,6 +1,7 @@
 import type { User, LoginResponse, LoginCredentials } from '@/types';
 
 export function useAuth() {
+    const authModal = useAuthModal();
     const useAuthToken = () => useCookie<string | null>('auth_token');
     const useAuthUser = () => useState<User | null>('auth_user');
     // const useAuthLoading = () => useState('auth_loading', () => true);
@@ -40,7 +41,8 @@ export function useAuth() {
         const userData = await fetchUser(response.user);
 
         setUser(userData);
-        await navigateTo('/');
+        authModal.close();
+        // await navigateTo('/');
       } catch (error) {
         console.error('useAuth login FAIL:', error);
         throw error;
