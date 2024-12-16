@@ -35,7 +35,7 @@ const currentStep = inject<number>('currentStep', 0);
   <div class="flex items-center py-10 justify-evenly">
     <NuxtLink
       v-if="hasPrevious"
-      :to="`/berletiv2/lepes/${currentStep - 1}`"
+      :to="`/berleti/lepes/${currentStep - 1}`"
       class="flex items-center px-5 py-2 text-sm font-bold transition-all rounded-md group hover:shadow-md text-neutral-200 dark:text-neutral-800 bg-neutral-900 hover:ring-0 ring-1 ring-neutral-900 hover:bg-accent-100 dark:ring-neutral-400 dark:bg-neutral-300"
       title="Előző"
       @click.prevent="handleNavigation(currentStep - 1)"
@@ -49,7 +49,7 @@ const currentStep = inject<number>('currentStep', 0);
 
     <NuxtLink
       v-if="!isLastStep"
-      :to="`/berletiv2/lepes/${currentStep + 1}`"
+      :to="`/berleti/lepes/${currentStep + 1}`"
       class="flex items-center px-5 py-2 text-sm font-bold transition-all rounded-md group hover:shadow-md text-dark-300 hover:ring-0 ring-1 ring-paktum-500 bg-paktum-500 hover:bg-accent-100 dark:text-neutral-800"
       title="Következő"
       @click.prevent="handleNavigation(currentStep + 1)"

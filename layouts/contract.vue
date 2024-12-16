@@ -5,7 +5,7 @@ import { schemas } from '@/utils/schemas';
 const router = useRouter();
 const route = useRoute();
 
-// Extract the step from route.fullPath (e.g., "/berletiv2/lepes/3")
+// Extract the step from route.fullPath (e.g., "/berleti/lepes/3")
 const currentStep = ref(parseInt(route.fullPath.split('/').pop() as string) || 1);
 const currentSchema = ref(schemas[currentStep.value - 1]);
 
@@ -30,7 +30,7 @@ function validateAndGo(step: number | null) {
     if (step) {
         handleSubmit(() => {
           currentStep.value = step;
-          router.push({ path: `/berletiv2/lepes/${step}` });
+          router.push({ path: `/berleti/lepes/${step}` });
         })();
       } else {
         handleSubmit(() => {

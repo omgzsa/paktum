@@ -4,6 +4,6 @@
 
 <template>
   <div>
-    // berletiV2/index.vue
+    // berleti/index.vue
   </div>
 </template>
