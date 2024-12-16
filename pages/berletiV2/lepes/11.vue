@@ -311,9 +311,9 @@ watch(isDifferentMailingAddressForRenter, () => {
         name="renters[0].mothersName"
       />
       <InputText
-        v-model="renters[0].country"
+        v-model="renters[0].nationality"
         label="Állampolgárság"
-        name="renters[0].country"
+        name="renters[0].nationality"
       />
 
       <UDivider class="py-4" size="xs" label="Lakcím" />
