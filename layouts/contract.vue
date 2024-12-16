@@ -1,54 +1,42 @@
 <script lang="ts" setup>
 import { useForm } from 'vee-validate';
 import { schemas } from '@/utils/schemas';
-import { AuthLogin } from '#components';
-
-const { useAuthUser } = useAuth();
 
 const router = useRouter();
 const route = useRoute();
-const modal = useModal();
-
-function openModal() {
-  if(!useAuthUser().value) {
-    return modal.open(AuthLogin);
-  }
-  return;
-}
 
 // Extract the step from route.fullPath (e.g., "/berletiv2/lepes/3")
 const currentStep = ref(parseInt(route.fullPath.split('/').pop() as string) || 1);
 const currentSchema = ref(schemas[currentStep.value - 1]);
 
 const { values, handleSubmit, isSubmitting, setFieldValue } = useForm({
-  validationSchema: currentSchema,
-  keepValuesOnUnmount: true,
+    validationSchema: currentSchema,
+    keepValuesOnUnmount: true,
 });
 
-const isLeftAsideOpen = ref(false)
-const isRightAsideOpen = ref(false)
+// const isLeftAsideOpen = ref(false)
+// const isRightAsideOpen = ref(false)
 
 provide('currentStep', currentStep);
 provide('setFieldValue', setFieldValue);
 
 // Watch for changes in the route to update currentStep
 watch(() => route.fullPath, (newPath) => {
-  const newStep = parseInt(newPath.split('/').pop() as string);
-  currentStep.value = newStep || 1;
+    const newStep = parseInt(newPath.split('/').pop() as string);
+    currentStep.value = newStep || 1;
 });
 
 function validateAndGo(step: number | null) {
-  if (step) {
-    handleSubmit(() => {
-      currentStep.value = step;
-      router.push({ path: `/berletiv2/lepes/${step}` });
-    })();
-  } else {
-    handleSubmit(() => {
-      openModal();
-      console.log(JSON.stringify(values, null, 2));
-    })();
-  }
+    if (step) {
+        handleSubmit(() => {
+          currentStep.value = step;
+          router.push({ path: `/berletiv2/lepes/${step}` });
+        })();
+      } else {
+        handleSubmit(() => {
+          console.log(JSON.stringify(values, null, 2));
+        })();
+    }
 }
 </script>
 
@@ -81,7 +69,7 @@ function validateAndGo(step: number | null) {
         {{ values }}
       </p> -->
       <!-- Mobile Sticky Buttons -->
-      <div class="fixed z-50 flex flex-col gap-2 bottom-4 right-4">
+      <!-- <div class="fixed z-50 flex flex-col gap-2 bottom-4 right-4">
         <UButton
           icon="i-heroicons-bars-3"
           color="white"
@@ -96,8 +84,10 @@ function validateAndGo(step: number | null) {
           class="glass-effect"
           @click="isRightAsideOpen = true"
         />
-      </div>
-    
+      </div> -->
+      <AuthModal>
+        <AuthLogin />
+      </AuthModal>
     </main>
 
     <footer>
