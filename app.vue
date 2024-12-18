@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const { restoreUserSession } = useAuth()
 
-onMounted(async () => {
+onBeforeMount(async () => {
     await restoreUserSession()
 })
 </script>
