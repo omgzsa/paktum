@@ -1,17 +1,17 @@
 export const useAuthModal = defineStore('auth-modal', () => {
-  const isOpen = ref(false)
+	const isOpen = ref(false)
 
-  function open() {
-    isOpen.value = true
-  }
+	function open() {
+		isOpen.value = true
+	}
 
-  function close() {
-    isOpen.value = false
-  }
+	function close() {
+		isOpen.value = false
+	}
 
-  return {
-    isOpen,
-    open,
-    close
-  }
+	return {
+		isOpen,
+		open,
+		close,
+	}
 })
