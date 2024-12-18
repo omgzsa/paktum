@@ -1,59 +1,111 @@
-import type { User, LoginResponse, LoginCredentials } from '@/types';
+import type { User, LoginResponse, LoginCredentials } from '@/types'
+import { jwtDecode } from 'jwt-decode'
 
 export function useAuth() {
-    const authModal = useAuthModal();
-    const useAuthToken = () => useCookie<string | null>('auth_token');
-    const useAuthUser = () => useState<User | null>('auth_user');
-    // const useAuthLoading = () => useState('auth_loading', () => true);
+    const authModal = useAuthModal()
+    const useAuthToken = () => useCookie<string | null>('auth_token')
+    const useAuthUser = () => useState<User | null>('auth_user')
+
+    const saveToLocalStorage = (key: string, value: string) =>
+        localStorage.setItem(key, value)
+
+    const removeFromLocalStorage = (key: string) => localStorage.removeItem(key)
 
     const setToken = (newToken: string | null) => {
-        const authToken = useAuthToken();
-        authToken.value = newToken;
+        const authToken = useAuthToken()
+        authToken.value = newToken
+
+        if (newToken) {
+            saveToLocalStorage('auth_token', newToken)
+        } else {
+            removeFromLocalStorage('auth_token')
+        }
     }
 
     const setUser = (newUser: User | null) => {
-        const authUser = useAuthUser();
-        authUser.value = newUser;
+        const authUser = useAuthUser()
+        authUser.value = newUser
+
+        if (newUser) {
+            saveToLocalStorage('userId', String(newUser.id))
+        } else {
+            removeFromLocalStorage('userId')
+        }
     }
 
-    // const setLoading = (newLoading: boolean) => {
-    //     const authLoading = useAuthLoading();
-    //     authLoading.value = newLoading;
-    // }
+    const isValidToken = (token: string): boolean => {
+        // Validate token structure before decoding
+        if (!token || token.split('.').length !== 3) return false
 
-    async function fetchUser(id: number) {
-        const token = useAuthToken().value;
-        const user = await $fetch<User>(`/api/users/${id}`, {
-            headers: { Authorization: `Bearer ${token}` },
-        });
-        return user;
+        try {
+            const decoded = jwtDecode<{ exp?: number }>(token)
+            return decoded.exp
+                ? decoded.exp > Math.floor(Date.now() / 1000)
+                : false
+        } catch (error) {
+            console.error('[isValidToken] Failed to decode token:', error)
+            return false
+        }
     }
-  
-    async function login(credentials: LoginCredentials) {
-      try {
-        const response = await $fetch<LoginResponse>('/api/auth/login', {
-          method: 'POST',
-          body: credentials,
-        });
 
-        setToken(response.token);
+    const restoreUserSession = async () => {
+        const token = useAuthToken().value
 
-        const userData = await fetchUser(response.user);
-
-        setUser(userData);
-        authModal.close();
-        // await navigateTo('/');
-      } catch (error) {
-        console.error('useAuth login FAIL:', error);
-        throw error;
-      }
+        if (token && isValidToken(token)) {
+            try {
+                const userData = await fetchUser(
+                    Number(localStorage.getItem('userId')),
+                )
+                setUser(userData)
+                return
+            } catch (error) {
+                console.error(
+                    '[restoreUserSession] Failed to fetch user:',
+                    error,
+                )
+            }
+        }
+        clearSession()
     }
-  
-    function logout() {
-        setToken(null);
-        setUser(null);
+
+    const fetchUser = async (id: number): Promise<User> => {
+        try {
+            return await $fetch<User>(`/api/users/${id}`)
+        } catch (error) {
+            console.error('[fetchUser] Failed to fetch user:', error)
+            throw error
+        }
     }
-  
-    return { login, logout, useAuthUser };
-  }
-  
+
+    const login = async (credentials: LoginCredentials) => {
+        try {
+            const response = await $fetch<LoginResponse>('/api/auth/login', {
+                method: 'POST',
+                body: credentials,
+            })
+
+            if (!isValidToken(response.token)) {
+                throw new Error('[login] Invalid authentication token')
+            }
+
+            setToken(response.token)
+
+            const userData = await fetchUser(response.user)
+            setUser(userData)
+
+            authModal.close()
+        } catch (error) {
+            console.error('[login] Failed to authenticate:', error)
+            throw error
+        }
+    }
+
+    const logout = () => clearSession()
+
+    const clearSession = () => {
+        setToken(null)
+        setUser(null)
+    }
+
+    return { login, logout, useAuthUser, restoreUserSession }
+}
