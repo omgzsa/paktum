@@ -1,13 +1,7 @@
 <template>
-  <div>
-    
-  </div>
+    <div># register</div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup></script>
 
-</script>
-
-<style>
-
-</style>
+<style></style>
