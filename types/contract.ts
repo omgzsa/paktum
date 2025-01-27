@@ -18,7 +18,7 @@ export interface PublicDocument {
 export interface Person {
     firstName: string;
     lastName: string;
-    birthDate: Date;
+    birthDate: string;
     birthPlace: string;
     mothersName: string;
     country: string;
@@ -30,6 +30,10 @@ export interface Person {
     idCardNumber: string;
     idCardExpiration: Date;
     taxIdentificationNumber: string;
+    mailingZipcode: string;
+    mailingCountry: string;
+    mailingCity: string;
+    mailingAddress: string;
     // these below properties are used for the address concatenation
     streetName: string;
     houseNumber: number | string | undefined;
@@ -46,10 +50,6 @@ export interface Owner extends Person {
     contractId: number;
     bankName: string;
     bankAccount: string;
-    mailingZipcode: string;
-    mailingCountry: string;
-    mailingCity: string;
-    mailingAddress: string;
 }
 
 export interface Renter extends Person {
