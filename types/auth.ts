@@ -1,9 +1,15 @@
 export interface LoginResponse {
-  token: string;
-  user: number;
+    token: string;
+    user: number;
 }
 
 export interface LoginCredentials {
-  username: string;
-  password: string;
+    username: string;
+    password: string;
+}
+
+export interface JWTPayload {
+    exp: number;
+    iat: number;
+    sub: string;
 }
