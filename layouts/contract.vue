@@ -52,10 +52,10 @@ function validateAndGo(step: number | null) {
         </header>
 
         <main class="relative space-y-10">
-            <!-- <FormProgress
+            <FormProgress
                 :current-step="currentStep"
                 :total-steps="schemas.length"
-            /> -->
+            />
 
             <form>
                 <slot />
