@@ -1,35 +1,35 @@
-<!-- 
-  TESTRESZABÁS 2. LÉPÉS
+<!--
+    2. TESTRESZABÁS 2/4
 -->
 <script lang="ts" setup>
-import { useContractStore } from '@/stores/contract';
+import { useContractStore } from '@/stores/contract'
 
 definePageMeta({
     layout: 'contract',
-});
+})
 
-const contractStore = useContractStore();
+const contractStore = useContractStore()
 // const { questions } = storeToRefs(contractStore);
-const { getQuestion, addQuestion, updateQuestions } = contractStore;
+const { getQuestion, addQuestion, updateQuestions } = contractStore
 
 const createValue = (questionId: number) =>
     computed({
         get: () => getQuestion(questionId)?.optionId || '',
         set: (newOptionId) => {
-            updateQuestions(newOptionId, questionId);
+            updateQuestions(newOptionId, questionId)
         },
-    });
+    })
 
-const Q15Value = createValue(10);
-const Q4Value = createValue(11);
-const Q16Value = createValue(12);
-const Q17Value = createValue(13);
-const Q21Value = createValue(14);
-const Q18Value = createValue(15);
-const Q19Value = createValue(16);
-const Q20Value = createValue(17);
+const Q15Value = createValue(10)
+const Q4Value = createValue(11)
+const Q16Value = createValue(12)
+const Q17Value = createValue(13)
+const Q21Value = createValue(14)
+const Q18Value = createValue(15)
+const Q19Value = createValue(16)
+const Q20Value = createValue(17)
 
-const currency = ref('HUF');
+const currency = ref('HUF')
 
 const optionsQ15 = [
     { id: 0, label: 'kert gondozása' },
@@ -44,26 +44,26 @@ const optionsQ15 = [
         label: 'az épület és a közös használatú helyiségek megvilágítása',
     },
     { id: 5, label: 'háztartási szemét elszállítása' },
-];
+]
 
 const handleSyncChange = (e: Event) => {
-    const clickedOption = (e.target as HTMLInputElement).value;
+    const clickedOption = (e.target as HTMLInputElement).value
 
     if (clickedOption === 'Q17O1' || clickedOption === 'Q21O1') {
-        Q17Value.value = 'Q17O1';
-        Q21Value.value = 'Q21O1';
-        updateQuestions('Q17O1', 13);
-        updateQuestions('Q21O1', 14);
+        Q17Value.value = 'Q17O1'
+        Q21Value.value = 'Q21O1'
+        updateQuestions('Q17O1', 13)
+        updateQuestions('Q21O1', 14)
     } else if (clickedOption === 'Q17O2' || clickedOption === 'Q21O2') {
-        Q17Value.value = 'Q17O2';
-        Q21Value.value = 'Q21O2';
-        updateQuestions('Q17O2', 13);
-        updateQuestions('Q21O2', 14);
+        Q17Value.value = 'Q17O2'
+        Q21Value.value = 'Q21O2'
+        updateQuestions('Q17O2', 13)
+        updateQuestions('Q21O2', 14)
     }
-};
+}
 
-const textValueRef = ref<string | number | null>(null);
-const checkedValuesRef = ref<string[]>([]);
+const textValueRef = ref<string | number | null>(null)
+const checkedValuesRef = ref<string[]>([])
 const handleCombinedUpdate = (
     optionId: string,
     questionId: number,
@@ -73,12 +73,12 @@ const handleCombinedUpdate = (
     }: { textValue?: string | number; checkedValues?: string[] },
 ) => {
     // Update the refs based on which value is being passed
-    if (textValue !== undefined) textValueRef.value = textValue;
-    if (checkedValues !== undefined) checkedValuesRef.value = checkedValues;
+    if (textValue !== undefined) textValueRef.value = textValue
+    if (checkedValues !== undefined) checkedValuesRef.value = checkedValues
 
     // If both values are present, proceed with adding the question
     if (textValueRef.value && checkedValuesRef.value.length) {
-        const concatenatedValues = concatValues(checkedValuesRef.value);
+        const concatenatedValues = concatValues(checkedValuesRef.value)
 
         addQuestion(questionId, optionId, [
             {
@@ -89,13 +89,13 @@ const handleCombinedUpdate = (
                 optionParameterId: 1,
                 parameter: concatenatedValues,
             },
-        ]);
+        ])
 
         // Clear the refs after submission to avoid repeated updates
-        textValueRef.value = null;
-        checkedValuesRef.value = [];
+        textValueRef.value = null
+        checkedValuesRef.value = []
     }
-};
+}
 </script>
 
 <template>
