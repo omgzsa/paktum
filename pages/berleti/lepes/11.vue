@@ -1,21 +1,21 @@
-<!-- 
+<!--
   FELEK
 -->
 <script lang="ts" setup>
-import { useContractStore } from '@/stores/contract';
+import { useContractStore } from '@/stores/contract'
 
 definePageMeta({
     layout: 'contract',
-});
+})
 
-const contractStore = useContractStore();
+const contractStore = useContractStore()
 const {
     owners,
     renters,
     subjectProperty,
     isDifferentMailingAddressForOwner,
     isDifferentMailingAddressForRenter,
-} = storeToRefs(contractStore);
+} = storeToRefs(contractStore)
 // const { updateNotarialCosts } = contractStore;
 
 const publicAreaTypes = ref([
@@ -37,40 +37,40 @@ const publicAreaTypes = ref([
     'árok',
     'telep',
     'sziget',
-]);
+])
 
 const concatAddress = computed(() => {
-    const property = subjectProperty.value;
+    const property = subjectProperty.value
 
-    const street = `${property.streetName} ${property.publicAreaType} `;
-    const houseN = `${property.houseNumber}., `;
-    const buildingN = property.building ? `${property.building}. épület, ` : '';
+    const street = `${property.streetName} ${property.publicAreaType} `
+    const houseN = `${property.houseNumber}., `
+    const buildingN = property.building ? `${property.building}. épület, ` : ''
     const staircaseN = property.staircase
         ? `${property.staircase}. lépcsőház, `
-        : '';
-    const floorN = property.floor ? `${property.floor}.em./` : '';
-    const doorN = property.door ? `${property.door}.a.` : '';
+        : ''
+    const floorN = property.floor ? `${property.floor}.em./` : ''
+    const doorN = property.door ? `${property.door}.a.` : ''
 
     const address = [street, houseN, buildingN, staircaseN, floorN, doorN]
         .filter((value) => value !== '')
-        .join('');
+        .join('')
 
-    return address;
-});
+    return address
+})
 
 watch(concatAddress, (newValue) => {
-    subjectProperty.value.address = newValue;
-});
+    subjectProperty.value.address = newValue
+})
 
 // 1/4. - Bérbeadó adatai (levelezési cím)
 const mailingAddressDiffersForOwner = useState(
     'mailing-address-differs-for-owner',
     () => false,
-);
+)
 watch(isDifferentMailingAddressForOwner, () => {
     mailingAddressDiffersForOwner.value =
-        isDifferentMailingAddressForOwner.value;
-});
+        isDifferentMailingAddressForOwner.value
+})
 
 // 2/4. - Bérbeadó jogalapja a bérbeadásra
 
@@ -80,20 +80,17 @@ watch(isDifferentMailingAddressForOwner, () => {
 const mailingAddressDiffersForRenter = useState(
     'mailing-address-differs-for-renter',
     () => false,
-);
+)
 watch(isDifferentMailingAddressForRenter, () => {
     mailingAddressDiffersForRenter.value =
-        isDifferentMailingAddressForRenter.value;
-});
+        isDifferentMailingAddressForRenter.value
+})
 </script>
 
 <template>
     <section class="max-w-2xl mx-auto">
         <!-- 1/4. - Bérbeadó adatai  -->
-        <QuestionBlock
-            title="Bérbeadó adatai"
-            placement="1/4."
-        >
+        <QuestionBlock title="Bérbeadó adatai" placement="1/4.">
             <QuestionHelp
                 icon-name="heroicons:information-circle-16-solid"
                 icon-size="20"
@@ -106,109 +103,33 @@ watch(isDifferentMailingAddressForRenter, () => {
                 </span>
             </QuestionHelp>
 
-            <div
-                class="space-y-3 sm:space-y-0 sm:flex sm:items-center sm:gap-4"
-            >
-                <InputText
-                    v-model="owners[0].firstName"
-                    label="Vezetéknév"
-                    name="owners[0].firstName"
-                />
-                <InputText
-                    v-model="owners[0].lastName"
-                    label="Keresztnév"
-                    name="owners[0].lastName"
-                />
-            </div>
-            <InputText
-                v-model="owners[0].birthPlace"
-                label="Születési hely"
-                name="owners[0].birthPlace"
-            />
-            <InputText
-                v-model="owners[0].birthDate"
-                label="Születési idő"
-                name="owners[0].birthDate"
-                placeholder="ÉÉÉÉ-HH-NN"
-            />
-            <InputText
-                v-model="owners[0].mothersName"
-                label="Anyja neve"
-                name="owners[0].mothersName"
-            />
-            <InputText
-                v-model="owners[0].nationality"
-                label="Állampolgárság"
-                name="owners[0].nationality"
+            <InputBlockPersonal
+                person="owners[0]"
+                v-model:firstName="owners[0].firstName"
+                v-model:lastName="owners[0].lastName"
+                v-model:birthPlace="owners[0].birthPlace"
+                v-model:birthDate="owners[0].birthDate"
+                v-model:mothersName="owners[0].mothersName"
+                v-model:nationality="owners[0].nationality"
             />
 
-            <UDivider
-                class="py-4"
-                size="xs"
-                label="Lakcím"
+            <UDivider class="py-4" size="xs" label="Lakcím" />
+
+            <InputBlockHabitat
+                person="owners[0]"
+                v-model:country="owners[0].country"
+                v-model:zipcode="owners[0].zipcode"
+                v-model:city="owners[0].city"
+                v-model:streetName="owners[0].streetName"
+                v-model:publicAreaType="owners[0].publicAreaType"
+                v-model:houseNumber="owners[0].houseNumber"
+                v-model:building="owners[0].building"
+                v-model:staircase="owners[0].staircase"
+                v-model:floor="owners[0].floor"
+                v-model:door="owners[0].door"
             />
 
-            <InputText
-                v-model="owners[0].country"
-                label="Ország"
-                name="owners[0].country"
-            />
-            <InputText
-                v-model="owners[0].zipcode"
-                label="Irányítószám"
-                name="owners[0].zipcode"
-            />
-            <InputText
-                v-model="owners[0].city"
-                label="Település"
-                name="owners[0].city"
-            />
-            <InputText
-                v-model="owners[0].streetName"
-                label="Közterület neve"
-                name="owners[0].streetName"
-            />
-            <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
-                <InputSelect
-                    v-model="owners[0].publicAreaType"
-                    label="Közterület jellege"
-                    :options="publicAreaTypes"
-                    name="owners[0].publicAreaType"
-                />
-                <InputText
-                    v-model="owners[0].houseNumber"
-                    label="Házszám"
-                    name="owners[0].houseNumber"
-                />
-                <InputText
-                    v-model="owners[0].building"
-                    label="Épület"
-                    name="owners[0].building"
-                />
-            </div>
-            <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
-                <InputText
-                    v-model="owners[0].staircase"
-                    label="Lépcsőház"
-                    name="owners[0].staircase"
-                />
-                <InputText
-                    v-model="owners[0].floor"
-                    label="Emelet"
-                    name="owners[0].floor"
-                />
-                <InputText
-                    v-model="owners[0].door"
-                    label="Ajtó"
-                    name="owners[0].door"
-                />
-            </div>
-
-            <UDivider
-                class="py-4"
-                size="xs"
-                label="Levelezési cím"
-            />
+            <UDivider class="py-4" size="xs" label="Levelezési cím" />
 
             <InputChboxPrice
                 v-model="isDifferentMailingAddressForOwner"
@@ -219,78 +140,73 @@ watch(isDifferentMailingAddressForRenter, () => {
             <TheTransition v-model="mailingAddressDiffersForOwner">
                 <div class="pt-5 space-y-3">
                     <InputText
-                        v-model="subjectProperty.country"
+                        v-model="owners[0].mailingCountry"
                         label="Ország"
-                        name="subjectProperty.country"
+                        name="owners[0].mailingCountry"
                     />
                     <InputText
-                        v-model="subjectProperty.zipCode"
+                        v-model="owners[0].mailingZipcode"
                         label="Irányítószám"
-                        name="subjectProperty.zipCode"
+                        name="owners[0].mailingZipcode"
                     />
                     <InputText
-                        v-model="subjectProperty.city"
+                        v-model="owners[0].mailingCity"
                         label="Település"
-                        name="subjectProperty.city"
+                        name="owners[0].mailingCity"
                     />
                     <InputText
-                        v-model="subjectProperty.streetName"
+                        v-model="owners[0].mailingStreetName"
                         label="Közterület neve"
-                        name="subjectProperty.streetName"
+                        name="owners[0].mailingStreetName"
                     />
                     <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
                         <InputSelect
-                            v-model="subjectProperty.publicAreaType"
+                            v-model="owners[0].mailingPublicAreaType"
                             label="Közterület jellege"
                             :options="publicAreaTypes"
-                            name="subjectProperty.streetType"
+                            name="owners[0].mailingPublicAreaType"
                         />
                         <InputText
-                            v-model="subjectProperty.houseNumber"
+                            v-model="owners[0].mailingHouseNumber"
                             label="Házszám"
-                            name="subjectProperty.houseNumber"
+                            name="owners[0].mailingHouseNumber"
                         />
                         <InputText
-                            v-model="subjectProperty.building"
+                            v-model="owners[0].mailingBuilding"
                             label="Épület"
-                            name="subjectProperty.building"
+                            name="owners[0].mailingBuilding"
                         />
                     </div>
                     <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
                         <InputText
-                            v-model="subjectProperty.staircase"
+                            v-model="owners[0].mailingStaircase"
                             label="Lépcsőház"
-                            name="subjectProperty.staircase"
+                            name="owners[0].mailingStaircase"
                         />
                         <InputText
-                            v-model="subjectProperty.floor"
+                            v-model="owners[0].mailingFloor"
                             label="Emelet"
-                            name="subjectProperty.floor"
+                            name="owners[0].mailingFloor"
                         />
                         <InputText
-                            v-model="subjectProperty.door"
+                            v-model="owners[0].mailingDoor"
                             label="Ajtó"
-                            name="subjectProperty.door"
+                            name="owners[0].mailingDoor"
                         />
                     </div>
                 </div>
             </TheTransition>
 
-            <UDivider
-                class="py-4"
-                size="xs"
-                label="Azonosító okmány"
-            />
+            <UDivider class="py-4" size="xs" label="Azonosító okmány" />
 
-            <InputText
-                v-model="owners[0].idCardType"
-                label="Típusa"
-                name="owners[0].idCardType"
-            />
-            <InputText
-                v-model="owners[0].idCardNumber"
-                label="Száma"
-                name="owners[0].idCardNumber"
+            <InputBlockIdentity
+                person="owners[0]"
+                v-model:idCardType="owners[0].idCardType"
+                v-model:idCardNumber="owners[0].idCardNumber"
+                v-model:idCardExpiration="owners[0].idCardExpiration"
+                v-model:taxIdentificationNumber="
+                    owners[0].taxIdentificationNumber
+                "
             />
         </QuestionBlock>
 
@@ -311,10 +227,7 @@ watch(isDifferentMailingAddressForRenter, () => {
         </QuestionBlock>
 
         <!-- 4/4. - Bérlő adatai -->
-        <QuestionBlock
-            title="Bérlő adatai"
-            placement="4/4."
-        >
+        <QuestionBlock title="Bérlő adatai" placement="4/4.">
             <QuestionHelp
                 icon-name="heroicons:information-circle-16-solid"
                 icon-size="20"
@@ -327,108 +240,33 @@ watch(isDifferentMailingAddressForRenter, () => {
                 </span>
             </QuestionHelp>
 
-            <div
-                class="space-y-3 sm:space-y-0 sm:flex sm:items-center sm:gap-4"
-            >
-                <InputText
-                    v-model="renters[0].firstName"
-                    label="Vezetéknév"
-                    name="renters[0].firstName"
-                />
-                <InputText
-                    v-model="renters[0].lastName"
-                    label="Keresztnév"
-                    name="renters[0].lastName"
-                />
-            </div>
-            <InputText
-                v-model="renters[0].birthPlace"
-                label="Születési hely"
-                name="renters[0].birthPlace"
-            />
-            <!-- <InputText
-        v-model="renters[0].birthDate"
-        label="Születési idő"
-        name="renters[0].birthDate"
-      /> -->
-            <InputText
-                v-model="renters[0].mothersName"
-                label="Anyja neve"
-                name="renters[0].mothersName"
-            />
-            <InputText
-                v-model="renters[0].nationality"
-                label="Állampolgárság"
-                name="renters[0].nationality"
+            <InputBlockPersonal
+                person="renters[0]"
+                v-model:firstName="renters[0].firstName"
+                v-model:lastName="renters[0].lastName"
+                v-model:birthPlace="renters[0].birthPlace"
+                v-model:birthDate="renters[0].birthDate"
+                v-model:mothersName="renters[0].mothersName"
+                v-model:nationality="renters[0].nationality"
             />
 
-            <UDivider
-                class="py-4"
-                size="xs"
-                label="Lakcím"
+            <UDivider class="py-4" size="xs" label="Lakcím" />
+
+            <InputBlockHabitat
+                person="renters[0]"
+                v-model:country="renters[0].country"
+                v-model:zipcode="renters[0].zipcode"
+                v-model:city="renters[0].city"
+                v-model:streetName="renters[0].streetName"
+                v-model:publicAreaType="renters[0].publicAreaType"
+                v-model:houseNumber="renters[0].houseNumber"
+                v-model:building="renters[0].building"
+                v-model:staircase="renters[0].staircase"
+                v-model:floor="renters[0].floor"
+                v-model:door="renters[0].door"
             />
 
-            <InputText
-                v-model="renters[0].country"
-                label="Ország"
-                name="renters[0].country"
-            />
-            <InputText
-                v-model="renters[0].zipcode"
-                label="Irányítószám"
-                name="renters[0].zipcode"
-            />
-            <InputText
-                v-model="renters[0].city"
-                label="Település"
-                name="renters[0].city"
-            />
-            <InputText
-                v-model="renters[0].streetName"
-                label="Közterület neve"
-                name="renters[0].streetName"
-            />
-            <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
-                <InputSelect
-                    v-model="renters[0].publicAreaType"
-                    label="Közterület jellege"
-                    :options="publicAreaTypes"
-                    name="renters[0].publicAreaType"
-                />
-                <InputText
-                    v-model="renters[0].houseNumber"
-                    label="Házszám"
-                    name="renters[0].houseNumber"
-                />
-                <InputText
-                    v-model="renters[0].building"
-                    label="Épület"
-                    name="renters[0].building"
-                />
-            </div>
-            <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
-                <InputText
-                    v-model="renters[0].staircase"
-                    label="Lépcsőház"
-                    name="renters[0].staircase"
-                />
-                <InputText
-                    v-model="renters[0].floor"
-                    label="Emelet"
-                    name="renters[0].floor"
-                />
-                <InputText
-                    v-model="renters[0].door"
-                    label="Ajtó"
-                    name="renters[0].door"
-                />
-            </div>
-
-            <UDivider
-                class="py-4"
-                size="xs"
-                label="Levelezési cím"
-            />
+            <UDivider class="py-4" size="xs" label="Levelezési cím" />
 
             <InputChboxPrice
                 v-model="isDifferentMailingAddressForRenter"
@@ -439,78 +277,73 @@ watch(isDifferentMailingAddressForRenter, () => {
             <TheTransition v-model="mailingAddressDiffersForRenter">
                 <div class="pt-5 space-y-3">
                     <InputText
-                        v-model="subjectProperty.country"
+                        v-model="renters[0].mailingCountry"
                         label="Ország"
-                        name="subjectProperty.country"
+                        name="renters[0].mailingCountry"
                     />
                     <InputText
-                        v-model="subjectProperty.zipCode"
+                        v-model="renters[0].mailingZipcode"
                         label="Irányítószám"
-                        name="subjectProperty.zipCode"
+                        name="renters[0].mailingZipcode"
                     />
                     <InputText
-                        v-model="subjectProperty.city"
+                        v-model="renters[0].mailingCity"
                         label="Település"
-                        name="subjectProperty.city"
+                        name="renters[0].mailingCity"
                     />
                     <InputText
-                        v-model="subjectProperty.streetName"
+                        v-model="renters[0].mailingStreetName"
                         label="Közterület neve"
-                        name="subjectProperty.streetName"
+                        name="renters[0].mailingStreetName"
                     />
                     <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
                         <InputSelect
-                            v-model="subjectProperty.publicAreaType"
+                            v-model="renters[0].mailingPublicAreaType"
                             label="Közterület jellege"
                             :options="publicAreaTypes"
-                            name="subjectProperty.streetType"
+                            name="renters[0].mailingPublicAreaType"
                         />
                         <InputText
-                            v-model="subjectProperty.houseNumber"
+                            v-model="renters[0].mailingHouseNumber"
                             label="Házszám"
-                            name="subjectProperty.houseNumber"
+                            name="renters[0].mailingHouseNumber"
                         />
                         <InputText
-                            v-model="subjectProperty.building"
+                            v-model="renters[0].mailingBuilding"
                             label="Épület"
-                            name="subjectProperty.building"
+                            name="renters[0].mailingBuilding"
                         />
                     </div>
                     <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
                         <InputText
-                            v-model="subjectProperty.staircase"
+                            v-model="renters[0].mailingStaircase"
                             label="Lépcsőház"
-                            name="subjectProperty.staircase"
+                            name="renters[0].mailingStaircase"
                         />
                         <InputText
-                            v-model="subjectProperty.floor"
+                            v-model="renters[0].mailingFloor"
                             label="Emelet"
-                            name="subjectProperty.floor"
+                            name="renters[0].mailingFloor"
                         />
                         <InputText
-                            v-model="subjectProperty.door"
+                            v-model="renters[0].mailingDoor"
                             label="Ajtó"
-                            name="subjectProperty.door"
+                            name="renters[0].mailingDoor"
                         />
                     </div>
                 </div>
             </TheTransition>
 
-            <UDivider
-                class="py-4"
-                size="xs"
-                label="Azonosító okmány"
-            />
+            <UDivider class="py-4" size="xs" label="Azonosító okmány" />
 
-            <InputText
-                v-model="renters[0].idCardType"
-                label="Típusa"
-                name="renters[0].idCardType"
-            />
-            <InputText
-                v-model="renters[0].idCardNumber"
-                label="Száma"
-                name="renters[0].idCardNumber"
+            <InputBlockIdentity
+                person="renters[0]"
+                v-model:idCardType="renters[0].idCardType"
+                v-model:idCardNumber="renters[0].idCardNumber"
+                v-model:idCardExpiration="renters[0].idCardExpiration"
+                v-model:taxIdentificationNumber="
+                    renters[0].taxIdentificationNumber
+                "
             />
         </QuestionBlock>
     </section>

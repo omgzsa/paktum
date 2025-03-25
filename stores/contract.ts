@@ -1,8 +1,8 @@
-import type { Owner, Renter, PublicDocument, Question } from '@/types';
+import type { Owner, Renter, PublicDocument, Question } from '@/types'
 
 export const useContractStore = defineStore('contract', () => {
-    const contractId = ref(0);
-    const userId = ref(1);
+    const contractId = ref(0)
+    const userId = ref(1)
 
     const subjectProperty = ref({
         subjectPropertyId: 0,
@@ -12,10 +12,10 @@ export const useContractStore = defineStore('contract', () => {
         city: '',
         address: '',
         size: '',
-        independentHouse: false,
+        independentHouse: true,
         condominiumApartment: false, // extra
         hasFurniture: false,
-        noFurniture: false, // extra
+        noFurniture: true, // extra
         inventoryDocument: false,
         numberOfKeys: 2,
         smokingPermitted: false,
@@ -39,13 +39,13 @@ export const useContractStore = defineStore('contract', () => {
         floor: '', // extra
         door: '', // extra
         publicAreaType: '', // extra
-    });
+    })
 
-    const contractStartDate = ref(new Date());
-    const contractEndDate = ref(new Date());
-    const propertyUsageStartDate = ref(new Date());
-    const definiteContractPeriod = ref(true); // extra
-    const undefiniteContractPeriod = ref(false);
+    const contractStartDate = ref(new Date())
+    const contractEndDate = ref(new Date())
+    const propertyUsageStartDate = ref(new Date())
+    const definiteContractPeriod = ref(true) // extra
+    const undefiniteContractPeriod = ref(false)
 
     const cohabitants = ref([
         {
@@ -60,7 +60,7 @@ export const useContractStore = defineStore('contract', () => {
             firstName: 'Zoltán',
             lastName: 'Nagy',
         },
-    ]);
+    ])
 
     const owners = ref<Owner[]>([
         {
@@ -68,7 +68,7 @@ export const useContractStore = defineStore('contract', () => {
             contractId: 488,
             firstName: 'owners.firstName',
             lastName: 'owners.lastName',
-            birthDate: '1999-01-09',
+            birthDate: 'owners.birthDate',
             birthPlace: 'owners.birthPlace',
             mothersName: 'owners.mothersName',
             country: 'owners.country',
@@ -78,24 +78,32 @@ export const useContractStore = defineStore('contract', () => {
             address: 'Fő utca 11',
             idCardType: 'owners.idCardType',
             idCardNumber: 'owners.idCardNumber',
-            idCardExpiration: new Date(),
+            idCardExpiration: 'owners.idCardExpiration',
             bankName: 'K&H',
             bankAccount: '12345678-12345678-12345678',
-            mailingZipcode: '1092',
-            mailingCountry: 'Magyarország',
-            mailingCity: 'Budapest',
+            mailingZipcode: 'owners.mailingZipcode',
+            mailingCountry: 'owners.mailingCountry',
+            mailingCity: 'owners.mailingCity',
             mailingAddress: 'Fő utca 11',
-            taxIdentificationNumber: '111 222 3344',
+            taxIdentificationNumber: 'owners.taxIdentificationNumber',
             // these below concatenates to address
-            streetName: '', // extra
-            houseNumber: '', // extra
+            streetName: 'owners.streetName', // extra
+            houseNumber: 'owners.houseNumber', // extra
             building: undefined, // extra
             staircase: undefined, // extra
             floor: undefined, // extra
             door: undefined, // extra
             publicAreaType: '', // extra
+            // these below concatenates to mailingAddress
+            mailingStreetName: 'owners.mailingStreetName', // extra
+            mailingHouseNumber: 'owners.mailingHouseNumber', // extra
+            mailingBuilding: undefined, // extra
+            mailingStaircase: undefined, // extra
+            mailingFloor: undefined, // extra
+            mailingDoor: undefined, // extra
+            mailingPublicAreaType: '', // extra
         },
-    ]);
+    ])
 
     const renters = ref<Renter[]>([
         {
@@ -103,7 +111,7 @@ export const useContractStore = defineStore('contract', () => {
             contractId: 0,
             firstName: 'renters.firstName',
             lastName: 'renters.lastName',
-            birthDate: '1992-02-02',
+            birthDate: 'renters.birthDate',
             birthPlace: 'renters.birthPlace',
             mothersName: 'renters.mothersName',
             nationality: 'renters.nationality',
@@ -113,22 +121,30 @@ export const useContractStore = defineStore('contract', () => {
             address: 'Teszt utca 2',
             idCardType: 'renters.idCardType',
             idCardNumber: 'renters.idCardNumber',
-            idCardExpiration: new Date(),
-            mailingZipcode: '1092',
-            mailingCountry: 'renters.Magyarország',
-            mailingCity: 'renters.Budapest',
-            mailingAddress: 'renters.Fő utca 11',
-            taxIdentificationNumber: '111 222 3344',
+            idCardExpiration: 'renters.idCardExpiration',
+            mailingZipcode: 'renters.mailingZipcode',
+            mailingCountry: 'renters.mailingCountry',
+            mailingCity: 'renters.mailingCity',
+            mailingAddress: 'Fő utca 11',
+            taxIdentificationNumber: 'renters.taxIdentificationNumber',
             // these below concatenates to address
-            streetName: '', // extra
-            houseNumber: '', // extra
+            streetName: 'renters.streetName', // extra
+            houseNumber: 'renters.houseNumber', // extra
             building: undefined, // extra
             staircase: undefined, // extra
             floor: undefined, // extra
             door: undefined, // extra
             publicAreaType: '', // extra
+            // these below concatenates to mailingAddress
+            mailingStreetName: 'renters.mailingStreetName', // extra
+            mailingHouseNumber: 'renters.mailingHouseNumber', // extra
+            mailingBuilding: undefined, // extra
+            mailingStaircase: undefined, // extra
+            mailingFloor: undefined, // extra
+            mailingDoor: undefined, // extra
+            mailingPublicAreaType: '', // extra
         },
-    ]);
+    ])
 
     const paymentDetail = ref({
         paymentDetailId: 0,
@@ -136,14 +152,14 @@ export const useContractStore = defineStore('contract', () => {
         paymentDeadlineDay: 1,
         bankName: 'K&H Bank',
         accountNumber: '12345678-12345678-12345678',
-        cash: false,
+        cash: true,
         firstPaymentDate: ref(new Date()),
         paymentCurrency: 'Magyar forint (HUF)',
         currentMonth: false,
         previousMonth: false, // extra
         transfer: false, // extra
         paymentDocument: false,
-    });
+    })
 
     const questions = ref<Question[]>([
         {
@@ -327,7 +343,7 @@ export const useContractStore = defineStore('contract', () => {
             questionSelectedOptionIdentifier: 'Q1O1',
             optionParameters: [],
         },
-    ]);
+    ])
 
     const selectedLanguages = ref([
         {
@@ -335,17 +351,17 @@ export const useContractStore = defineStore('contract', () => {
             languageCode: 'string',
             languageName: 'string',
         },
-    ]);
+    ])
 
     const indexing = ref({
         indexingId: 0,
         contractId: 0,
         indexingType: '',
         indexingNotifyDate: ref(new Date()),
-    });
+    })
 
-    const ptkSelected = ref(false);
-    const ltvSelected = ref(false);
+    const ptkSelected = ref(false)
+    const ltvSelected = ref(false)
 
     const utilityExpenses = ref({
         utilityExpensesId: 0,
@@ -353,10 +369,10 @@ export const useContractStore = defineStore('contract', () => {
         bankName: 'K&H Bank',
         bankAccount: '12345678-12345678-12345678',
         cash: false,
-        payedByOwner: false,
+        payedByOwner: false, // This should be payedToOwner.
         payedToProvider: false, // extra
         paymentDocument: false, // extra
-    });
+    })
 
     const deposit = ref({
         depositId: 0,
@@ -367,7 +383,7 @@ export const useContractStore = defineStore('contract', () => {
         payedWhen: 'string', // extra
         bankName: '',
         bankAccount: '',
-        cash: false,
+        cash: true,
         depositPaybackDays: 0,
         depositRefillDays: 0,
         contractTerminationPossibleOnNoRefill: false,
@@ -376,8 +392,8 @@ export const useContractStore = defineStore('contract', () => {
         paymentDocument: false,
         mustRefill: false, // extra
         mustNotRefill: false, // extra
-        contractTerminationPossibleOnNoNotRefill: false, // extra
-    });
+        contractTerminationNotPossibleOnNoRefill: false, // extra
+    })
 
     // whole object extra
     const publicDocument = ref<PublicDocument>({
@@ -385,62 +401,137 @@ export const useContractStore = defineStore('contract', () => {
         paymentObligation: false,
         servicePresumption: false,
         paidBy: undefined,
-    });
+    })
 
     // const contractTerminationDateIfNotPaid = ref("2024-06-21T19:43:14.217Z"); // 7. oldal 6/7 ???
-    const contractTerminationDays = ref(0); // 2 helyen is van 7. oldal 6/7 és 9. oldal 4/6.2
-    const contractTerminationDayInMonth = ref(0);
-    const contractTerminationPossibleBeforeEndDate = ref(false);
-    const contractTerminationNotPossibleBeforeEndDate = ref(false);
-    const contractConfirmationDays = ref(0);
-    const contractReConfirmationDays = ref(0);
-    const contractDatedPlace = ref('');
-    const contractDatedDate = ref(new Date());
+    const contractTerminationDays = ref(0) // 2 helyen is van 7. oldal 6/7 és 9. oldal 4/6.2
+    const contractTerminationDayInMonth = ref(0)
+    const contractTerminationPossibleBeforeEndDate = ref(false)
+    const contractTerminationNotPossibleBeforeEndDate = ref(false)
+    const contractConfirmationDays = ref(0)
+    const contractReConfirmationDays = ref(0)
+    const contractDatedPlace = ref('')
+    const contractDatedDate = ref(new Date())
 
-    const damageReport = ref(false);
-    const damageReportWithPhotoAndVideo = ref(false); // extra
-    const damageReportWithPhotoAndVideoAndProtocol = ref(false); // extra
-    const notarialDocumentCostForOwner = ref(50);
-    const notarialDocumentCostForRenter = ref(50); // extra
-    const energeticCertificateRequired = ref(false);
-    const energeticCertificateNotRequired = ref(false); // extra
-    const condominiumFoundingDocument = ref(false);
-    const orgRules = ref(false);
-    const houseRules = ref(false);
+    const damageReport = ref(false)
+    const damageReportWithPhotoAndVideo = ref(true) // extra
+    const damageReportWithPhotoAndVideoAndProtocol = ref(false) // extra
+    const notarialDocumentCostForOwner = ref(50)
+    const notarialDocumentCostForRenter = ref(50) // extra
+    const energeticCertificateRequired = ref(false)
+    const energeticCertificateNotRequired = ref(false) // extra
+    const condominiumFoundingDocument = ref(false)
+    const orgRules = ref(false)
+    const houseRules = ref(false)
 
-    const moveOut = ref(false);
-    const paymentObligation = ref(false);
-    const noPaymentObligation = ref(false); // extra
-    const presumptionOfDelivery = ref(false); // extra
-    const eSignature = ref(false);
-    const noSignature = ref(false); // extra
-    const penalityChange = ref('');
-    const isDifferentMailingAddressForOwner = ref(false); // extra
-    const isDifferentMailingAddressForRenter = ref(false); // extra
+    const moveOut = ref(false)
+    const paymentObligation = ref(false)
+    const noPaymentObligation = ref(false) // extra
+    const presumptionOfDelivery = ref(false) // extra
+    const eSignature = ref(false)
+    const noSignature = ref(false) // extra
+    const penalityChange = ref('')
+    const isDifferentMailingAddressForOwner = ref(false) // extra
+    const isDifferentMailingAddressForRenter = ref(false) // extra
 
     // ATTACHMENTS
-    const attachment_HandoverReport = ref(true);
-    const attachment_CashReceiptRentFeePayment = ref(true);
-    const attachment_CashReceiptDeposit = ref(true);
-    const attachment_CashReceiptUtilityCost = ref(true);
-    const attachment_NotificationOfModernizationWorks = ref(true);
-    const attachment_DamageReport = ref(true);
-    const attachment_PowerOfAttorneyRenterEsign = ref(true);
-    const attachment_PowerOfAttorneyOwnerEsign = ref(true);
-    const attachment_PowerOfAttorneyOwner = ref(true);
-    const attachment_PowerOfAttorneyRenter = ref(true);
-    const attachment_PreTerminationWarningOtherBreachOfContract = ref(true);
-    const attachment_PreTerminationWarningPayment = ref(true);
-    const attachment_PreTerminationWarningOther = ref(true);
-    const attachment_PreTerminationWarningOtherRight = ref(true);
-    const attachment_TerminationHealthWarning = ref(true);
-    const attachment_TerminationPropertyConditionProblem = ref(true);
-    const attachment_TerminationOtherBreachOfContract = ref(true);
-    const attachment_TerminationLatePayment = ref(true);
-    const attachment_TerminationModernization = ref(true);
-    const attachment_TerminationOtherRight = ref(true);
-    const attachment_OrdenaryTerminationOwner = ref(true);
-    const attachment_OrdenaryTerminationRenter = ref(true);
+    const attachment_HandoverReport = ref(false)
+    const attachment_ByOwnerAgent = ref(false)
+    const attachment_ByRenterAgent = ref(false)
+    const attachment_CashReceiptRentFeePayment = ref(false)
+    const attachment_CashReceiptDeposit = ref(false)
+    const attachment_CashReceiptUtilityCost = ref(false)
+    const attachment_NotificationOfModernizationWorks = ref(false)
+    const attachment_DamageReport = ref(false)
+    const attachment_AuthorizationRenterEsign = ref(false)
+    const attachment_AuthorizationOwnerEsign = ref(false)
+    const attachment_AuthorizationOwner = ref(false)
+    const attachment_AuthorizationRenter = ref(false)
+    const attachment_PreTerminationWarningPayment = ref(false)
+    const attachment_PreTerminationWarningOther = ref(false)
+    const attachment_PreTerminationWarningOtherRight = ref(false)
+    const attachment_TerminationHealthWarning = ref(false)
+    const attachment_TerminationPropertyConditionProblem = ref(false)
+    const attachment_TerminationOtherBreachOfContract = ref(false)
+    const attachment_TerminationLatePayment = ref(false)
+    const attachment_TerminationModernization = ref(false)
+    const attachment_TerminationOtherRight = ref(false)
+    const attachment_OrdenaryTerminationOwner = ref(false)
+    const attachment_OrdenaryTerminationRenter = ref(false)
+    const attachment_CoUsufructuary_ConsentEsign = ref(false)
+    const attachment_CoUsufructuary_Consent = ref(false)
+    const attachment_CoUsufructuary_ConsentFilled = ref(false)
+    const attachment_CoOwner_ConsentEsign = ref(false)
+    const attachment_CoOwner_Consent = ref(false)
+    const attachment_CoOwner_ConsentFilled = ref(false)
+    const attachment_CoOwner_PreLeaseRightWaiverEsign = ref(false)
+    const attachment_CoOwner_PreLeaseRightWaiver = ref(false)
+    const attachment_CoOwner_PreLeaseRightWaiverFilled = ref(false)
+
+    const agentOwner = ref({
+        agentOwnerId: 5,
+        contractId: 493,
+        firstName: 'Owner Agent',
+        lastName: 'Smith',
+        birthDate: '2025-01-29T14:15:18.63',
+        birthPlace: 'Budapest',
+        mothersName: 'Kis Éva',
+        nationality: 'magyar',
+        zipcode: '1045',
+        country: 'Magyarország',
+        city: 'Budapest',
+        address: 'Fő utca 11',
+    })
+
+    const agentRenter = ref({
+        agentRenterId: 5,
+        contractId: 493,
+        firstName: 'Renter Agent',
+        lastName: 'Smith',
+        birthDate: '2025-01-29T14:15:18.63',
+        birthPlace: 'Budapest',
+        mothersName: 'Nagy Ilona',
+        nationality: 'magyar',
+        zipcode: '1054',
+        country: 'Magyarország',
+        city: 'Budapest',
+        address: 'Mellék utca 2',
+    })
+
+    const coUsufructuaries = ref([
+        {
+            coUsufructuaryId: 5,
+            contractId: 493,
+            firstName: 'Béla',
+            lastName: 'Hasznos',
+            birthDate: '2025-03-09T09:26:04.988',
+            birthPlace: 'Budapest',
+            mothersName: 'Piros Rózsa',
+            nationality: 'magyar',
+            zipcode: '1123',
+            country: 'Magyarország',
+            city: 'Budapest',
+            address: 'Fő út 11.',
+        },
+    ])
+
+    const coOwners = ref([
+        {
+            coOwnerId: 5,
+            contractId: 493,
+            firstName: 'Gál',
+            lastName: 'István',
+            birthDate: '2025-03-09T13:27:47.385',
+            birthPlace: 'Miskolc',
+            mothersName: 'Gálos',
+            nationality: 'Ilona',
+            zipcode: '3214',
+            country: 'Magyarország',
+            city: 'Miskolc',
+            address: 'Kazinczy utca 22.',
+            preLeaseRightWaiver: true,
+        },
+    ])
 
     // GETTERS
 
@@ -449,59 +540,59 @@ export const useContractStore = defineStore('contract', () => {
         questionId: number,
         optionId: string,
         optionParameters?: Array<{
-            optionParameterId: number;
-            parameter: number | string;
+            optionParameterId: number
+            parameter: number | string
         }>,
     ) => {
         const existingQuestionIndex = questions.value.findIndex(
             (q) => q.questionId === questionId,
-        );
+        )
 
         if (existingQuestionIndex !== -1) {
             // If the question exists, update its selected option
             questions.value[
                 existingQuestionIndex
-            ].questionSelectedOptionIdentifier = optionId;
+            ].questionSelectedOptionIdentifier = optionId
             questions.value[existingQuestionIndex].optionParameters =
-                optionParameters;
+                optionParameters
         } else {
             // If the question doesn't exist, add it to the array
             questions.value.push({
                 questionId,
                 questionSelectedOptionIdentifier: optionId,
                 optionParameters,
-            });
+            })
         }
-    };
+    }
 
     const removeQuestion = (questionId: number) => {
         const existingQuestionIndex = questions.value.findIndex(
             (q) => q.questionId === questionId,
-        );
+        )
 
         if (existingQuestionIndex !== -1) {
-            questions.value.splice(existingQuestionIndex, 1);
+            questions.value.splice(existingQuestionIndex, 1)
         }
-    };
+    }
 
     const getQuestion = (questionId: number) => {
         const question = questions.value.find(
             (q) => q.questionId === questionId,
-        );
+        )
 
         return {
             questionId: question?.questionId,
             optionId: question?.questionSelectedOptionIdentifier || '',
             optionParameters: question?.optionParameters || [],
-        };
-    };
+        }
+    }
 
     const updateQuestions = (
         optionId: string,
         questionId: number,
         optionParams?: string | number,
     ) => {
-        const stringParam = JSON.stringify(optionParams) || '';
+        const stringParam = JSON.stringify(optionParams) || ''
 
         if (optionParams) {
             addQuestion(questionId, optionId, [
@@ -509,12 +600,12 @@ export const useContractStore = defineStore('contract', () => {
                     optionParameterId: 0,
                     parameter: stringParam,
                 },
-            ]);
-            return;
+            ])
+            return
         }
 
-        addQuestion(questionId, optionId, []);
-    };
+        addQuestion(questionId, optionId, [])
+    }
 
     const updateQuestionsWithTwoParams = (
         optionId: string,
@@ -522,8 +613,8 @@ export const useContractStore = defineStore('contract', () => {
         param1?: string | number,
         param2?: string | number,
     ) => {
-        const stringParam = JSON.stringify(param1) || '';
-        const stringParamTwo = JSON.stringify(param2) || '';
+        const stringParam = JSON.stringify(param1) || ''
+        const stringParamTwo = JSON.stringify(param2) || ''
 
         addQuestion(questionId, optionId, [
             {
@@ -534,18 +625,18 @@ export const useContractStore = defineStore('contract', () => {
                 optionParameterId: 1,
                 parameter: stringParamTwo,
             },
-        ]);
-    };
+        ])
+    }
 
     const updateDepositAmount = (times: number = 1) => {
         if (!deposit.value.amount) {
-            deposit.value.amount = paymentDetail.value.rentingFee;
+            deposit.value.amount = paymentDetail.value.rentingFee
         } else {
-            deposit.value.amount = paymentDetail.value.rentingFee * times;
+            deposit.value.amount = paymentDetail.value.rentingFee * times
         }
 
-        return deposit.value.amount;
-    };
+        return deposit.value.amount
+    }
 
     const updateNotarialCosts = (type: 'owner' | 'renter', value: number) => {
         // Strict input validation
@@ -555,31 +646,31 @@ export const useContractStore = defineStore('contract', () => {
         const parsedValue = Math.max(
             0.1,
             Math.min(99.9, Number(value.toFixed(1)) || 0.1),
-        );
+        )
 
         if (publicDocument.value.paidBy === 'both') {
             if (type === 'owner') {
-                notarialDocumentCostForOwner.value = parsedValue;
+                notarialDocumentCostForOwner.value = parsedValue
                 notarialDocumentCostForRenter.value = Math.max(
                     0.1,
                     Math.min(99.9, 100 - parsedValue),
-                );
+                )
             } else {
-                notarialDocumentCostForRenter.value = parsedValue;
+                notarialDocumentCostForRenter.value = parsedValue
                 notarialDocumentCostForOwner.value = Math.max(
                     0.1,
                     Math.min(99.9, 100 - parsedValue),
-                );
+                )
             }
         } else {
             // If not split, update the value directly
             if (type === 'owner') {
-                notarialDocumentCostForOwner.value = parsedValue;
+                notarialDocumentCostForOwner.value = parsedValue
             } else {
-                notarialDocumentCostForRenter.value = parsedValue;
+                notarialDocumentCostForRenter.value = parsedValue
             }
         }
-    };
+    }
 
     return {
         contractId,
@@ -631,16 +722,17 @@ export const useContractStore = defineStore('contract', () => {
         isDifferentMailingAddressForOwner,
         isDifferentMailingAddressForRenter,
         attachment_HandoverReport,
+        attachment_ByOwnerAgent,
+        attachment_ByRenterAgent,
         attachment_CashReceiptRentFeePayment,
         attachment_CashReceiptDeposit,
         attachment_CashReceiptUtilityCost,
         attachment_NotificationOfModernizationWorks,
         attachment_DamageReport,
-        attachment_PowerOfAttorneyRenterEsign,
-        attachment_PowerOfAttorneyOwnerEsign,
-        attachment_PowerOfAttorneyOwner,
-        attachment_PowerOfAttorneyRenter,
-        attachment_PreTerminationWarningOtherBreachOfContract,
+        attachment_AuthorizationRenterEsign,
+        attachment_AuthorizationOwnerEsign,
+        attachment_AuthorizationOwner,
+        attachment_AuthorizationRenter,
         attachment_PreTerminationWarningPayment,
         attachment_PreTerminationWarningOther,
         attachment_PreTerminationWarningOtherRight,
@@ -652,6 +744,19 @@ export const useContractStore = defineStore('contract', () => {
         attachment_TerminationOtherRight,
         attachment_OrdenaryTerminationOwner,
         attachment_OrdenaryTerminationRenter,
+        attachment_CoUsufructuary_ConsentEsign,
+        attachment_CoUsufructuary_Consent,
+        attachment_CoUsufructuary_ConsentFilled,
+        attachment_CoOwner_ConsentEsign,
+        attachment_CoOwner_Consent,
+        attachment_CoOwner_ConsentFilled,
+        attachment_CoOwner_PreLeaseRightWaiverEsign,
+        attachment_CoOwner_PreLeaseRightWaiver,
+        attachment_CoOwner_PreLeaseRightWaiverFilled,
+        agentOwner,
+        agentRenter,
+        coUsufructuaries,
+        coOwners,
         addQuestion,
         removeQuestion,
         getQuestion,
@@ -659,5 +764,5 @@ export const useContractStore = defineStore('contract', () => {
         updateQuestionsWithTwoParams,
         updateDepositAmount,
         updateNotarialCosts,
-    };
-});
+    }
+})

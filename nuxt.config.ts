@@ -1,21 +1,21 @@
-import { defineNuxtConfig } from 'nuxt/config'
+import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
-    layoutTransition: { name: 'layout', mode: 'out-in' },
+    pageTransition: { name: "page", mode: "out-in" },
+    layoutTransition: { name: "layout", mode: "out-in" },
   },
 
   runtimeConfig: {
     paktumApiUrl: process.env.NUXT_PAKTUM_API_URL,
     public: {
       //
-    }
+    },
   },
 
   colorMode: {
-    preference: 'light',
-    fallback: 'system',
+    preference: "light",
+    fallback: "system",
   },
 
   devtools: {
@@ -23,13 +23,12 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@nuxt/ui',
-    '@nuxtjs/google-fonts',
-    '@nuxt/image',
-    '@vee-validate/nuxt',
-    '@pinia/nuxt',
-    '@formkit/auto-animate',
-    "@nuxt/eslint"
+    "@nuxt/ui",
+    "@nuxtjs/google-fonts",
+    "@nuxt/image",
+    "@vee-validate/nuxt",
+    "@pinia/nuxt",
+    "@formkit/auto-animate",
   ],
 
   googleFonts: {
@@ -40,9 +39,9 @@ export default defineNuxtConfig({
   },
 
   tailwindcss: {
-    cssPath: '~/assets/css/tailwind.css',
-    configPath: '~/tailwind.config.js',
+    cssPath: "~/assets/css/tailwind.css",
+    configPath: "~/tailwind.config.js",
   },
 
-  compatibilityDate: '2024-07-19',
-})
+  compatibilityDate: "2024-07-19",
+});

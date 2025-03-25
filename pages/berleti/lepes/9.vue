@@ -1,19 +1,19 @@
-<!-- 
-  IDŐTARTAM
+<!--
+  9. IDŐTARTAM
 -->
 <script lang="ts" setup>
-import { useContractStore } from '@/stores/contract';
+import { useContractStore } from '@/stores/contract'
 
 definePageMeta({
     layout: 'contract',
-});
+})
 
 const setFieldValue = inject('setFieldValue') as (
     field: string,
     value: string | number | boolean,
-) => void;
+) => void
 
-const contractStore = useContractStore();
+const contractStore = useContractStore()
 const {
     propertyUsageStartDate,
     subjectProperty,
@@ -27,61 +27,87 @@ const {
     paymentObligation,
     noPaymentObligation,
     contractTerminationDayInMonth,
-} = storeToRefs(contractStore);
-const { removeQuestion, getQuestion, updateQuestions } = contractStore;
+    attachment_NotificationOfModernizationWorks,
+    attachment_PreTerminationWarningPayment,
+    attachment_TerminationLatePayment,
+    attachment_PreTerminationWarningOther,
+    attachment_TerminationOtherRight,
+    attachment_OrdenaryTerminationOwner,
+    attachment_TerminationOtherBreachOfContract,
+    attachment_TerminationHealthWarning,
+    attachment_OrdenaryTerminationRenter,
+    attachment_TerminationModernization,
+    attachment_PreTerminationWarningOtherRight,
+    attachment_TerminationPropertyConditionProblem,
+} = storeToRefs(contractStore)
+const { removeQuestion, getQuestion, updateQuestions } = contractStore
 
 const createValue = (questionId: number) =>
     computed({
         get: () => getQuestion(questionId)?.optionId,
         set: (newOptionId) => {
-            updateQuestions(newOptionId, questionId);
+            updateQuestions(newOptionId, questionId)
         },
-    });
+    })
 
 // 3/6 - Bútorozottság, komfortfokozat
 // 3/6.1 - Bútorozottság a bérlő által
-const isFurnishedByOwner = useState('is-furnished-by-owner', () => false);
-const Q1Value = createValue(33);
-watch(
-    () => subjectProperty.value.propertyFurnituredByOwner,
-    (newValue) => {
-        if (newValue) {
-            removeQuestion(33);
-            setFieldValue('Q1', ''); /// is this a must?
-            isFurnishedByOwner.value = false;
-        } else {
-            isFurnishedByOwner.value = true;
-        }
-    },
-);
+const isFurnishedByOwner = useState('is-furnished-by-owner', () => false)
+const Q1Value = createValue(33)
+const handlePersonFurnishedBy = (
+    type: 'propertyFurnituredByOwner' | 'propertyFurnituredByRenter',
+) => {
+    toggleVisibility(isFurnishedByOwner)
+    if (type === 'propertyFurnituredByOwner') {
+        removeQuestion(33)
+        setFieldValue('Q1', '') // must?
+    }
+
+    subjectProperty.value.propertyFurnituredByOwner = false
+    subjectProperty.value.propertyFurnituredByRenter = false
+
+    subjectProperty.value[type] = true
+}
 
 // 4/6 - A bérlet ideje
+const isDefiniteContract = useState('is-definite-contract', () => true)
+const isUndefiniteContract = useState('is-undefinite-contract', () => false)
+
 // 4/6.1 - Határozott idő
-// 4/6.2 - Határozatlan idő
-const isDefiniteContract = useState('is-definite-contract', () => true);
-const isUndefiniteContract = useState('is-undefinite-contract', () => false);
-watch(
-    () => definiteContractPeriod.value,
-    (newValue) => {
-        if (newValue) {
-            isDefiniteContract.value = true;
-            isUndefiniteContract.value = false;
-        } else {
-            isDefiniteContract.value = false;
-            isUndefiniteContract.value = true;
-        }
-    },
-);
-// }
+const handleContractPeriodType = (type: 'definite' | 'undefinite') => {
+    toggleVisibility(isDefiniteContract)
+    toggleVisibility(isUndefiniteContract)
+
+    definiteContractPeriod.value = false
+    undefiniteContractPeriod.value = false
+
+    if (type === 'definite') definiteContractPeriod.value = true
+    if (type === 'undefinite') undefiniteContractPeriod.value = true
+}
+
+// 4/6/1.2 - Határozatlan idő
+const handleContractTerminationPossibility = (type: 'yes' | 'no') => {
+    contractTerminationPossibleBeforeEndDate.value = false
+    contractTerminationNotPossibleBeforeEndDate.value = false
+
+    if (type === 'yes') contractTerminationPossibleBeforeEndDate.value = true
+    if (type === 'no') contractTerminationNotPossibleBeforeEndDate.value = true
+}
+
+// 4/6/1.4 - Teljes időtartamra járó bérleti díj
+const handlePaymentObligationOnTermination = (type: 'yes' | 'no') => {
+    paymentObligation.value = false
+    noPaymentObligation.value = false
+
+    if (type === 'yes') paymentObligation.value = true
+    if (type === 'no') noPaymentObligation.value = true
+}
 </script>
 
 <template>
     <section class="max-w-2xl mx-auto">
         <!-- 1/6. - Birtokbaadás napja -->
-        <QuestionBlock
-            title="A birtokbaadás napja"
-            placement="1/6."
-        >
+        <QuestionBlock title="A birtokbaadás napja" placement="1/6.">
             <div class="inline-flex flex-col items-center">
                 <p class="text-sm text-neutral-500">Válassz dátumot</p>
                 <InputDatePicker
@@ -92,10 +118,7 @@ watch(
         </QuestionBlock>
 
         <!-- 2/6 - Átadott kulcsok száma -->
-        <QuestionBlock
-            title="Átadott kulcsok száma"
-            placement="2/6."
-        >
+        <QuestionBlock title="Átadott kulcsok száma" placement="2/6.">
             <InputText
                 v-model="subjectProperty.numberOfKeys"
                 type="number"
@@ -136,27 +159,26 @@ watch(
                 v-model="subjectProperty.propertyFurnituredByOwner"
                 is-default
                 name="subjectProperty.propertyFurnituredByOwner"
+                group-value="furnituredBy"
                 label="a Bérbeadó a komfortfokozatnak megfelelő berendezésekkel adja át."
                 @update:model-value="
-                    subjectProperty.propertyFurnituredByRenter = false
+                    handlePersonFurnishedBy('propertyFurnituredByOwner')
                 "
             />
             <InputRadioBool
                 v-model="subjectProperty.propertyFurnituredByRenter"
                 name="subjectProperty.propertyFurnituredByRenter"
+                group-value="furnituredBy"
                 label="a Bérlő látja el a komfortfokozatnak megfelelő berendezésekkel."
                 @update:model-value="
-                    subjectProperty.propertyFurnituredByOwner = false
+                    handlePersonFurnishedBy('propertyFurnituredByRenter')
                 "
             />
         </QuestionBlock>
 
         <!-- 3/6.1 - Indexálás éves értesítő -->
         <TheTransition v-model="isFurnishedByOwner">
-            <QuestionMultiple
-                title="A berendezés igazolt költségeit"
-                bordered
-            >
+            <QuestionMultiple title="A berendezés igazolt költségeit" bordered>
                 <QuestionItem title="A berendezés igazolt költségeit">
                     <InputRadioBase
                         v-model="Q1Value"
@@ -204,13 +226,15 @@ watch(
                 v-model="definiteContractPeriod"
                 name="definiteContractPeriod"
                 label="határozott idő."
-                @update:model-value="undefiniteContractPeriod = false"
+                group-value="contractPeriodType"
+                @update:model-value="handleContractPeriodType('definite')"
             />
             <InputRadioBool
                 v-model="undefiniteContractPeriod"
                 name="undefiniteContractPeriod"
                 label="határozatlan idő."
-                @update:model-value="definiteContractPeriod = false"
+                group-value="contractPeriodType"
+                @update:model-value="handleContractPeriodType('undefinite')"
             />
         </QuestionBlock>
 
@@ -263,17 +287,19 @@ watch(
                     <InputRadioBool
                         v-model="contractTerminationPossibleBeforeEndDate"
                         name="contractTerminationPossibleBeforeEndDate"
+                        group-value="contractTerminationPossibilityBeforeDueDate"
                         label="igen"
                         @update:model-value="
-                            contractTerminationNotPossibleBeforeEndDate = false
+                            handleContractTerminationPossibility('yes')
                         "
                     />
                     <InputRadioBool
                         v-model="contractTerminationNotPossibleBeforeEndDate"
                         name="contractTerminationNotPossibleBeforeEndDate"
+                        group-value="contractTerminationPossibilityBeforeDueDate"
                         label="nem"
                         @update:model-value="
-                            contractTerminationPossibleBeforeEndDate = false
+                            handleContractTerminationPossibility('no')
                         "
                     />
                 </QuestionItem>
@@ -296,14 +322,20 @@ watch(
                     <InputRadioBool
                         v-model="paymentObligation"
                         name="paymentObligation"
+                        group-value="paymentObligationOnTermination"
                         label="igen"
-                        @update:model-value="noPaymentObligation = false"
+                        @update:model-value="
+                            handlePaymentObligationOnTermination('yes')
+                        "
                     />
                     <InputRadioBool
                         v-model="noPaymentObligation"
                         name="noPaymentObligation"
+                        group-value="paymentObligationOnTermination"
                         label="nem"
-                        @update:model-value="paymentObligation = false"
+                        @update:model-value="
+                            handlePaymentObligationOnTermination('no')
+                        "
                     />
                 </QuestionItem>
             </QuestionMultiple>
@@ -356,14 +388,108 @@ watch(
             title="Melléklet vásárlási lehetőség Bérbeadónak"
             placement="5/6."
         >
-            # mellékletek Bérbeadónak
+            <InputBlockAnnex
+                v-model="attachment_NotificationOfModernizationWorks"
+                name="attachment_NotificationOfModernizationWorks"
+                :price="500"
+                tooltip-content="???"
+                input-label="Értesítés korszerűsítési munkálatokról és azok várható időtartamáról"
+                class="pb-4"
+            />
+            <InputBlockAnnex
+                v-model="attachment_PreTerminationWarningPayment"
+                name="attachment_PreTerminationWarningPayment"
+                :price="2500"
+                tooltip-content="???"
+                input-label="Rendkívüli felmondás előtti felszólítás minta (fizetési késedelem esetén)"
+                class="pb-4"
+            />
+            <InputBlockAnnex
+                v-model="attachment_TerminationLatePayment"
+                name="attachment_TerminationLatePayment"
+                :price="2500"
+                tooltip-content="???"
+                input-label="Rendkívüli felmondás minta (fizetési késedelem esetén)"
+                class="pb-4"
+            />
+            <InputBlockAnnex
+                v-model="attachment_PreTerminationWarningOther"
+                name="attachment_PreTerminationWarningOther"
+                :price="2500"
+                tooltip-content="???"
+                input-label="Rendkívüli felmondás előtti felszólítás minta (egyéb szerződésszegés)"
+                class="pb-4"
+            />
+            <InputBlockAnnex
+                v-model="attachment_TerminationOtherRight"
+                name="attachment_TerminationOtherRight"
+                :price="2500"
+                tooltip-content="???"
+                input-label="Rendkívüli felmondás minta (egyéb szerződésszegés)"
+                class="pb-4"
+            />
+            <InputBlockAnnex
+                v-model="attachment_OrdenaryTerminationOwner"
+                name="attachment_OrdenaryTerminationOwner"
+                :price="2500"
+                tooltip-content="???"
+                input-label="Rendes felmondás minta"
+                class="border-none"
+            />
         </QuestionBlock>
         <!-- 6/6. - Melléklet vásárlási lehetőség Bérlőnek -->
         <QuestionBlock
             title="Melléklet vásárlási lehetőség Bérlőnek"
             placement="6/6."
         >
-            # mellékletek Bérlőnek
+            <InputBlockAnnex
+                v-model="attachment_TerminationOtherBreachOfContract"
+                name="attachment_TerminationOtherBreachOfContract"
+                :price="500"
+                tooltip-content="???"
+                input-label="Felszólítás minta arra az esetre, ha más joga miatt a Bérlő a Bérleményt nem használhatja"
+                class="pb-4"
+            />
+            <InputBlockAnnex
+                v-model="attachment_PreTerminationWarningOtherRight"
+                name="attachment_PreTerminationWarningOtherRight"
+                :price="2500"
+                tooltip-content="???"
+                input-label="Felmondás minta arra az esetre, ha más joga miatt a Bérlő a Bérleményt nem használhatja"
+                class="pb-4"
+            />
+            <InputBlockAnnex
+                v-model="attachment_TerminationHealthWarning"
+                name="attachment_TerminationHealthWarning"
+                :price="2500"
+                tooltip-content="???"
+                input-label="Felmondás minta arra az esetre, ha a Bérlemény olyan állapotban van, hogy a használata az egészséget veszélyezteti"
+                class="pb-4"
+            />
+            <InputBlockAnnex
+                v-model="attachment_OrdenaryTerminationRenter"
+                name="attachment_OrdenaryTerminationRenter"
+                :price="2500"
+                tooltip-content="???"
+                input-label="Rendes felmondás minta"
+                class="pb-4"
+            />
+            <InputBlockAnnex
+                v-model="attachment_TerminationModernization"
+                name="attachment_TerminationModernization"
+                :price="2500"
+                tooltip-content="???"
+                input-label="Felmondás minta a Bérlemény korszerűsítése esetén"
+                class="pb-4"
+            />
+            <InputBlockAnnex
+                v-model="attachment_TerminationPropertyConditionProblem"
+                name="attachment_TerminationPropertyConditionProblem"
+                :price="2500"
+                tooltip-content="???"
+                input-label="Felmondás minta a Bérlemény nem rendeltetésszerű állapota esetére"
+                class="border-none"
+            />
         </QuestionBlock>
     </section>
 </template>
