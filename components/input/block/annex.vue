@@ -25,7 +25,7 @@ const annex = defineModel<boolean>()
 </script>
 
 <template>
-    <div class="border-b space-y-4">
+    <div class="border-b border-neutral-200 dark:border-neutral-800 space-y-4">
         <InputToggle v-model="annex" :label="inputLabel" :name="name" />
         <div class="flex justify-between">
             <AppTooltip class="" :width="300" :label="tooltipLabel">
