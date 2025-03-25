@@ -1,55 +1,52 @@
 <script lang="ts" setup>
-import { useForm } from 'vee-validate';
-import { schemas } from '@/utils/schemas';
+import { useForm } from 'vee-validate'
+import { schemas } from '@/utils/schemas'
 
-const router = useRouter();
-const route = useRoute();
+const router = useRouter()
+const route = useRoute()
 
 // Extract the step from route.fullPath (e.g., "/berleti/lepes/3")
 const currentStep = ref(
     parseInt(route.fullPath.split('/').pop() as string) || 1,
-);
-const currentSchema = ref(schemas[currentStep.value - 1]);
+)
+const currentSchema = ref(schemas[currentStep.value - 1])
 
 const { values, handleSubmit, isSubmitting, setFieldValue } = useForm({
     validationSchema: currentSchema,
     keepValuesOnUnmount: true,
-});
+})
 
 // const isLeftAsideOpen = ref(false)
 // const isRightAsideOpen = ref(false)
 
-provide('currentStep', currentStep);
-provide('setFieldValue', setFieldValue);
+provide('currentStep', currentStep)
+provide('setFieldValue', setFieldValue)
 
 // Watch for changes in the route to update currentStep
 watch(
     () => route.fullPath,
     (newPath) => {
-        const newStep = parseInt(newPath.split('/').pop() as string);
-        currentStep.value = newStep || 1;
+        const newStep = parseInt(newPath.split('/').pop() as string)
+        currentStep.value = newStep || 1
     },
-);
+)
 
 function validateAndGo(step: number | null) {
     if (step) {
         handleSubmit(() => {
-            currentStep.value = step;
-            router.push({ path: `/berleti/lepes/${step}` });
-        })();
+            currentStep.value = step
+            router.push({ path: `/berleti/lepes/${step}` })
+        })()
     } else {
         handleSubmit(() => {
-            console.log(JSON.stringify(values, null, 2));
-        })();
+            console.log(JSON.stringify(values, null, 2))
+        })()
     }
 }
 </script>
 
 <template>
-    <UContainer
-        as="div"
-        class="space-y-10"
-    >
+    <UContainer as="div" class="space-y-10">
         <header>
             <NavDesktop />
         </header>
@@ -71,12 +68,12 @@ function validateAndGo(step: number | null) {
                 :current-step="currentStep"
                 @validate-and-go="validateAndGo"
             />
-            <pre
+            <!-- <pre
                 wrap
                 class="bottom-0 right-0 w-full text-xs leading-tight"
             >
                 {{ values }}
-            </pre>
+            </pre> -->
             <!-- Mobile Sticky Buttons -->
             <!-- <div class="fixed z-50 flex flex-col gap-2 bottom-4 right-4">
         <UButton
