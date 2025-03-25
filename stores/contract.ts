@@ -357,7 +357,7 @@ export const useContractStore = defineStore('contract', () => {
         indexingId: 0,
         contractId: 0,
         indexingType: '',
-        indexingNotifyDate: ref(new Date()),
+        indexingNotifyDate: new Date(), // previously ref(new Date())
     })
 
     const ptkSelected = ref(false)
@@ -377,7 +377,7 @@ export const useContractStore = defineStore('contract', () => {
     const deposit = ref({
         depositId: 0,
         contractId: 0,
-        paymentDate: ref(new Date()),
+        paymentDate: new Date(), // previously ref(new Date())
         amount: 0,
         nbOfMonths: 1,
         payedWhen: 'string', // extra
