@@ -1,5 +1,5 @@
 <!--
-  FELEK
+  11. FELEK
 -->
 <script lang="ts" setup>
 import { useContractStore } from '@/stores/contract'
@@ -39,34 +39,21 @@ const publicAreaTypes = ref([
     'sziget',
 ])
 
-const concatAddress = computed(() => {
-    const property = subjectProperty.value
-
-    const street = `${property.streetName} ${property.publicAreaType} `
-    const houseN = `${property.houseNumber}., `
-    const buildingN = property.building ? `${property.building}. épület, ` : ''
-    const staircaseN = property.staircase
-        ? `${property.staircase}. lépcsőház, `
-        : ''
-    const floorN = property.floor ? `${property.floor}.em./` : ''
-    const doorN = property.door ? `${property.door}.a.` : ''
-
-    const address = [street, houseN, buildingN, staircaseN, floorN, doorN]
-        .filter((value) => value !== '')
-        .join('')
-
-    return address
-})
-
-watch(concatAddress, (newValue) => {
-    subjectProperty.value.address = newValue
-})
-
 // 1/4. - Bérbeadó adatai (levelezési cím)
 const mailingAddressDiffersForOwner = useState(
     'mailing-address-differs-for-owner',
     () => false,
 )
+const ownersAddress = computed(() => formatAddress(owners.value[0]))
+watch(ownersAddress, (newValue) => {
+    owners.value[0].address = newValue
+})
+const ownersMailingAddress = computed(() =>
+    formatMailingAddress(owners.value[0]),
+)
+watch(ownersMailingAddress, (newValue) => {
+    owners.value[0].mailingAddress = newValue
+})
 watch(isDifferentMailingAddressForOwner, () => {
     mailingAddressDiffersForOwner.value =
         isDifferentMailingAddressForOwner.value
@@ -115,7 +102,7 @@ watch(isDifferentMailingAddressForRenter, () => {
 
             <UDivider class="py-4" size="xs" label="Lakcím" />
 
-            <InputBlockHabitat
+            <InputBlockAddress
                 person="owners[0]"
                 v-model:country="owners[0].country"
                 v-model:zipcode="owners[0].zipcode"
@@ -138,63 +125,20 @@ watch(isDifferentMailingAddressForRenter, () => {
             />
 
             <TheTransition v-model="mailingAddressDiffersForOwner">
-                <div class="pt-5 space-y-3">
-                    <InputText
-                        v-model="owners[0].mailingCountry"
-                        label="Ország"
-                        name="owners[0].mailingCountry"
-                    />
-                    <InputText
-                        v-model="owners[0].mailingZipcode"
-                        label="Irányítószám"
-                        name="owners[0].mailingZipcode"
-                    />
-                    <InputText
-                        v-model="owners[0].mailingCity"
-                        label="Település"
-                        name="owners[0].mailingCity"
-                    />
-                    <InputText
-                        v-model="owners[0].mailingStreetName"
-                        label="Közterület neve"
-                        name="owners[0].mailingStreetName"
-                    />
-                    <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
-                        <InputSelect
-                            v-model="owners[0].mailingPublicAreaType"
-                            label="Közterület jellege"
-                            :options="publicAreaTypes"
-                            name="owners[0].mailingPublicAreaType"
-                        />
-                        <InputText
-                            v-model="owners[0].mailingHouseNumber"
-                            label="Házszám"
-                            name="owners[0].mailingHouseNumber"
-                        />
-                        <InputText
-                            v-model="owners[0].mailingBuilding"
-                            label="Épület"
-                            name="owners[0].mailingBuilding"
-                        />
-                    </div>
-                    <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
-                        <InputText
-                            v-model="owners[0].mailingStaircase"
-                            label="Lépcsőház"
-                            name="owners[0].mailingStaircase"
-                        />
-                        <InputText
-                            v-model="owners[0].mailingFloor"
-                            label="Emelet"
-                            name="owners[0].mailingFloor"
-                        />
-                        <InputText
-                            v-model="owners[0].mailingDoor"
-                            label="Ajtó"
-                            name="owners[0].mailingDoor"
-                        />
-                    </div>
-                </div>
+                <InputBlockMailingAddress
+                    person="owners[0]"
+                    v-model:country="owners[0].mailingCountry"
+                    v-model:zipcode="owners[0].mailingZipcode"
+                    v-model:city="owners[0].mailingCity"
+                    v-model:streetName="owners[0].mailingStreetName"
+                    v-model:publicAreaType="owners[0].mailingPublicAreaType"
+                    v-model:houseNumber="owners[0].mailingHouseNumber"
+                    v-model:building="owners[0].mailingBuilding"
+                    v-model:staircase="owners[0].mailingStaircase"
+                    v-model:floor="owners[0].mailingFloor"
+                    v-model:door="owners[0].mailingDoor"
+                    class="pt-5"
+                />
             </TheTransition>
 
             <UDivider class="py-4" size="xs" label="Azonosító okmány" />
@@ -252,7 +196,7 @@ watch(isDifferentMailingAddressForRenter, () => {
 
             <UDivider class="py-4" size="xs" label="Lakcím" />
 
-            <InputBlockHabitat
+            <InputBlockAddress
                 person="renters[0]"
                 v-model:country="renters[0].country"
                 v-model:zipcode="renters[0].zipcode"

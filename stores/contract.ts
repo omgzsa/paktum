@@ -66,37 +66,37 @@ export const useContractStore = defineStore('contract', () => {
         {
             ownerId: 485,
             contractId: 488,
-            firstName: 'owners.firstName',
-            lastName: 'owners.lastName',
-            birthDate: 'owners.birthDate',
-            birthPlace: 'owners.birthPlace',
-            mothersName: 'owners.mothersName',
-            country: 'owners.country',
-            nationality: 'owners.nationality',
-            city: 'owners.city',
-            zipcode: 'owners.zipcode',
-            address: 'Fő utca 11',
-            idCardType: 'owners.idCardType',
-            idCardNumber: 'owners.idCardNumber',
-            idCardExpiration: 'owners.idCardExpiration',
-            bankName: 'K&H',
-            bankAccount: '12345678-12345678-12345678',
-            mailingZipcode: 'owners.mailingZipcode',
-            mailingCountry: 'owners.mailingCountry',
-            mailingCity: 'owners.mailingCity',
-            mailingAddress: 'Fő utca 11',
-            taxIdentificationNumber: 'owners.taxIdentificationNumber',
+            firstName: '',
+            lastName: '',
+            birthDate: '',
+            birthPlace: '',
+            mothersName: '',
+            country: '',
+            nationality: '',
+            city: '',
+            zipcode: '',
+            address: '',
+            idCardType: '',
+            idCardNumber: '',
+            idCardExpiration: '',
+            bankName: '',
+            bankAccount: '',
+            mailingZipcode: '',
+            mailingCountry: '',
+            mailingCity: '',
+            mailingAddress: '',
+            taxIdentificationNumber: '',
             // these below concatenates to address
-            streetName: 'owners.streetName', // extra
-            houseNumber: 'owners.houseNumber', // extra
+            streetName: '', // extra
+            houseNumber: '', // extra
             building: undefined, // extra
             staircase: undefined, // extra
             floor: undefined, // extra
             door: undefined, // extra
             publicAreaType: '', // extra
             // these below concatenates to mailingAddress
-            mailingStreetName: 'owners.mailingStreetName', // extra
-            mailingHouseNumber: 'owners.mailingHouseNumber', // extra
+            mailingStreetName: '', // extra
+            mailingHouseNumber: '', // extra
             mailingBuilding: undefined, // extra
             mailingStaircase: undefined, // extra
             mailingFloor: undefined, // extra
@@ -109,35 +109,35 @@ export const useContractStore = defineStore('contract', () => {
         {
             renterId: 0,
             contractId: 0,
-            firstName: 'renters.firstName',
-            lastName: 'renters.lastName',
-            birthDate: 'renters.birthDate',
-            birthPlace: 'renters.birthPlace',
-            mothersName: 'renters.mothersName',
-            nationality: 'renters.nationality',
-            zipcode: 'renters.zipcode',
-            country: 'renters.country',
-            city: 'renters.city',
-            address: 'Teszt utca 2',
-            idCardType: 'renters.idCardType',
-            idCardNumber: 'renters.idCardNumber',
-            idCardExpiration: 'renters.idCardExpiration',
-            mailingZipcode: 'renters.mailingZipcode',
-            mailingCountry: 'renters.mailingCountry',
-            mailingCity: 'renters.mailingCity',
-            mailingAddress: 'Fő utca 11',
-            taxIdentificationNumber: 'renters.taxIdentificationNumber',
+            firstName: '',
+            lastName: '',
+            birthDate: '',
+            birthPlace: '',
+            mothersName: '',
+            nationality: '',
+            zipcode: '',
+            country: '',
+            city: '',
+            address: '',
+            idCardType: '',
+            idCardNumber: '',
+            idCardExpiration: '',
+            mailingZipcode: '',
+            mailingCountry: '',
+            mailingCity: '',
+            mailingAddress: '',
+            taxIdentificationNumber: '',
             // these below concatenates to address
-            streetName: 'renters.streetName', // extra
-            houseNumber: 'renters.houseNumber', // extra
+            streetName: '', // extra
+            houseNumber: '', // extra
             building: undefined, // extra
             staircase: undefined, // extra
             floor: undefined, // extra
             door: undefined, // extra
             publicAreaType: '', // extra
             // these below concatenates to mailingAddress
-            mailingStreetName: 'renters.mailingStreetName', // extra
-            mailingHouseNumber: 'renters.mailingHouseNumber', // extra
+            mailingStreetName: '', // extra
+            mailingHouseNumber: '', // extra
             mailingBuilding: undefined, // extra
             mailingStaircase: undefined, // extra
             mailingFloor: undefined, // extra
@@ -150,10 +150,10 @@ export const useContractStore = defineStore('contract', () => {
         paymentDetailId: 0,
         rentingFee: 0,
         paymentDeadlineDay: 1,
-        bankName: 'K&H Bank',
-        accountNumber: '12345678-12345678-12345678',
+        bankName: '',
+        accountNumber: '',
         cash: true,
-        firstPaymentDate: ref(new Date()),
+        firstPaymentDate: new Date(),
         paymentCurrency: 'Magyar forint (HUF)',
         currentMonth: false,
         previousMonth: false, // extra
@@ -366,8 +366,8 @@ export const useContractStore = defineStore('contract', () => {
     const utilityExpenses = ref({
         utilityExpensesId: 0,
         contractId: 0,
-        bankName: 'K&H Bank',
-        bankAccount: '12345678-12345678-12345678',
+        bankName: '',
+        bankAccount: '',
         cash: false,
         payedByOwner: false, // This should be payedToOwner.
         payedToProvider: false, // extra

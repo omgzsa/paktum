@@ -8,23 +8,34 @@ export const saveToLocalStorage = (key: string, value: string) =>
 export const removeFromLocalStorage = (key: string) =>
     localStorage.removeItem(key)
 
-// The handler function that works with both refs and plain objects
-// export const handleRadioChange = (
-//     obj: Record<string, any> | Ref<Record<string, any>>,
-//     selected: string,
-//     options: string[],
-// ) => {
-//     const target = isRef(obj)
-//         ? (obj.value as Record<string, any>)
-//         : (obj as Record<string, any>);
+export const toggleVisibility = (ref: Ref) => (ref.value = !ref.value)
 
-//     options.forEach((option) => {
-//         target[option] = false;
-//     });
+export const formatAddress = (property: any) => {
+    if (!property) return ''
 
-//     target[selected] = true;
-// };
+    const parts = [
+        `${property.streetName} ${property.publicAreaType}`,
+        `${property.houseNumber}.`,
+        property.building && `${property.building}. épület`,
+        property.staircase && `${property.staircase}. lépcsőház`,
+        property.floor && `${property.floor}.em.`,
+        property.door && `${property.door}.a.`,
+    ]
 
-export const toggleVisibility = (ref: Ref) => {
-    ref.value = !ref.value
+    return parts.filter(Boolean).join(', ')
+}
+
+export const formatMailingAddress = (property: any) => {
+    if (!property) return ''
+
+    const parts = [
+        `${property.mailingStreetName} ${property.mailingPublicAreaType}`,
+        `${property.mailingHouseNumber}.`,
+        property.mailingBuilding && `${property.mailingBuilding}. épület`,
+        property.mailingStaircase && `${property.mailingStaircase}. lépcsőház`,
+        property.mailingFloor && `${property.mailingFloor}.em.`,
+        property.mailingDoor && `${property.mailingDoor}.a.`,
+    ]
+
+    return parts.filter(Boolean).join(', ')
 }
