@@ -17,7 +17,6 @@ import TreeBench from '../public/svg/tree-bench.svg'
 <template>
     <UContainer class="mx-auto flex justify-center items-end pt-6">
         <motion.div class="relative w-full flex items-end justify-center">
-            <!-- Background -->
             <motion.img
                 :src="Bg"
                 class="absolute w-full"
@@ -31,7 +30,7 @@ import TreeBench from '../public/svg/tree-bench.svg'
                     class="w-24"
                     :initial="{ opacity: 0, scale: 0 }"
                     :animate="{ opacity: 1, scale: 1 }"
-                    :transition="{ delay: 1 }"
+                    :transition="{ delay: 0.9 }"
                 />
                 <div class="relative">
                     <motion.img
@@ -41,13 +40,13 @@ import TreeBench from '../public/svg/tree-bench.svg'
                         :animate="{ opacity: 1, scale: 1 }"
                         :transition="{ delay: 0.6 }"
                     />
-                    <!-- Rent Sign Above House 1 -->
+
                     <motion.img
                         :src="RentLeft"
-                        class="absolute left-1/2 -translate-x-1/2 -top-10 w-12"
+                        class="absolute left-1/2 -translate-x-1/2 -top-14 w-16"
                         :initial="{ opacity: 0, y: -50 }"
                         :animate="{ opacity: 1, y: 0 }"
-                        :transition="{ delay: 1.5 }"
+                        :transition="{ type: 'spring', delay: 1.8 }"
                     />
                 </div>
                 <motion.img
@@ -74,15 +73,15 @@ import TreeBench from '../public/svg/tree-bench.svg'
                         class="w-40"
                         :initial="{ opacity: 0, scale: 0 }"
                         :animate="{ opacity: 1, scale: 1 }"
-                        :transition="{ delay: 1.3 }"
+                        :transition="{ delay: 1.1 }"
                     />
-                    <!-- Rent Sign Above House 3 -->
+
                     <motion.img
                         :src="RentRight"
-                        class="absolute left-1/2 -translate-x-1/2 -top-10 w-12"
+                        class="absolute left-1/2 -translate-x-1/2 -top-10 w-14"
                         :initial="{ opacity: 0, y: -50 }"
                         :animate="{ opacity: 1, y: 0 }"
-                        :transition="{ delay: 2 }"
+                        :transition="{ type: 'spring', delay: 2 }"
                     />
                 </div>
                 <motion.img
@@ -91,11 +90,10 @@ import TreeBench from '../public/svg/tree-bench.svg'
                     class="w-24"
                     :initial="{ opacity: 0, scale: 0 }"
                     :animate="{ opacity: 1, scale: 1 }"
-                    :transition="{ delay: 1.6 }"
+                    :transition="{ delay: 1.4 }"
                 />
             </div>
 
-            <!-- Animated Bottom Border -->
             <motion.div
                 class="absolute z-10 h-[2px] -bottom-[1.25px] left-0 w-full bg-black/60"
                 :initial="{ opacity: 0, y: 50 }"
