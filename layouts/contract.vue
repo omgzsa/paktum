@@ -66,8 +66,8 @@ function validateAndGo(step: number | null) {
             />
         </AppHeader>
 
-        <main class="relative space-y-10">
-            <UContainer as="section">
+        <main>
+            <UContainer as="section" class="relative space-y-10">
                 <FormProgress
                     :current-step="currentStep"
                     :total-steps="schemas.length"
