@@ -19,8 +19,14 @@ const punchLine =
                     size="xs"
                     class="rounded-full"
                 />
-                <h1 class="xl:text-6xl">{{ title }}</h1>
-                <p class="text-sm sm:text-base">{{ punchLine }}</p>
+                <h1 class="xl:text-6xl ext-neutral-900 dark:text-neutral-900">
+                    {{ title }}
+                </h1>
+                <p
+                    class="text-sm sm:text-base ext-neutral-900 dark:text-neutral-900"
+                >
+                    {{ punchLine }}
+                </p>
                 <UButton
                     color="black"
                     variant="solid"
