@@ -1,16 +1,16 @@
-<!-- 
+<!--
   6. AZ INGATLAN
 -->
 <script lang="ts" setup>
-import { useContractStore } from '@/stores/contract';
+import { useContractStore } from '@/stores/contract'
 
-const contractStore = useContractStore();
+const contractStore = useContractStore()
 const { subjectProperty, condominiumFoundingDocument, orgRules, houseRules } =
-    storeToRefs(contractStore);
+    storeToRefs(contractStore)
 
 definePageMeta({
     layout: 'contract',
-});
+})
 
 const publicAreaTypes = ref([
     'utca',
@@ -31,141 +31,73 @@ const publicAreaTypes = ref([
     'árok',
     'telep',
     'sziget',
-]);
+])
 
-const concatAddress = computed(() => {
-    const {
-        streetName,
-        publicAreaType,
-        houseNumber,
-        building,
-        staircase,
-        floor,
-        door,
-    } = subjectProperty.value;
-    return [
-        `${streetName} ${publicAreaType}`,
-        `${houseNumber}.`,
-        building && `${building}. épület`,
-        staircase && `${staircase}. lépcsőház`,
-        floor && `${floor}.em.`,
-        door && `${door}.a.`,
-    ]
-        .filter(Boolean)
-        .join(', ');
-});
+const propertyAddress = computed(() => formatAddress(subjectProperty.value))
+watch(propertyAddress, (newValue) => (subjectProperty.value.address = newValue))
 
-const measure = 'm2';
+const measure = 'm2'
 const formattedMeasure = computed(() => {
     return {
         base: measure.slice(0, -1),
         sup: measure.slice(-1),
-    };
-});
+    }
+})
 
 // 2/3. INGATLAN TÍPUSA
-const docsVisible = useState('docsVisible', () => false);
+const docsVisible = useState('docsVisible', () => false)
 
 // 3/3. BÚTOROZOTTSÁG
-const annexLabel = 'Birtokbaadási jegyzőkönyv, állapotleírás és bútorleltár';
-const annexVisible = useState('annexVisible', () => false);
-
-watch(concatAddress, (newValue) => {
-    subjectProperty.value.address = newValue;
-});
+const annexLabel = 'Birtokbaadási jegyzőkönyv, állapotleírás és bútorleltár'
+const annexVisible = useState('annexVisible', () => false)
 
 watch(docsVisible, (newValue) => {
     if (!newValue) {
-        condominiumFoundingDocument.value = false;
-        orgRules.value = false;
-        houseRules.value = false;
+        condominiumFoundingDocument.value = false
+        orgRules.value = false
+        houseRules.value = false
     }
-});
+})
 
 const handlePropertyTypeChange = (
     type: 'independentHouse' | 'condominiumApartment',
 ) => {
-    toggleVisibility(docsVisible);
+    toggleVisibility(docsVisible)
 
-    subjectProperty.value.independentHouse = false;
-    subjectProperty.value.condominiumApartment = false;
+    subjectProperty.value.independentHouse = false
+    subjectProperty.value.condominiumApartment = false
 
-    subjectProperty.value[type] = true;
-};
+    subjectProperty.value[type] = true
+}
 
 const handleToggleFurnished = (type: 'noFurniture' | 'hasFurniture') => {
-    toggleVisibility(annexVisible);
+    toggleVisibility(annexVisible)
 
-    subjectProperty.value.noFurniture = false;
-    subjectProperty.value.hasFurniture = false;
+    subjectProperty.value.noFurniture = false
+    subjectProperty.value.hasFurniture = false
 
-    subjectProperty.value[type] = true;
-};
+    subjectProperty.value[type] = true
+}
 </script>
 
 <template>
     <section class="max-w-2xl mx-auto">
         <!-- 1/3 - Bérlemény adatai -->
-        <QuestionBlock
-            title="Bérlemény adatai"
-            sub-text=""
-            placement="1/3."
-        >
-            <InputText
-                v-model="subjectProperty.country"
-                label="Ország"
-                name="subjectProperty.country"
+        <QuestionBlock title="Bérlemény adatai" sub-text="" placement="1/3.">
+            <InputBlockAddress
+                person="subjectProperty"
+                v-model:country="subjectProperty.country"
+                v-model:zipcode="subjectProperty.zipCode"
+                v-model:city="subjectProperty.city"
+                v-model:streetName="subjectProperty.streetName"
+                v-model:publicAreaType="subjectProperty.publicAreaType"
+                v-model:houseNumber="subjectProperty.houseNumber"
+                v-model:building="subjectProperty.building"
+                v-model:staircase="subjectProperty.staircase"
+                v-model:floor="subjectProperty.floor"
+                v-model:door="subjectProperty.door"
             />
-            <InputText
-                v-model="subjectProperty.zipCode"
-                label="Irányítószám"
-                name="subjectProperty.zipCode"
-            />
-            <InputText
-                v-model="subjectProperty.city"
-                label="Település"
-                name="subjectProperty.city"
-            />
-            <InputText
-                v-model="subjectProperty.streetName"
-                label="Közterület neve"
-                name="subjectProperty.streetName"
-            />
-            <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
-                <InputSelect
-                    v-model="subjectProperty.publicAreaType"
-                    label="Közterület jellege"
-                    :options="publicAreaTypes"
-                    name="subjectProperty.publicAreaType"
-                />
-                <InputText
-                    v-model="subjectProperty.houseNumber"
-                    label="Házszám"
-                    name="subjectProperty.houseNumber"
-                />
-                <InputText
-                    v-model="subjectProperty.building"
-                    label="Épület"
-                    name="subjectProperty.building"
-                />
-            </div>
-            <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
-                <InputText
-                    v-model="subjectProperty.staircase"
-                    label="Lépcsőház"
-                    name="subjectProperty.staircase"
-                />
-                <InputText
-                    v-model="subjectProperty.floor"
-                    label="Emelet"
-                    name="subjectProperty.floor"
-                />
-                <InputText
-                    v-model="subjectProperty.door"
-                    label="Ajtó"
-                    name="subjectProperty.door"
-                />
-            </div>
+
             <div class="gap-4 space-y-4 sm:space-y-0 sm:flex">
                 <InputText
                     v-model="subjectProperty.parcelNumber"
