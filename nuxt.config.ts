@@ -27,6 +27,7 @@ export default defineNuxtConfig({
         '@vee-validate/nuxt',
         '@pinia/nuxt',
         '@formkit/auto-animate',
+        'motion-v/nuxt',
     ],
 
     googleFonts: {
