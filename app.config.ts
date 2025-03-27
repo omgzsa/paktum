@@ -56,7 +56,7 @@ export default defineAppConfig({
         },
         {
             id: 10,
-            title: 'Egyedi kérdések, közokiratba foglalás, aláírás',
+            title: 'Egyedi kérdések, közokirat, aláírás',
             subTitle: 'Egyebek',
             link: '/berleti/lepes/10',
         },

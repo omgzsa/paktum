@@ -28,7 +28,7 @@ import TreeBench from '../public/svg/tree-bench.svg'
             <div class="relative flex items-end gap-4">
                 <motion.img
                     :src="TreeBench"
-                    class="w-24"
+                    class="w-16 sm:w-24"
                     :initial="{ opacity: 0, scale: 0 }"
                     :animate="{ opacity: 1, scale: 1 }"
                     :transition="{ delay: 0.9 }"
@@ -36,7 +36,7 @@ import TreeBench from '../public/svg/tree-bench.svg'
                 <div class="relative">
                     <motion.img
                         :src="House1"
-                        class="w-32"
+                        class="w-24 sm:w-32"
                         :initial="{ opacity: 0, scale: 0 }"
                         :animate="{ opacity: 1, scale: 1 }"
                         :transition="{ delay: 0.6 }"
@@ -47,7 +47,7 @@ import TreeBench from '../public/svg/tree-bench.svg'
                         class="absolute left-1/2 -translate-x-1/2 -top-14 w-16"
                         :initial="{ opacity: 0, y: -50 }"
                         :animate="{ opacity: 1, y: 0 }"
-                        :transition="{ type: 'spring', delay: 1.8 }"
+                        :transition="{ type: 'spring', delay: 2 }"
                     />
                 </div>
                 <motion.img
@@ -79,10 +79,10 @@ import TreeBench from '../public/svg/tree-bench.svg'
 
                     <motion.img
                         :src="RentRight"
-                        class="absolute left-1/2 -translate-x-1/2 -top-10 w-14"
+                        class="absolute left-1/2 -translate-x-1/2 -top-10 w-16"
                         :initial="{ opacity: 0, y: -50 }"
                         :animate="{ opacity: 1, y: 0 }"
-                        :transition="{ type: 'spring', delay: 2 }"
+                        :transition="{ type: 'spring', delay: 1.8 }"
                     />
                 </div>
                 <motion.img
