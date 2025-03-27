@@ -15,8 +15,9 @@ import TreeBench from '../public/svg/tree-bench.svg'
 </script>
 
 <template>
+    <!-- <ClientOnly> -->
     <UContainer class="mx-auto flex justify-center items-end pt-6">
-        <motion.div class="relative w-full flex items-end justify-center">
+        <div class="relative w-full flex items-end justify-center">
             <motion.img
                 :src="Bg"
                 class="absolute w-full"
@@ -100,6 +101,7 @@ import TreeBench from '../public/svg/tree-bench.svg'
                 :animate="{ opacity: 1, y: 0 }"
                 :transition="{ delay: 0.3 }"
             />
-        </motion.div>
+        </div>
     </UContainer>
+    <!-- </ClientOnly> -->
 </template>
