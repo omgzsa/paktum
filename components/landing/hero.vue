@@ -36,6 +36,6 @@ const punchLine =
                 />
             </div>
         </UContainer>
-        <TheHouses />
+        <!-- <TheHouses /> -->
     </div>
 </template>
