@@ -5,7 +5,7 @@ const punchLine =
 </script>
 
 <template>
-    <div class="bg-primary-500 pt-6 pb-12 sm:pt-10 sm:pb-14 md:pt-12 md:pb-16">
+    <div class="bg-primary-500 pt-10 pb-14 md:pt-12 md:pb-16">
         <UContainer as="section" class="mb-16">
             <div
                 class="flex flex-col items-center max-w-2xl mx-auto text-center gap-4 md:gap-6 xl:gap-8"
