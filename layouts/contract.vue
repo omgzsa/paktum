@@ -113,8 +113,15 @@ function validateAndGo(step: number | null) {
             </UContainer>
         </main>
 
-        <footer>
-            <!-- footer content -->
+        <footer class="bg-(--ui-text-highlighted)">
+            <NuxtLink to="/">
+                <NuxtImg
+                    src="/paktum-logo-black.svg"
+                    width="168"
+                    height="40"
+                    class="w-24"
+                />
+            </NuxtLink>
         </footer>
     </div>
 </template>

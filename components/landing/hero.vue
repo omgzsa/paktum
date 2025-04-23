@@ -1,14 +1,20 @@
 <script setup lang="ts">
-const title = 'Bérleti szerződés otthonról, gyorsan, egyszerűen'
+const emit = defineEmits(['open'])
+
+const handleClick = () => {
+    emit('open')
+}
+
+const title = 'Készíts bérleti szerződést online, gyorsan és jogszerűen!'
 const punchLine =
-    'Készítsd el a teljesen személyre szabható, ügyvéd által hitelesített bérleti szerződést percek alatt, otthonról, felesleges papírozás és magas ügyvédi költségek nélkül.'
+    'Készítsd el a teljesen személyre szabható, jogszabályoknak megfelelő bérleti szerződést percek alatt online, magas ügyvédi költségek és akár felesleges papírozás nélkül.'
 </script>
 
 <template>
     <div class="bg-primary-500 pt-10 pb-14 md:pt-12 md:pb-16">
         <UContainer as="section" class="mb-16">
             <div
-                class="flex flex-col items-center max-w-2xl mx-auto text-center gap-4 md:gap-6 xl:gap-8"
+                class="flex flex-col items-center max-w-4xl mx-auto text-center gap-4 md:gap-6 xl:gap-8"
             >
                 <UButton
                     color="black"
@@ -30,10 +36,11 @@ const punchLine =
                 <UButton
                     color="black"
                     variant="solid"
-                    to="/berleti/lepes/1"
+                    to="/"
                     label="Kitöltöm a szerződésem!"
                     size="lg"
                     class="shadow-md"
+                    @click="handleClick"
                 />
             </div>
         </UContainer>
