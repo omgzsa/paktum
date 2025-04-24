@@ -1,13 +1,16 @@
 <script setup lang="ts">
+defineProps<{
+    title: string
+    punchLine: string
+}>()
+
+const colorMode = useColorMode()
+
 const emit = defineEmits(['open'])
 
 const handleClick = () => {
     emit('open')
 }
-
-const title = 'Készíts bérleti szerződést online, gyorsan és jogszerűen!'
-const punchLine =
-    'Készítsd el a teljesen személyre szabható, jogszabályoknak megfelelő bérleti szerződést percek alatt online, magas ügyvédi költségek és akár felesleges papírozás nélkül.'
 </script>
 
 <template>
@@ -17,8 +20,8 @@ const punchLine =
                 class="flex flex-col items-center max-w-4xl mx-auto text-center gap-4 md:gap-6 xl:gap-8"
             >
                 <UButton
-                    color="black"
-                    variant="outline"
+                    :color="colorMode.value === 'dark' ? 'white' : 'black'"
+                    :variant="colorMode.value === 'dark' ? 'solid' : 'outline'"
                     to="/"
                     label="Kiváncsi vagy hogyan működik?"
                     trailing-icon="i-heroicons-arrow-right"
@@ -34,7 +37,7 @@ const punchLine =
                     {{ punchLine }}
                 </p>
                 <UButton
-                    color="black"
+                    :color="colorMode.value === 'dark' ? 'white' : 'black'"
                     variant="solid"
                     to="/"
                     label="Kitöltöm a szerződésem!"

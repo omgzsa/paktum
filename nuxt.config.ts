@@ -2,6 +2,17 @@ export default defineNuxtConfig({
     app: {
         pageTransition: { name: 'page', mode: 'out-in' },
         layoutTransition: { name: 'layout', mode: 'out-in' },
+        head: {
+            htmlAttrs: {
+                lang: 'hu',
+            },
+            script: [],
+            titleTemplate: '%s %separator %siteName',
+            templateParams: {
+                separator: ' | ',
+                siteName: 'PAKTUM',
+            },
+        },
     },
 
     runtimeConfig: {
@@ -28,7 +39,32 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         '@formkit/auto-animate',
         'motion-v/nuxt',
+        '@nuxtjs/seo',
     ],
+
+    site: {
+        name: 'PAKTUM',
+        indexable: false,
+    },
+
+    robots: {
+        enabled: true,
+        robotsTxt: true,
+        disallow: ['/berleti/lepes/**', '/blog', '/blog/**', '/gyik'],
+    },
+
+    sitemap: {
+        //
+    },
+
+    seo: {
+        meta: {
+            description:
+                'Készítsd el a teljesen személyre szabható, jogszabályoknak megfelelő bérleti szerződést percek alatt online, magas ügyvédi költségek és akár felesleges papírozás nélkül.',
+            author: 'PAKTUM',
+            applicationName: 'PAKTUM',
+        },
+    },
 
     googleFonts: {
         families: {

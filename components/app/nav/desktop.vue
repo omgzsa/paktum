@@ -19,9 +19,18 @@
                 </p>
             </template>
         </ClientOnly>
-        <!-- <ul class="space-x-4">
-            <NuxtLink to="/berleti/lepes/1">berleti</NuxtLink>
-        </ul> -->
+        <ul class="space-x-4">
+            <NuxtLink
+                to="/blog"
+                class="hover:underline underline-offset-4 dark:text-neutral-900"
+                >Blog</NuxtLink
+            >
+            <NuxtLink
+                to="/gyik"
+                class="hover:underline underline-offset-4 dark:text-neutral-900"
+                >GYIK</NuxtLink
+            >
+        </ul>
         <TheColorSwitcher />
     </nav>
 </template>

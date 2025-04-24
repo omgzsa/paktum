@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div>
+    <UContainer as="section" class="py-16">
         <h1>Blog</h1>
-    </div>
+    </UContainer>
 </template>

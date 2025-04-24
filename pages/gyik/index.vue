@@ -3,5 +3,7 @@
 </script>
 
 <template>
-    <div>gyik</div>
+    <UContainer as="section" class="py-16">
+        <h1>GYIK</h1>
+    </UContainer>
 </template>
